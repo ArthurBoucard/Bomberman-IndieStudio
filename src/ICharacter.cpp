@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2021
 ** B-YEP-400-LYN-4-1-indiestudio-arthur.boucard
 ** File description:
-** IStates
+** ICharacter
 */
 
-#include "IStates.hpp"
+#include "ICharacter.hpp"
 
-IStates::IStates()
+ICharacter::ICharacter()
 {
 }
 
-IStates::~IStates()
+ICharacter::~ICharacter()
 {
 }
