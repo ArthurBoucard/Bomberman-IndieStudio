@@ -10,6 +10,11 @@
 
 #include <iostream>
 
+#include "StatesManagement/Context.hpp"
+#include "StatesManagement/State.hpp"
+#include "States/Menu.hpp"
+#include "States/Game.hpp"
+
 typedef enum {
 	ENTER,
 	SPACE,

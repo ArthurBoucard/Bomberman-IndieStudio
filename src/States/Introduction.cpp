@@ -5,7 +5,7 @@
 ** Introduction
 */
 
-#include "Introduction.hpp"
+#include "../../include/States/Introduction.hpp"
 
 Introduction::Introduction()
 {
@@ -28,5 +28,5 @@ void Introduction::Clear()
 void Introduction::HandleInput()
 {}
 
-void Reset()
+void Introduction::Reset()
 {}

@@ -8,7 +8,7 @@
 #ifndef GAMEOVER_HPP_
 #define GAMEOVER_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class GameOver : public State
 {

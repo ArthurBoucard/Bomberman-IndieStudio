@@ -8,7 +8,9 @@
 #ifndef Menu_HPP_
 #define Menu_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
+#include "../StatesManagement/Context.hpp"
+#include "../States/Game.hpp"
 
 class Menu : public State
 {

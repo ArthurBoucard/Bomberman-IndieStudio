@@ -8,7 +8,7 @@
 #ifndef PAUSE_HPP_
 #define PAUSE_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class Pause : public State
 {

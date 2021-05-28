@@ -5,7 +5,7 @@
 ** Generic
 */
 
-#include "Generic.hpp"
+#include "../../include/States/Generic.hpp"
 
 Generic::Generic()
 {
@@ -28,5 +28,5 @@ void Generic::Clear()
 void Generic::HandleInput()
 {}
 
-void Reset()
+void Generic::Reset()
 {}

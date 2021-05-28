@@ -5,7 +5,7 @@
 ** GameOver
 */
 
-#include "GameOver.hpp"
+#include "../../include/States/GameOver.hpp"
 
 GameOver::GameOver()
 {
@@ -28,5 +28,5 @@ void GameOver::Clear()
 void GameOver::HandleInput()
 {}
 
-void Reset()
+void GameOver::Reset()
 {}

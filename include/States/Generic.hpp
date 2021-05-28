@@ -8,7 +8,7 @@
 #ifndef GENERIC_HPP_
 #define GENERIC_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class Generic : public State
 {

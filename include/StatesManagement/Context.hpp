@@ -26,7 +26,6 @@ class Context
     void Draw();
     void Update();
     void Clear();
-    void Draw();
     void HandleInput();
     void Reset();
 };

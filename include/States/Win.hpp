@@ -8,7 +8,7 @@
 #ifndef WIN_HPP_
 #define WIN_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class Win : public State
 {

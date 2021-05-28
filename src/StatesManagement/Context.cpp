@@ -5,7 +5,7 @@
 ** Context
 */
 
-#include "Context.hpp"
+#include "../../include/StatesManagement/Context.hpp"
 
 Context::Context(State *state) : _state(nullptr)
 {
@@ -46,7 +46,7 @@ void Context::HandleInput()
     _state->HandleInput();
 }
 
-void Context::HandleInput()
+void Context::Reset()
 {
     _state->Reset();
 }

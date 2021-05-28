@@ -5,7 +5,7 @@
 ** Menu
 */
 
-#include "Menu.hpp"
+#include "../../include/States/Menu.hpp"
 
 Menu::Menu()
 {
@@ -28,5 +28,5 @@ void Menu::Clear()
 void Menu::HandleInput()
 {}
 
-void Reset()
+void Menu::Reset()
 {}

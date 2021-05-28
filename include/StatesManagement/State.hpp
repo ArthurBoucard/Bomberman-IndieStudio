@@ -14,13 +14,13 @@
 class Context;
 
 class State {
-    private:
+    public:
         Context *_context;
 
     public:
         virtual ~State();
 
-        void SetContext(Context *context){};
+        void SetContext(Context *context);
 
         virtual void Draw() = 0;
         virtual void Update() = 0;

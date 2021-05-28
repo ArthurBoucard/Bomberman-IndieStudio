@@ -5,11 +5,11 @@
 ** Main
 */
 
-#include "Main.hpp"
+#include "../include/Main.hpp"
 
 int main(int ac, char **av)
 {
-    if (ac != 0)
+    if (ac != 1)
         return 84;
 
     return 0;

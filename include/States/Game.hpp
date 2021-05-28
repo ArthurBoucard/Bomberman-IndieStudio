@@ -8,7 +8,7 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class Game : public State
 {

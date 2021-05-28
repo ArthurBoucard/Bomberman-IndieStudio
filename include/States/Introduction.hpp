@@ -8,7 +8,7 @@
 #ifndef INTRODUCTION_HPP_
 #define INTRODUCTION_HPP_
 
-#include "State.hpp"
+#include "../StatesManagement/State.hpp"
 
 class Introduction : public State
 {

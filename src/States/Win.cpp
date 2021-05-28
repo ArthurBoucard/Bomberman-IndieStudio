@@ -5,7 +5,7 @@
 ** Win
 */
 
-#include "Win.hpp"
+#include "../../include/States/Win.hpp"
 
 Win::Win()
 {
@@ -28,5 +28,5 @@ void Win::Clear()
 void Win::HandleInput()
 {}
 
-void Reset()
+void Win::Reset()
 {}

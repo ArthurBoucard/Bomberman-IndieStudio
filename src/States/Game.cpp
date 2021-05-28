@@ -5,7 +5,7 @@
 ** Game
 */
 
-#include "Game.hpp"
+#include "../../include/States/Game.hpp"
 
 Game::Game()
 {
@@ -28,5 +28,5 @@ void Game::Clear()
 void Game::HandleInput()
 {}
 
-void Reset()
+void Game::Reset()
 {}
