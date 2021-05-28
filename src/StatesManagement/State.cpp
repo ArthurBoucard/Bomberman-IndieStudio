@@ -5,12 +5,11 @@
 ** IStates
 */
 
-#include "IStates.hpp"
+#include "State.hpp"
 
-IStates::IStates()
-{
-}
+State::~State(){}
 
-IStates::~IStates()
+void State::SetContext(Context *context)
 {
+    _context = context;
 }
