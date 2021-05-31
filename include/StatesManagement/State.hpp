@@ -20,7 +20,7 @@ class State {
     public:
         virtual ~State(){}
 
-        void set_context(Context *context)
+        void SetContext(Context *context)
         {
             _context = context;
         }
