@@ -14,22 +14,32 @@
 
 namespace Raylib {
     class Window {
-        public:Window(int width, int height, const std::string &title) {        //Constructor
-            Init(width, height, title);
-        }
-        ~Window() {                                                             //Destructor
-            Close();
-        }
+        public:
+            Window()                                                              //Default Constructor
+            {
+                Init(800, 450, "Raylib Window");
+            }
+            Window(int width, int height, const std::string &title)               //Constructor
+            {
+                Init(width, height, title);
+            }
+            ~Window()                                                             //Destructor
+            {
+                Close();
+            }
 
-        void Init(int width, int height, const std::string &title) {            //Create Window
-            ::InitWindow(width, height, title.c_str());
-        }
-        inline bool ShouldClose() {                                             //Check if KEY_ESCAPE pressed or Close icon pressed
-            return ::WindowShouldClose();
-        }
-        inline void Close() {                                                   //Close window and unload OpenGL context
-            ::CloseWindow();
-        }
+            void Init(int width, int height, const std::string &title)            //Create Window
+            {
+                ::InitWindow(width, height, title.c_str());
+            }
+            inline bool ShouldClose()                                             //Check if KEY_ESCAPE pressed or Close icon pressed
+            {
+                return ::WindowShouldClose();
+            }
+            inline void Close()                                                   //Close window and unload OpenGL context
+            {
+                ::CloseWindow();
+            }
         protected:
         private:
     };
