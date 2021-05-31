@@ -18,9 +18,12 @@ class State {
         Context *_context;
 
     public:
-        virtual ~State();
+        virtual ~State(){}
 
-        void SetContext(Context *context);
+        void set_context(Context *context)
+        {
+            _context = context;
+        }
 
         virtual void Draw() = 0;
         virtual void Update() = 0;
