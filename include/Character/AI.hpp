@@ -16,8 +16,28 @@ class AI : public ICharacter
         AI();
         ~AI();
 
-    protected:
+        //skin
+        void SetSkin();
+
+        std::string GetSkin() const;
+
+        //Stats
+        void SetBombQuantity();
+        void SetSpeed();
+        void SetRange();
+
+        unsigned int GetBombQuantity() const;
+        unsigned int GetSpeed() const;
+        unsigned int GetRange() const;
+
     private:
+        //skin
+        std::string _skin;
+
+        //stats
+        unsigned int _bombQuantity;
+        unsigned int _speed;
+        unsigned int _range;
 };
 
 #endif /* !AI_HPP_ */

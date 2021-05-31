@@ -17,8 +17,6 @@ Pause::~Pause()
 
 void Pause::Draw()
 {
-    //test design pattern States
-    std::cout << " transition en jeu réussi" << std::endl;
 }
 
 void Pause::Update()
