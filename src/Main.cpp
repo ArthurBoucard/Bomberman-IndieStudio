@@ -12,6 +12,9 @@ int main(int ac, char **av)
     if (ac != 1)
         return 84;
 
+    Bomberman bomberman;
+    bomberman.GameLoop();
+
     return 0;
 }
 

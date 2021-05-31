@@ -10,10 +10,7 @@
 
 #include <iostream>
 
-#include "StatesManagement/Context.hpp"
-#include "StatesManagement/State.hpp"
-#include "States/Menu.hpp"
-#include "States/Game.hpp"
+#include "Bomberman.hpp"
 
 typedef enum {
 	ENTER,

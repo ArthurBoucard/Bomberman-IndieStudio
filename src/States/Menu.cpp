@@ -17,13 +17,16 @@ Menu::~Menu()
 
 void Menu::Draw()
 {
+    std::cout << "draw menu ok!" << std::endl;
 }
 
 void Menu::Update()
 {}
 
 void Menu::Clear()
-{}
+{
+    std::cout << "clear menu ok!" << std::endl;
+}
 
 void Menu::HandleInput()
 {}

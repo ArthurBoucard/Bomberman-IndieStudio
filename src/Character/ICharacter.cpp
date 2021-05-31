@@ -5,7 +5,7 @@
 ** ICharacter
 */
 
-#include "../include/ICharacter.hpp"
+#include "../../include/Character/ICharacter.hpp"
 
 ICharacter::ICharacter()
 {
