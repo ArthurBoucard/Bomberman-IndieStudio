@@ -11,6 +11,7 @@
 #include <iostream>
 #include <unistd.h>
 
+#include "Raylib/Raylib.hpp"
 #include "StatesManagement/Context.hpp"
 #include "StatesManagement/State.hpp"
 #include "States/Menu.hpp"

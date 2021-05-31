@@ -11,6 +11,8 @@
 #include <iostream>
 #include <typeinfo>
 
+#include "../Raylib/Raylib.hpp"
+
 class Context;
 
 class State {
