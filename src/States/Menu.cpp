@@ -17,7 +17,7 @@ Menu::~Menu()
 
 void Menu::Draw()
 {
-    std::cout << "draw menu ok!" << std::endl;
+    DrawText("Bomberman!", 190, 200, 20, BLACK);
 }
 
 void Menu::Update()
@@ -25,7 +25,7 @@ void Menu::Update()
 
 void Menu::Clear()
 {
-    std::cout << "clear menu ok!" << std::endl;
+    ClearBackground(RAYWHITE);
 }
 
 void Menu::HandleInput()

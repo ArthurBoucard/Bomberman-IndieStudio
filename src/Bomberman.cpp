@@ -18,13 +18,14 @@ Bomberman::~Bomberman()
 void Bomberman::GameLoop()
 {
     Context *context = new Context(new Menu);
+    Raylib::Window window(1000, 650, "Indie Studio");
 
-    //exemple de gameloop
-    while(1)
-    {
-        context->Draw();
-        context->Clear();
-        context->TransitionTo(new Game); //changement de states
-        usleep(1000000);
+    while (!window.ShouldClose()) {
+        BeginDrawing();
+            context->Draw();
+            context->Clear();
+        EndDrawing();
+        // context->TransitionTo(new Game);
+        // usleep(1000000);
     }
 }
