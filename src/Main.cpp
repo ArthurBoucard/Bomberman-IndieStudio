@@ -9,8 +9,16 @@
 
 int main(int ac, char **av)
 {
-    if (ac != 1)
-        return 84;
+    try
+    {
+        if (ac != 1)
+            throw Exception("invalid number of arguments");
+    }
+    catch(Exception const& e)
+    {
+        std::cerr << "ERROR : " << e.what() << std::endl;
+        exit(84);
+    }
 
     Bomberman bomberman;
     bomberman.GameLoop();

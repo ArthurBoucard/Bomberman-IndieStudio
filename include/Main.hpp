@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "Bomberman.hpp"
+#include "Exception.hpp"
 
 typedef enum {
 	ENTER,
