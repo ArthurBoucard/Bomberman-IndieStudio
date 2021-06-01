@@ -5,8 +5,7 @@
 ## Makefile
 ##
 
-SRC     =		$(wildcard src/States/*.cpp)	\
-				$(wildcard src/StatesManagement/*.cpp)	\
+SRC     =		$(wildcard src/*/*.cpp)	\
 				$(wildcard src/*.cpp)	\
 
 NAME	=	bomberman
