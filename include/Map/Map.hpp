@@ -23,7 +23,7 @@ class Map {
         void createMap();
         std::vector<std::string> getMap() const;
         void reset();
-        void proceduralGen1();
+        void proceduralGenClassical();
     protected:
     private:
         std::vector<std::string> _map;

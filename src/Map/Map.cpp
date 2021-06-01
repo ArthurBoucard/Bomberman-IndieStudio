@@ -44,7 +44,7 @@ void Map::reset()
     _map.empty();
 }
 
-void Map::proceduralGen1()
+void Map::proceduralGenClassical()
 {
     srand (time(NULL));
 
