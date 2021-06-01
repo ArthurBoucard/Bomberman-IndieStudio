@@ -54,7 +54,7 @@ clean:
 	rm -f vgcore.*
 	rm -f *.gcda
 	rm -f *.gcno
-	rm -f$(TNAME)
+	rm -f $(TNAME)
 	@echo $(CRED)======[CLEANED]=====$(END)
 
 fclean:	clean
