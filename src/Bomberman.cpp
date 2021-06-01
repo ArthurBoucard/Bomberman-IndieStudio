@@ -17,8 +17,9 @@ Bomberman::~Bomberman()
 
 void Bomberman::GameLoop()
 {
-    Context *context = new Context(new Menu);
-    Raylib::Window window(1000, 650, "Indie Studio");
+    Context *context = new Context(new Introduction());
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    Raylib::Window window(GetScreenWidth(), GetScreenHeight(), "Window title");
 
     while (!window.ShouldClose()) {
         BeginDrawing();
