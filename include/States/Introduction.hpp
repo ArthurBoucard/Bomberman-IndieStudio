@@ -9,6 +9,8 @@
 #define INTRODUCTION_HPP_
 
 #include "../StatesManagement/State.hpp"
+#include "../StatesManagement/Context.hpp"
+#include "../States/Menu.hpp"
 
 class Introduction : public State
 {
@@ -22,7 +24,16 @@ class Introduction : public State
         void HandleInput();
         void Reset();
 
+        void UpdateScale(Texture2D texture);
+
     private:
+        int _width;
+        int _height;
+        float scale = 5;
+
+        Image _bouboule;
+        Texture2D _texture;
+        Music music;
 };
 
 #endif /* !INTRODUCTION_HPP_ */

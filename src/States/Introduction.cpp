@@ -9,22 +9,32 @@
 
 Introduction::Introduction()
 {
+    _width = 10000;
+    _height = 10000 / 2.9;
+
+    _bouboule = LoadImage("./assets/img/Bouboule.png");
+    _texture = LoadTextureFromImage(_bouboule);
+
+    music = LoadMusicStream("./assets/music/poutine.mp3");
+    PlayMusicStream(music);
 }
 
 Introduction::~Introduction()
 {
-    // UnloadTexture(bouboule);
 }
 
 void Introduction::Draw()
 {
-    Texture2D bouboule = LoadTexture("./assets/img/Bouboule.png");
+    Vector2 pos = {(GetScreenWidth()/2 - _texture.width/2 * scale), (GetScreenHeight()/2 - _texture.height/2 * scale)};
+    DrawTextureEx(_texture, pos, 0, scale, WHITE);
 
-    DrawTexture(bouboule, 1000/2 - bouboule.width/2, 650/2 - bouboule.height/2, WHITE);
+    UpdateScale(_texture);
 }
 
 void Introduction::Update()
-{}
+{
+    UpdateMusicStream(music);
+}
 
 void Introduction::Clear()
 {
@@ -36,3 +46,14 @@ void Introduction::HandleInput()
 
 void Introduction::Reset()
 {}
+
+void Introduction::UpdateScale(Texture2D texture)
+{
+    if ((texture.width/2 * scale) < GetScreenWidth() + 20)
+        scale = scale - 0.0001;
+    else
+        scale = scale - 0.014;
+
+    if ((texture.width/2 * scale) < GetScreenWidth())
+        _context->TransitionTo(new Menu);
+}
