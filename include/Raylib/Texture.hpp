@@ -29,6 +29,27 @@ namespace Raylib {
                 Unload();
             }
 
+            int getId()                                                            //Get ID 
+            {
+                return this->id;
+            }
+            int getWidth()                                                         //Get Width
+            {
+                return this->width;
+            }
+            int getHeight()                                                        //Get Height
+            {
+                return this->height;
+            }
+            int getMipmaps()                                                       //Get Mipmaps
+            {
+                return this->mipmaps;
+            }
+            int getFormat()                                                        //Get Format
+            {
+                return this->format;
+            }
+
             void LoadFromImage(const ::Image &image)                               //Load texture with image
             {
                 set(::LoadTextureFromImage(image));
