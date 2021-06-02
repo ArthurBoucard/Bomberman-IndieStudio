@@ -29,7 +29,7 @@ namespace Raylib {
                 Unload();
             }
 
-            int getId()                                                            //Get ID
+            int getId()                                                            //Get ID 
             {
                 return this->id;
             }
