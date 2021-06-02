@@ -13,7 +13,6 @@ Introduction::Introduction()
     _height = 10000 / 2.9;
 
     _bouboule = LoadImage("./assets/img/Bouboule.png");
-    _texture = LoadTextureFromImage(_bouboule);
 
     music = LoadMusicStream("./assets/music/poutine.mp3");
     PlayMusicStream(music);
