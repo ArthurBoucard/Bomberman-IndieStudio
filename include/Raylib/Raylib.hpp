@@ -11,6 +11,7 @@
 #include "raylib.h"
 
 #include "Window.hpp"
+#include "Texture.hpp"
 
 namespace Raylib {}
 

@@ -9,7 +9,6 @@
 #define BOMBERMAN_HPP_
 
 #include <iostream>
-#include <unistd.h>
 
 #include "Raylib/Raylib.hpp"
 #include "StatesManagement/Context.hpp"
