@@ -24,15 +24,17 @@ class Introduction : public State
         void HandleInput();
         void Reset();
 
-        void UpdateScale(Texture2D texture);
+        void UpdateScale();
 
     private:
         int _width;
         int _height;
         float scale = 5;
 
-        Image _bouboule;
         Music music;
+        Image _bouboule;
+
+        Raylib::Texture bouboule;
 };
 
 #endif /* !INTRODUCTION_HPP_ */
