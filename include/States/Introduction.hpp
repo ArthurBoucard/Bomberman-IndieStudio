@@ -32,7 +32,6 @@ class Introduction : public State
         float scale = 5;
 
         Image _bouboule;
-        Texture2D _texture;
         Music music;
 };
 

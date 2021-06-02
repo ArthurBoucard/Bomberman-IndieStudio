@@ -25,10 +25,11 @@ Introduction::~Introduction()
 
 void Introduction::Draw()
 {
-    Vector2 pos = {(GetScreenWidth()/2 - _texture.width/2 * scale), (GetScreenHeight()/2 - _texture.height/2 * scale)};
-    DrawTextureEx(_texture, pos, 0, scale, WHITE);
+    Texture2D texture = LoadTextureFromImage(_bouboule);
+    Vector2 pos = {(GetScreenWidth()/2 - texture.width/2 * scale), (GetScreenHeight()/2 - texture.height/2 * scale)};
+    DrawTextureEx(texture, pos, 0, scale, WHITE);
 
-    UpdateScale(_texture);
+    UpdateScale(texture);
 }
 
 void Introduction::Update()
