@@ -9,13 +9,11 @@
 
 int main(int ac, char **av)
 {
-    try
-    {
+    try {
         if (ac != 1)
             throw Exception("invalid number of arguments");
     }
-    catch(Exception const& e)
-    {
+    catch(Exception const& e) {
         std::cerr << "ERROR : " << e.what() << std::endl;
         exit(84);
     }
