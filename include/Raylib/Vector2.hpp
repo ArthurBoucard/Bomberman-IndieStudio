@@ -22,7 +22,7 @@ namespace Raylib {
             {
                 set(Vector2{x, y});
             }
-            ~Vector2();                                                                         //Destructor
+            ~Vector2() {}                                                                       //Destructor
 
         protected:
             inline void set(::Vector2 vec)                                                      //Set vector2 values

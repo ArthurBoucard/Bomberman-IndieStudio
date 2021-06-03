@@ -15,6 +15,7 @@
 #include "StatesManagement/State.hpp"
 #include "States/Menu.hpp"
 #include "States/Game.hpp"
+#include "States/Introduction.hpp"
 #include "Map/Map.hpp"
 
 class Bomberman

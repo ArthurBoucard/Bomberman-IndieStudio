@@ -9,6 +9,9 @@
 
 Bomberman::Bomberman()
 {
+    InitAudioDevice();
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    SetTargetFPS(60);
 }
 
 Bomberman::~Bomberman()
@@ -17,15 +20,16 @@ Bomberman::~Bomberman()
 
 void Bomberman::GameLoop()
 {
-    Context *context = new Context(new Menu);
-    Raylib::Window window(1000, 650, "Indie Studio");
+    Raylib::Window window(GetScreenWidth(), GetScreenHeight(), "Indie studio");
+    Context *context = new Context(new Introduction());
 
     while (!window.ShouldClose()) {
         BeginDrawing();
             context->Draw();
+            context->Update();
             context->Clear();
         EndDrawing();
-        // context->TransitionTo(new Game);
-        // usleep(1000000);
     }
+
+    CloseAudioDevice();
 }
