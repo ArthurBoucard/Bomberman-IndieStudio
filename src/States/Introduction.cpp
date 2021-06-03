@@ -12,9 +12,6 @@ Introduction::Introduction()
     _music.LoadMusic("../assets/music/poutine.mp3");
     _music.Play();
     _bouboule.LoadFile("../assets/pictures/Bouboule.png");
-
-    _scrennHeight = GetScreenHeight();
-    _scrennWidth = GetScreenWidth();
 }
 
 Introduction::~Introduction()
@@ -29,6 +26,9 @@ void Introduction::Draw()
 
 void Introduction::Update()
 {
+    _scrennHeight = GetScreenHeight();
+    _scrennWidth = GetScreenWidth();
+
     _music.Update();
     UpdateScale();
 }

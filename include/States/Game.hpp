@@ -25,6 +25,10 @@ public:
     void Reset();
 
 private:
+    float _screenWidth;
+    float _screenHeight;
+
+    Rectangle _rectGame;
 };
 
 #endif /* !GAME_HPP_ */

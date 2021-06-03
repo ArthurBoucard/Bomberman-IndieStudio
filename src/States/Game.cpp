@@ -17,23 +17,16 @@ Game::~Game()
 
 void Game::Draw()
 {
-    float screenWidth = GetScreenWidth();
-    float screenHeight = GetScreenHeight();
     DrawText("We are Rocket League", 450, 100, 25, RED);
-    Rectangle rect_game = {screenWidth / 4, screenHeight / 4, 350, 100};
-    DrawRectangleRounded(rect_game, 50, 50, BLUE);
-    Vector2 mouse = GetMousePosition();
-
-    if (CheckCollisionPointRec(mouse, rect_game))
-    {
-        DrawRectangleRounded(rect_game, 50, 50, RED);
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-            _context->TransitionTo(new Menu);
-    }
+    DrawRectangleRounded(_rectGame, 50, 50, BLUE);
 }
 
 void Game::Update()
 {
+    _screenWidth = GetScreenWidth();
+    _screenHeight = GetScreenHeight();
+
+    _rectGame = {_screenWidth / 4, _screenHeight / 4, 350, 100};
 }
 
 void Game::Clear()
@@ -43,6 +36,14 @@ void Game::Clear()
 
 void Game::HandleInput()
 {
+    Vector2 mouse = GetMousePosition();
+
+    if (CheckCollisionPointRec(mouse, _rectGame))
+    {
+        DrawRectangleRounded(_rectGame, 50, 50, RED);
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            _context->TransitionTo(new Menu);
+    }
 }
 
 void Game::Reset()
