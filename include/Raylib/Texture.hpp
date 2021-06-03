@@ -13,20 +13,27 @@
 namespace Raylib {
     class Texture : public ::Texture {
         public:
-            Texture()                                                              //Default Constructor (does nothing)
+            Texture() {}
+            Texture(const Image &image)                                            //Constructor with image
             {
-            }
-            Texture(const ::Image &image)                                          //Constructor with image
-            {
-                LoadFromImage(image);
+                LoadImage(image);
             }
             Texture(const std::string &fileName)                                   //Constructor with file
             {
-                LoadFromFile(fileName);
+                LoadFile(fileName);
             }
-            ~Texture()                                                             //Destructor
+            ~Texture()                                                             //Destructor - Unload texture
             {
-                Unload();
+                UnloadTexture(*this);
+            }
+
+            void LoadImage(const Image &image)                                     //Load from image
+            {
+                set(::LoadTextureFromImage(image));
+            }
+            void LoadFile(const std::string &fileName)                             //Load from file
+            {
+                set(::LoadTexture(fileName.c_str()));
             }
 
             int getId()                                                            //Get ID 
@@ -50,25 +57,19 @@ namespace Raylib {
                 return this->format;
             }
 
-            void LoadFromImage(const ::Image &image)                               //Load texture with image
+            inline Texture &Draw(int posX, int posY, Color tint)                                 //Draw texture
             {
-                set(::LoadTextureFromImage(image));
-            }
-            void LoadFromFile(const std::string &fileName)                         //Load texture with file
-            {
-                set(::LoadTexture(fileName.c_str()));
-            }
-            inline void Unload()                                                   //Unload texture
-            {
-                ::UnloadTexture(*this);
-            }
-            inline Texture& Draw(::Vector2 position, float rotation, float scale, ::Color tint)    //Draw texture with scale
-            {
-                ::DrawTextureEx(*this, position, rotation, scale, tint);
+                DrawTexture(*this, posX, posY, tint);
                 return *this;
             }
+            inline Texture &DrawEx(Vector2 position, float rotation, float scale, Color tint)    //Draw texture with scale
+            {
+                DrawTextureEx(*this, position, rotation, scale, tint);
+                return *this;
+            }
+
         protected:
-            inline void set(::Texture texture)                                     //Set texture values
+            inline void set(::Texture texture)                                       //Set texture values
             {
                 id = texture.id;
                 width = texture.width;
