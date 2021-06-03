@@ -13,19 +13,16 @@
 namespace Raylib {
     class Music : public ::Music {
         public:
-            Music(const std::string& fileName)                                                              //Constructor with file
+            Music() {}
+            Music(const std::string &fileName)                                                              //Constructor with file
             {
                 set(::LoadMusicStream(fileName.c_str()));
             }
-            ~Music()                                                                                        //Destructor
-            {
-                Unload();
-            }
-
-            inline void Unload()                                                                            //Unload music
+            ~Music()                                                                                        //Destructor - unload music
             {
                 ::UnloadMusicStream(*this);
             }
+
             inline Music& Play()                                                                            //Play music
             {
                 ::PlayMusicStream(*this);
@@ -36,6 +33,7 @@ namespace Raylib {
                 ::UpdateMusicStream(*this);
                 return *this;
             }
+
         protected:
             inline void set(::Music music)                                                                 //Set music value
             {
