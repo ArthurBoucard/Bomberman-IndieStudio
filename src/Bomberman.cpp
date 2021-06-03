@@ -27,6 +27,7 @@ void Bomberman::GameLoop()
         BeginDrawing();
             context->Draw();
             context->Update();
+            context->HandleInput();
             context->Clear();
         EndDrawing();
     }

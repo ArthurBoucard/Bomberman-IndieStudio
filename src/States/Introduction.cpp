@@ -36,7 +36,10 @@ void Introduction::Clear()
 }
 
 void Introduction::HandleInput()
-{}
+{
+    if (IsKeyPressed(KEY_SPACE))
+        _context->TransitionTo(new Menu);
+}
 
 void Introduction::Reset()
 {}
