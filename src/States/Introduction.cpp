@@ -9,12 +9,9 @@
 
 Introduction::Introduction()
 {
-    _width = 10000;
-    _height = 10000 / 2.9;
-
-    bouboule = Raylib::Texture("../assets/img/Bouboule.png");
-    music = LoadMusicStream("../assets/music/poutine.mp3");
-    PlayMusicStream(music);
+    _music.LoadMusic("../assets/music/poutine.mp3");
+    _music.Play();
+    _bouboule.LoadFile("../assets/img/Bouboule.png");
 }
 
 Introduction::~Introduction()
@@ -23,15 +20,14 @@ Introduction::~Introduction()
 
 void Introduction::Draw()
 {
-    Vector2 pos = {(GetScreenWidth()/2 - bouboule.getWidth()/2 * scale), (GetScreenHeight()/2 - bouboule.getHeight()/2 * scale)};
-    DrawTextureEx(bouboule, pos, 0, scale, WHITE);
-
-    UpdateScale();
+    Vector2 pos= {(GetScreenWidth()/2 - _bouboule.getWidth()/2 * _scale), (GetScreenHeight()/2 - _bouboule.getHeight()/2 * _scale)};
+    _bouboule.DrawEx(pos, 0, _scale, WHITE);
 }
 
 void Introduction::Update()
 {
-    UpdateMusicStream(music);
+    _music.Update();
+    UpdateScale();
 }
 
 void Introduction::Clear()
@@ -47,11 +43,11 @@ void Introduction::Reset()
 
 void Introduction::UpdateScale()
 {
-    if ((bouboule.getWidth()/2 * scale) < GetScreenWidth() + 20)
-        scale = scale - 0.0001;
+    if ((_bouboule.getWidth()/2 * _scale) < GetScreenWidth() + 20)
+        _scale = _scale - 0.0001;
     else
-        scale = scale - 0.014;
+        _scale = _scale - 0.014;
 
-    if ((bouboule.getWidth()/2 * scale) < GetScreenWidth())
+    if ((_bouboule.getWidth()/2 * _scale) < GetScreenWidth())
         _context->TransitionTo(new Menu);
 }

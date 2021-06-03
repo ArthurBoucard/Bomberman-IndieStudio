@@ -16,13 +16,17 @@ namespace Raylib {
             Music() {}
             Music(const std::string &fileName)                                                              //Constructor with file
             {
-                set(::LoadMusicStream(fileName.c_str()));
+                LoadMusic(fileName);
             }
             ~Music()                                                                                        //Destructor - unload music
             {
                 ::UnloadMusicStream(*this);
             }
 
+            void LoadMusic(const std::string &fileName)                                                     //Load music
+            {
+                set(::LoadMusicStream(fileName.c_str()));
+            }
             inline Music& Play()                                                                            //Play music
             {
                 ::PlayMusicStream(*this);

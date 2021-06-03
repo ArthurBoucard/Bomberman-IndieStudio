@@ -20,8 +20,8 @@ Bomberman::~Bomberman()
 
 void Bomberman::GameLoop()
 {
-    Context *context = new Context(new Introduction());
     Raylib::Window window(GetScreenWidth(), GetScreenHeight(), "Indie studio");
+    Context *context = new Context(new Introduction());
 
     while (!window.ShouldClose()) {
         BeginDrawing();

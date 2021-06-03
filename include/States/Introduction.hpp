@@ -11,6 +11,7 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
+#include "../Raylib/Raylib.hpp"
 
 class Introduction : public State
 {
@@ -27,14 +28,11 @@ class Introduction : public State
         void UpdateScale();
 
     private:
-        int _width;
-        int _height;
-        float scale = 5;
+        float _scale = 5;
 
-        Music music;
-        Image _bouboule;
+        Raylib::Music _music;
 
-        Raylib::Texture bouboule;
+        Raylib::Texture2D _bouboule;
 };
 
 #endif /* !INTRODUCTION_HPP_ */
