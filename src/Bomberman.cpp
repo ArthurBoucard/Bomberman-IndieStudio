@@ -23,12 +23,13 @@ void Bomberman::GameLoop()
     Raylib::Window window(GetScreenWidth(), GetScreenHeight(), "Indie studio");
     Context *context = new Context(new Introduction());
 
-    while (!window.ShouldClose()) {
+    while (!window.ShouldClose())
+    {
         BeginDrawing();
-            context->Draw();
-            context->Update();
-            context->HandleInput();
-            context->Clear();
+        context->Clear();
+        context->Update();
+        context->Draw();
+        context->HandleInput();
         EndDrawing();
     }
 
