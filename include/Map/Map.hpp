@@ -14,6 +14,7 @@
 #include <fstream>
 #include <vector>
 #include <time.h>
+#include <string>
 
 class Map {
     public:
