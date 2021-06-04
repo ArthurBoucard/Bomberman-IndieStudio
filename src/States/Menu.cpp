@@ -74,7 +74,7 @@ void Menu::Clear()
 void Menu::HandleInput()
 {
     if (CheckMouse(_mouse, _rect_game, _play_game, 1) == true)
-        _context->TransitionTo(new Game);
+        _context->TransitionTo(new GameOver);
     if (CheckMouse(_mouse, _rect_settings, _settings, 2) == true)
         printf("Settings\n");
     if (CheckMouse(_mouse, _rect_tuto, _tuto, 3) == true)

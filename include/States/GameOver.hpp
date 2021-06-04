@@ -12,17 +12,20 @@
 
 class GameOver : public State
 {
-    public:
-        GameOver();
-        ~GameOver();
+public:
+    GameOver();
+    ~GameOver();
 
-        void Draw();
-        void Update();
-        void Clear();
-        void HandleInput();
-        void Reset();
+    void Draw();
+    void Update();
+    void Clear();
+    void HandleInput();
+    void Reset();
 
-    private:
+private:
+    float _screenWidth;
+    float _screenHeight;
+    Texture2D _bgGameOver;
 };
 
 #endif /* !GAMEOVER_HPP_ */
