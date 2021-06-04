@@ -26,10 +26,10 @@ void Bomberman::GameLoop()
     while (!window.ShouldClose())
     {
         BeginDrawing();
-        context->Clear();
-        context->Update();
-        context->Draw();
-        context->HandleInput();
+                context->Clear();
+                context->Draw();
+                context->Update();
+                context->HandleInput();
         EndDrawing();
     }
 

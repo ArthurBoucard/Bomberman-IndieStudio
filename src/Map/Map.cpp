@@ -17,7 +17,7 @@ Map::~Map()
 
 void Map::createMap()
 {
-    std::ifstream mapFile("./assets/map.txt");
+    std::ifstream mapFile("../assets/map.txt");
 	std::vector<std::string> map;
 	std::string line;
 
