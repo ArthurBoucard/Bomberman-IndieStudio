@@ -23,8 +23,7 @@ void Bomberman::GameLoop()
     Raylib::Window window(GetScreenWidth(), GetScreenHeight(), "Indie studio");
     Context *context = new Context(new Introduction());
 
-    while (!window.ShouldClose())
-    {
+    while (!window.ShouldClose()) {
         BeginDrawing();
             context->Clear();
             context->Draw();
@@ -32,6 +31,5 @@ void Bomberman::GameLoop()
             context->HandleInput();
         EndDrawing();
     }
-
     CloseAudioDevice();
 }
