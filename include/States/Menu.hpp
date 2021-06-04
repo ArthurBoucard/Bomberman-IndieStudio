@@ -32,6 +32,7 @@ private:
     Rectangle _rect_stat;
     Vector2 _mouse;
     Texture2D _bg;
+    Music _music_menu;
 
     float _screenWidth;
     float _screenHeight;

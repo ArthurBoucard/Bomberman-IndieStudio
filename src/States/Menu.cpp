@@ -9,6 +9,8 @@
 
 Menu::Menu()
 {
+    _music_menu = LoadMusicStream("../assets/music/music_menu.mp3");
+    PlayMusicStream(_music_menu);
     _bg = LoadTexture("../assets/pictures/bg.png");
 }
 
@@ -61,6 +63,7 @@ void Menu::Update()
     DrawText(_settings, _rect_settings.x + _screenWidth / 40, _rect_settings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
     DrawText(_tuto, _rect_tuto.x + _screenWidth / 90, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
     DrawText(_stat, _rect_stat.x + _screenWidth / 20, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    UpdateMusicStream(_music_menu);
 }
 
 void Menu::Clear()
