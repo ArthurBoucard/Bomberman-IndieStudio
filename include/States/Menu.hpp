@@ -23,22 +23,13 @@ public:
     void Clear();
     void HandleInput();
     void Reset();
-    bool CheckMouse(Vector2, Rectangle, const char *, int);
+    bool CheckMouse(Vector2, Rectangle, const char *, int state);
 
 private:
-    Rectangle _settingsRect;
-    Vector2 _settingsVect;
-    Texture2D _settingsText;
-
-    Rectangle _statRect;
-    Vector2 _statVect;
-    Texture2D _statText;
-
-    Rectangle _questRect;
-    Vector2 _questVect;
-    Texture2D _questText;
-
     Rectangle _rect_game;
+    Rectangle _rect_settings;
+    Rectangle _rect_tuto;
+    Rectangle _rect_stat;
     Vector2 _mouse;
     Texture2D _bg;
 
@@ -46,7 +37,9 @@ private:
     float _screenHeight;
     const char *_play_game = (char *)"PLAY GAME";
     const char *_title = (char *)"BOMBERMAN";
-    const char *_empty = (char *)"";
+    const char *_settings = (char *)"SETTINGS";
+    const char *_tuto = (char *)"HOW TO PLAY";
+    const char *_stat = (char *)"STATS";
 };
 
 #endif /* !Menu_HPP_ */
