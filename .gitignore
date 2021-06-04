@@ -4,3 +4,4 @@ testStatesPattern.cpp
 test
 bomberman
 build/*
+.vs/*
