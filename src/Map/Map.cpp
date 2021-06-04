@@ -17,13 +17,13 @@ Map::~Map()
 
 void Map::createMap()
 {
-    std::ifstream mapFile("./assets/map.txt");
+    std::ifstream mapFile("../assets/map.txt");
 	std::vector<std::string> map;
 	std::string line;
 
     try {
         if (mapFile) {
-            while (getline(mapFile, line))
+            while (std::getline(mapFile, line))
                 map.push_back(line);
         }
     }
