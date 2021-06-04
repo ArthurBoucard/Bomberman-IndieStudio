@@ -9,6 +9,7 @@
 
 GameOver::GameOver()
 {
+    _bgGameOver = LoadTexture("../assets/pictures/GameOver.png");
 }
 
 GameOver::~GameOver()
@@ -17,10 +18,13 @@ GameOver::~GameOver()
 
 void GameOver::Draw()
 {
+    DrawTexture(_bgGameOver, 0, 0, RAYWHITE);
 }
 
 void GameOver::Update()
 {
+    _screenWidth = GetScreenWidth();
+    _screenHeight = GetScreenHeight();
 }
 
 void GameOver::Clear()

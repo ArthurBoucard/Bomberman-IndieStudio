@@ -11,35 +11,37 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Game.hpp"
+#include "../States/GameOver.hpp"
 
-class Menu : public State {
-    public:
-        Menu();
-        ~Menu();
+class Menu : public State
+{
+public:
+    Menu();
+    ~Menu();
 
-        void Draw();
-        void Update();
-        void Clear();
-        void HandleInput();
-        void Reset();
-        bool CheckMouse(Vector2, Rectangle, const char *, int state);
+    void Draw();
+    void Update();
+    void Clear();
+    void HandleInput();
+    void Reset();
+    bool CheckMouse(Vector2, Rectangle, const char *, int state);
 
-    private:
-        Rectangle _rect_game;
-        Rectangle _rect_settings;
-        Rectangle _rect_tuto;
-        Rectangle _rect_stat;
-        Vector2 _mouse;
-        Texture2D _bg;
-        Music _music_menu;
+private:
+    Rectangle _rect_game;
+    Rectangle _rect_settings;
+    Rectangle _rect_tuto;
+    Rectangle _rect_stat;
+    Vector2 _mouse;
+    Texture2D _bg;
+    Music _music_menu;
 
-        float _screenWidth;
-        float _screenHeight;
-        const char *_play_game = (char *)"PLAY GAME";
-        const char *_title = (char *)"BOMBERMAN";
-        const char *_settings = (char *)"SETTINGS";
-        const char *_tuto = (char *)"HOW TO PLAY";
-        const char *_stat = (char *)"STATS";
+    float _screenWidth;
+    float _screenHeight;
+    const char *_play_game = (char *)"PLAY GAME";
+    const char *_title = (char *)"BOMBERMAN";
+    const char *_settings = (char *)"SETTINGS";
+    const char *_tuto = (char *)"HOW TO PLAY";
+    const char *_stat = (char *)"STATS";
 };
 
 #endif /* !Menu_HPP_ */
