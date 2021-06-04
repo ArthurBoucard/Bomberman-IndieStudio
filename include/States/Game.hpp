@@ -9,9 +9,10 @@
 #define GAME_HPP_
 
 #include "../StatesManagement/State.hpp"
+#include "../StatesManagement/Context.hpp"
+#include "../States/Menu.hpp"
 
-class Game : public State
-{
+class Game : public State {
     public:
         Game();
         ~Game();
@@ -23,6 +24,10 @@ class Game : public State
         void Reset();
 
     private:
+        float _screenWidth;
+        float _screenHeight;
+
+        Rectangle _rectGame;
 };
 
 #endif /* !GAME_HPP_ */

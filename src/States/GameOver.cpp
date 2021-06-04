@@ -20,13 +20,17 @@ void GameOver::Draw()
 }
 
 void GameOver::Update()
-{}
+{
+}
 
 void GameOver::Clear()
-{}
+{
+}
 
 void GameOver::HandleInput()
-{}
+{
+}
 
 void GameOver::Reset()
-{}
+{
+}

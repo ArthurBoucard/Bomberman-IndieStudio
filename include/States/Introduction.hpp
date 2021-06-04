@@ -29,6 +29,8 @@ class Introduction : public State
 
     private:
         float _scale = 5;
+        float _scrennWidth;
+        float _scrennHeight;
 
         Raylib::Music _music;
 

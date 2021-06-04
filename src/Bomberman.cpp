@@ -25,12 +25,11 @@ void Bomberman::GameLoop()
 
     while (!window.ShouldClose()) {
         BeginDrawing();
+            context->Clear();
             context->Draw();
             context->Update();
             context->HandleInput();
-            context->Clear();
         EndDrawing();
     }
-
     CloseAudioDevice();
 }
