@@ -9,13 +9,14 @@
 #define BOMBERMAN_HPP_
 
 #include <iostream>
-#include <unistd.h>
 
 #include "Raylib/Raylib.hpp"
 #include "StatesManagement/Context.hpp"
 #include "StatesManagement/State.hpp"
 #include "States/Menu.hpp"
 #include "States/Game.hpp"
+#include "States/Introduction.hpp"
+#include "Map/Map.hpp"
 
 class Bomberman
 {

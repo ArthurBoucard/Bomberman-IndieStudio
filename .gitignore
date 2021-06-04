@@ -3,3 +3,5 @@ a.out
 testStatesPattern.cpp
 test
 bomberman
+build/*
+.vs/*
