@@ -46,7 +46,6 @@ void Game::Draw()
         }
     }
     EndMode3D();
-    // DrawRectangleRounded(_rectGame, 50, 50, BLUE);
 }
 
 void Game::Update()
