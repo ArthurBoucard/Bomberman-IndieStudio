@@ -23,7 +23,7 @@ void Map::createMap()
 
     try {
         if (mapFile) {
-            while (std::getline(mapFile, line))
+            while (getline(mapFile, line))
                 map.push_back(line);
         }
     }
