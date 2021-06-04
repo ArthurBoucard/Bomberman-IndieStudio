@@ -12,23 +12,22 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 
-class Game : public State
-{
-public:
-    Game();
-    ~Game();
+class Game : public State {
+    public:
+        Game();
+        ~Game();
 
-    void Draw();
-    void Update();
-    void Clear();
-    void HandleInput();
-    void Reset();
+        void Draw();
+        void Update();
+        void Clear();
+        void HandleInput();
+        void Reset();
 
-private:
-    float _screenWidth;
-    float _screenHeight;
+    private:
+        float _screenWidth;
+        float _screenHeight;
 
-    Rectangle _rectGame;
+        Rectangle _rectGame;
 };
 
 #endif /* !GAME_HPP_ */
