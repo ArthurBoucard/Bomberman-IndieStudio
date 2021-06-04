@@ -11,6 +11,7 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
+#include "../Map/Map.hpp"
 
 class Game : public State {
     public:
@@ -28,6 +29,13 @@ class Game : public State {
         float _screenHeight;
 
         Rectangle _rectGame;
+        std::vector<std::string> _map;
+
+        Texture2D _brick;
+        Texture2D _wall;
+        Texture2D _grass;
+
+        Camera _camera = {0};
 };
 
 #endif /* !GAME_HPP_ */
