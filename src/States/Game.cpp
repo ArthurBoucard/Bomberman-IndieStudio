@@ -33,18 +33,21 @@ Game::~Game()
 void Game::Draw()
 {
     BeginMode3D(_camera);
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
-    {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
-        {
-            if (_map[x][z] == ' ')
-                DrawCubeTexture(_grass, (Vector3){x-6, -1, z-9}, 1, 1, 1, WHITE);
-            if (_map[x][z] == 'X')
-                DrawCubeTexture(_wall, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
-            if (_map[x][z] == '#')
-                DrawCubeTexture(_brick, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
+        for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
+            for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
+                if (_map[x][z] == ' ')
+                    DrawCubeTexture(_grass, (Vector3){x-6, -1, z-9}, 1, 1, 1, WHITE);
+                else if (_map[x][z] == 'X')
+                    DrawCubeTexture(_wall, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
+                else if (_map[x][z] == '#') {
+                    DrawCubeTexture(_brick, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
+                    Entity *brick = new Entity;
+                    Position pos(x, z);
+                    brick->addComponents(pos);
+                    _brickList.push_back(brick);
+                }
+            }
         }
-    }
     EndMode3D();
 }
 

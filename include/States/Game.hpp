@@ -12,6 +12,7 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 #include "../Map/Map.hpp"
+#include "../Components/Entity.hpp"
 
 class Game : public State {
     public:
@@ -36,6 +37,9 @@ class Game : public State {
         Texture2D _grass;
 
         Camera _camera = {0};
+
+        std::vector<Entity *> _wallList;
+        std::vector<Entity *> _brickList;
 };
 
 #endif /* !GAME_HPP_ */
