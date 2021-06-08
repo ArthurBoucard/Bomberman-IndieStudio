@@ -53,16 +53,16 @@ void Menu::Update()
     _screenHeight = GetScreenHeight();
     _mouse = GetMousePosition();
 
-    _rect_game = {_screenWidth / (float)2.7, _screenHeight / (float)2, _screenWidth / 4, _screenHeight / 8};
-    _rect_settings = {_screenWidth / (float)6, _screenHeight / (float)1.3, _screenWidth / 6, _screenHeight / 10};
-    _rect_tuto = {_screenWidth / (float)2.4, _screenHeight / (float)1.3, _screenWidth / (float)5.5, _screenHeight / (float)10};
-    _rect_stat = {_screenWidth / (float)1.45, _screenHeight / (float)1.3, _screenWidth / (float)5.5, _screenHeight / (float)10};
+    _rect_game = {_screenWidth / static_cast<float>(2.7), _screenHeight / 2, _screenWidth / 4, _screenHeight / 8};
+    _rect_settings = {_screenWidth / 6, _screenHeight / static_cast<float>(1.3), _screenWidth / 6, _screenHeight / 10};
+    _rect_tuto = {_screenWidth / static_cast<float>(2.4), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10};
+    _rect_stat = {_screenWidth / static_cast<float>(1.45), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10};
 
-    DrawText(_title, _screenWidth / (float)4.5, _screenHeight / 6, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
-    DrawText(_play_game, _rect_game.x + _screenWidth / 40, _rect_game.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
-    DrawText(_settings, _rect_settings.x + _screenWidth / 40, _rect_settings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-    DrawText(_tuto, _rect_tuto.x + _screenWidth / 90, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-    DrawText(_stat, _rect_stat.x + _screenWidth / 20, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    DrawText(_title.c_str(), _screenWidth / static_cast<float>(4.5), _screenHeight / 6, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
+    DrawText(_play_game.c_str(), _rect_game.x + _screenWidth / 40, _rect_game.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+    DrawText(_settings.c_str(), _rect_settings.x + _screenWidth / 40, _rect_settings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    DrawText(_tuto.c_str(), _rect_tuto.x + _screenWidth / 90, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    DrawText(_stat.c_str(), _rect_stat.x + _screenWidth / 20, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
     UpdateMusicStream(_music_menu);
 }
 
@@ -73,13 +73,13 @@ void Menu::Clear()
 
 void Menu::HandleInput()
 {
-    if (CheckMouse(_mouse, _rect_game, _play_game, 1) == true)
-        _context->TransitionTo(new Game);
-    if (CheckMouse(_mouse, _rect_settings, _settings, 2) == true)
+    if (CheckMouse(_mouse, _rect_game, _play_game.c_str(), 1) == true)
+        _context->TransitionTo(new GameOver);
+    if (CheckMouse(_mouse, _rect_settings, _settings.c_str(), 2) == true)
         printf("Settings\n");
-    if (CheckMouse(_mouse, _rect_tuto, _tuto, 3) == true)
+    if (CheckMouse(_mouse, _rect_tuto, _tuto.c_str(), 3) == true)
         printf("Tuto\n");
-    if (CheckMouse(_mouse, _rect_stat, _stat, 4) == true)
+    if (CheckMouse(_mouse, _rect_stat, _stat.c_str(), 4) == true)
         printf("Stat\n");
 }
 
