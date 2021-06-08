@@ -8,10 +8,12 @@
 #ifndef ENTITY_HPP_
 #define ENTITY_HPP_
 
+#include <iostream>
 #include <vector>
 
-#include "../Main.hpp"
 #include "Components.hpp"
+#include "Position.hpp"
+#include "Breakable.hpp"
 
 class Entity {
     public:
@@ -20,6 +22,8 @@ class Entity {
 
         int getId() const;
         void addComponents(Components components);
+        Components getComponent(int i) const;
+        std::vector<Components> getVectorCompononent() const;
     protected:
     private:
         int _id;

@@ -40,6 +40,7 @@ class Game : public State {
 
         std::vector<Entity *> _wallList;
         std::vector<Entity *> _brickList;
+        std::vector<Entity *> _groundList;
 };
 
 #endif /* !GAME_HPP_ */

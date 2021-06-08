@@ -16,7 +16,7 @@ Position::~Position()
 {
 }
 
-std::pair<int, int> Position::getPos() const
+std::pair<int, int> Position::getPos()
 {
     return _pos;
 }

@@ -25,3 +25,13 @@ void Entity::addComponents(Components components)
 {
     _components.push_back(components);
 }
+
+Components Entity::getComponent(int i) const
+{
+    return _components[i];
+}
+
+std::vector<Components> Entity::getVectorCompononent() const
+{
+    return _components;
+}

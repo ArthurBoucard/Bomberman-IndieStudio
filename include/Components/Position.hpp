@@ -17,10 +17,10 @@ class Position : public Components {
         Position(int posX, int posY);
         ~Position();
 
-        std::pair<int, int> getPos() const;
+        std::pair<int, int> getPos();
     protected:
+        // std::pair<int, int> _pos;
     private:
-        std::pair<int, int> _pos;
 };
 
 #endif /* !POSITION_HPP_ */
