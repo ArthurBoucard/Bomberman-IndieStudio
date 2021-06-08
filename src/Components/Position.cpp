@@ -7,16 +7,38 @@
 
 #include "../../include/Components/Position.hpp"
 
-Position::Position(int posX, int posY)
+Position::Position(int posX, int posY, int posZ)
 {
-    _pos = {posX, posY};
+    _x = posX;
+    _y = posY;
+    _z = posZ;
 }
 
 Position::~Position()
 {
 }
 
-std::pair<int, int> Position::getPos()
+void Position::link(int id)
 {
-    return _pos;
+    _link = id;
+}
+
+int Position::getLink()
+{
+    return _link;
+}
+
+int Position::getX()
+{
+    return _x;
+}
+
+int Position::getY()
+{
+    return _y;
+}
+
+int Position::getZ()
+{
+    return _z;
 }

@@ -11,9 +11,12 @@
 #include <iostream>
 #include <vector>
 
+extern int idValue;
+
 #include "Components.hpp"
 #include "Position.hpp"
 #include "Breakable.hpp"
+#include "Texture2DComp.hpp"
 
 class Entity {
     public:
@@ -21,13 +24,9 @@ class Entity {
         ~Entity();
 
         int getId() const;
-        void addComponents(Components components);
-        Components getComponent(int i) const;
-        std::vector<Components> getVectorCompononent() const;
     protected:
     private:
         int _id;
-        std::vector<Components> _components;
 };
 
 #endif /* !ENTITY_HPP_ */

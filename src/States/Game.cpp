@@ -15,9 +15,9 @@ Game::Game()
     map.proceduralGenClassical();
     _map = map.getMap();
 
-    _brick = LoadTexture("../assets/pictures/block.png");
-    _wall = LoadTexture("../assets/pictures/wall.png");
-    _grass = LoadTexture("../assets/pictures/grass.png");
+    Texture2D brickT = LoadTexture("../assets/pictures/block.png");
+    Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
+    Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
     _camera.position = (Vector3){0.0f, 10.0f, 10.0f};
     _camera.target = (Vector3){0.0f, 0.0f, 0.0f};
@@ -30,29 +30,36 @@ Game::Game()
     _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
     _position = { -4.5, 0.0f, 4.25};
 
-    _spherePos = { -4.5f, 0.0f, 4.25f };
-
     for (int x = 0, w = 0; x < _map.size(); x++, w += 60) {
         for (int z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
             if (_map[x][z] == ' ' || _map[x][z] == '#') {
                 Entity *ground = new Entity;
-                Position pos(x, z);
-                ground->addComponents(pos);
-                _groundList.push_back(ground);
+                Position *pos = new Position(x, z, -1);
+                pos->link(ground->getId());
+                _positionList.push_back(pos);
+                Texture2DComp *tex = new Texture2DComp(grassT);
+                tex->link(ground->getId());
+                _texture2DList.push_back(tex);
             }
             if (_map[x][z] == 'X') {
                 Entity *wall = new Entity;
-                Position pos(x, z);
-                wall->addComponents(pos);
-                _wallList.push_back(wall);
+                Position *pos = new Position(x, z, 0);
+                pos->link(wall->getId());
+                _positionList.push_back(pos);
+                Texture2DComp *tex = new Texture2DComp(wallT);
+                tex->link(wall->getId());
+                _texture2DList.push_back(tex);
             }
             if (_map[x][z] == '#') {
                 Entity *brick = new Entity;
-                Position pos(x, z);
-                Breakable br;
-                brick->addComponents(pos);
-                brick->addComponents(br);
-                _brickList.push_back(brick);
+                Position *pos = new Position(x, z, 0);
+                pos->link(brick->getId());
+                _positionList.push_back(pos);
+                Breakable *br = new Breakable;
+                br->link(brick->getId());
+                Texture2DComp *tex = new Texture2DComp(brickT);
+                tex->link(brick->getId());
+                _texture2DList.push_back(tex);
             }
         }
     }
@@ -65,23 +72,20 @@ Game::~Game()
 void Game::Draw()
 {
     BeginMode3D(_camera);
-        for (std::size_t i = 0; i < _groundList.size(); i++) {
-            DrawCubeTexture(_grass,
-                (Vector3){static_cast<float>(_groundList[i]->getVectorCompononent()[0].getPos().first)-6, -1,
-                    static_cast<float>(_groundList[i]->getVectorCompononent()[0].getPos().second)-9}
-                        , 1, 1, 1, WHITE);
-        }
-        for (std::size_t i = 0; i < _wallList.size(); i++) {
-            DrawCubeTexture(_wall, (Vector3)
-                {static_cast<float>(_wallList[i]->getVectorCompononent()[0].getPos().first)-6, 0,
-                    static_cast<float>(_wallList[i]->getVectorCompononent()[0].getPos().second)-9}
-                        , 1, 1, 1, WHITE);
-        }
-        for (std::size_t i = 0; i < _brickList.size(); i++) {
-            DrawCubeTexture(_brick, (Vector3)
-                {static_cast<float>(_brickList[i]->getVectorCompononent()[0].getPos().first)-6, 0,
-                    static_cast<float>(_brickList[i]->getVectorCompononent()[0].getPos().second)-9}
-                        , 1, 1, 1, WHITE);
+        for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
+            bool isTexture2D = false;
+            for (; j < _texture2DList.size(); j++) {
+                if (_texture2DList[j]->getLink() == _positionList[i]->getLink()) {
+                    isTexture2D = true;
+                    break;
+                }
+            }
+            if (isTexture2D)
+                DrawCubeTexture(_texture2DList[j]->getTexture(),
+                    (Vector3){static_cast<float>(_positionList[i]->getX()) - 6,
+                        static_cast<float>(_positionList[i]->getZ()),
+                            static_cast<float>(_positionList[i]->getY()) - 9}
+                                , 1, 1, 1, WHITE);
         }
         DrawModelEx(_model, _position, (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f, (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
         if (IsKeyDown(KEY_RIGHT_SHIFT)) {

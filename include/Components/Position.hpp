@@ -14,12 +14,19 @@
 
 class Position : public Components {
     public:
-        Position(int posX, int posY);
+        Position(int posX, int posY, int posZ);
         ~Position();
 
-        std::pair<int, int> getPos();
+        void link(int id);
+        int getLink();
+        int getX();
+        int getY();
+        int getZ();
     protected:
-        // std::pair<int, int> _pos;
+        int _link;
+        int _x;
+        int _y;
+        int _z;
     private:
 };
 

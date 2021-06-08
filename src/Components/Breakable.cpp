@@ -15,6 +15,16 @@ Breakable::~Breakable()
 {
 }
 
+void Breakable::link(int id)
+{
+    _link = id;
+}
+
+int Breakable::getLink()
+{
+    return _link;
+}
+
 void Breakable::breakBrick()
 {
     //Spawn power-UP

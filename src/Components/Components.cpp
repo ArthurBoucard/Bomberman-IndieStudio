@@ -15,12 +15,12 @@ Components::~Components()
 {
 }
 
-std::pair<int, int> Components::getPos()
-{
-    return _pos;
-}
+// std::pair<int, int> Components::getPos()
+// {
+//     return _pos;
+// }
 
-void Components::breakBrick()
-{
-    //Spawn power-UP
-}
+// void Components::breakBrick()
+// {
+//     //Spawn power-UP
+// }

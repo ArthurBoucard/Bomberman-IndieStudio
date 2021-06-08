@@ -12,17 +12,18 @@
 
 class Position;
 class Breakable;
+class Texture2DComp;
 
 class Components {
     public:
         Components();
         ~Components();
 
-        virtual std::pair<int, int> getPos();   //Position
+        // virtual std::pair<int, int> getPos();   //Position
 
-        virtual void breakBrick();  //Breakable
+        // virtual void breakBrick();  //Breakable
     protected:
-        std::pair<int, int> _pos;
+        // std::pair<int, int> _pos;
     private:
 };
 

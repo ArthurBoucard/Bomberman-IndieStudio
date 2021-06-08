@@ -32,10 +32,6 @@ class Game : public State {
         Rectangle _rectGame;
         std::vector<std::string> _map;
 
-        Texture2D _brick;
-        Texture2D _wall;
-        Texture2D _grass;
-
         Camera _camera = {0};
 
         Model _model;
@@ -43,11 +39,10 @@ class Game : public State {
         Vector3 _position;
 
         float _speed = 0.05;
-        Vector3 _spherePos;
 
-        std::vector<Entity *> _wallList;
-        std::vector<Entity *> _brickList;
-        std::vector<Entity *> _groundList;
+        std::vector<Position *> _positionList;
+        std::vector<Breakable *> _breakableList;
+        std::vector<Texture2DComp *> _texture2DList;
 };
 
 #endif /* !GAME_HPP_ */
