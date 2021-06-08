@@ -38,6 +38,13 @@ class Game : public State {
 
         Camera _camera = {0};
 
+        Model _model;
+        Texture2D _texture;
+        Vector3 _position;
+
+        float _speed = 0.05;
+        Vector3 _spherePos;
+
         std::vector<Entity *> _wallList;
         std::vector<Entity *> _brickList;
         std::vector<Entity *> _groundList;
