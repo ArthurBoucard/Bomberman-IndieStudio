@@ -36,6 +36,13 @@ class Game : public State {
         Texture2D _grass;
 
         Camera _camera = {0};
+
+        Model _model;
+        Texture2D _texture;
+        Vector3 _position;
+
+        float _speed = 0.05;
+        Vector3 _spherePos;
 };
 
 #endif /* !GAME_HPP_ */
