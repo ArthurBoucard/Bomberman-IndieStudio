@@ -14,6 +14,7 @@
 #include "Texture.hpp"
 #include "Vector2.hpp"
 #include "Music.hpp"
+#include "InitRaylib.hpp"
 
 namespace Raylib {}
 
