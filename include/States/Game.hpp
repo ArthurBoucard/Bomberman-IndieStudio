@@ -12,6 +12,7 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 #include "../Map/Map.hpp"
+#include "../Components/Entity.hpp"
 
 class Game : public State {
     public:
@@ -43,6 +44,10 @@ class Game : public State {
 
         float _speed = 0.05;
         Vector3 _spherePos;
+
+        std::vector<Entity *> _wallList;
+        std::vector<Entity *> _brickList;
+        std::vector<Entity *> _groundList;
 };
 
 #endif /* !GAME_HPP_ */

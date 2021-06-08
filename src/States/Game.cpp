@@ -31,6 +31,31 @@ Game::Game()
     _position = { -4.5, 0.0f, 4.25};
 
     _spherePos = { -4.5f, 0.0f, 4.25f };
+
+    for (int x = 0, w = 0; x < _map.size(); x++, w += 60) {
+        for (int z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
+            if (_map[x][z] == ' ' || _map[x][z] == '#') {
+                Entity *ground = new Entity;
+                Position pos(x, z);
+                ground->addComponents(pos);
+                _groundList.push_back(ground);
+            }
+            if (_map[x][z] == 'X') {
+                Entity *wall = new Entity;
+                Position pos(x, z);
+                wall->addComponents(pos);
+                _wallList.push_back(wall);
+            }
+            if (_map[x][z] == '#') {
+                Entity *brick = new Entity;
+                Position pos(x, z);
+                Breakable br;
+                brick->addComponents(pos);
+                brick->addComponents(br);
+                _brickList.push_back(brick);
+            }
+        }
+    }
 }
 
 Game::~Game()
@@ -40,26 +65,30 @@ Game::~Game()
 void Game::Draw()
 {
     BeginMode3D(_camera);
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
-    {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
-        {
-            if (_map[x][z] == ' ')
-                DrawCubeTexture(_grass, (Vector3){x-6, -1, z-9}, 1, 1, 1, WHITE);
-            if (_map[x][z] == 'X')
-                DrawCubeTexture(_wall, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
-            if (_map[x][z] == '#')
-                DrawCubeTexture(_brick, (Vector3){x-6, 0, z-9}, 1, 1, 1, WHITE);
+        for (std::size_t i = 0; i < _groundList.size(); i++) {
+            DrawCubeTexture(_grass,
+                (Vector3){static_cast<float>(_groundList[i]->getVectorCompononent()[0].getPos().first)-6, -1,
+                    static_cast<float>(_groundList[i]->getVectorCompononent()[0].getPos().second)-9}
+                        , 1, 1, 1, WHITE);
         }
-    }
-    DrawModelEx(_model, _position, (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f, (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
-
-    if (IsKeyDown(KEY_RIGHT_SHIFT)) {
-        Vector3 pos = { _position.x, _position.y + 0.3f, _position.z};
-        DrawSphere(pos, 0.3, DARKGRAY);
-        DrawSphereWires(pos, 0.3, 16, 16, BLACK);
-    }
-
+        for (std::size_t i = 0; i < _wallList.size(); i++) {
+            DrawCubeTexture(_wall, (Vector3)
+                {static_cast<float>(_wallList[i]->getVectorCompononent()[0].getPos().first)-6, 0,
+                    static_cast<float>(_wallList[i]->getVectorCompononent()[0].getPos().second)-9}
+                        , 1, 1, 1, WHITE);
+        }
+        for (std::size_t i = 0; i < _brickList.size(); i++) {
+            DrawCubeTexture(_brick, (Vector3)
+                {static_cast<float>(_brickList[i]->getVectorCompononent()[0].getPos().first)-6, 0,
+                    static_cast<float>(_brickList[i]->getVectorCompononent()[0].getPos().second)-9}
+                        , 1, 1, 1, WHITE);
+        }
+        DrawModelEx(_model, _position, (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f, (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
+        if (IsKeyDown(KEY_RIGHT_SHIFT)) {
+            Vector3 pos = { _position.x, _position.y + 0.3f, _position.z};
+            DrawSphere(pos, 0.3, DARKGRAY);
+            DrawSphereWires(pos, 0.3, 16, 16, BLACK);
+        }
     EndMode3D();
 }
 
