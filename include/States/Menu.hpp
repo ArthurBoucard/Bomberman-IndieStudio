@@ -37,11 +37,11 @@ private:
 
     float _screenWidth;
     float _screenHeight;
-    const char *_play_game = (char *)"PLAY GAME";
-    const char *_title = (char *)"BOMBERMAN";
-    const char *_settings = (char *)"SETTINGS";
-    const char *_tuto = (char *)"HOW TO PLAY";
-    const char *_stat = (char *)"STATS";
+    std::string _play_game = "PLAY GAME";
+    std::string _title = "BOMBERMAN";
+    std::string _settings = "SETTINGS";
+    std::string _tuto = "HOW TO PLAY";
+    std::string _stat = "STATS";
 };
 
 #endif /* !Menu_HPP_ */

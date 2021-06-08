@@ -9,6 +9,8 @@
 #define GAMEOVER_HPP_
 
 #include "../StatesManagement/State.hpp"
+#include "../StatesManagement/Context.hpp"
+#include "../States/Menu.hpp"
 
 class GameOver : public State
 {
@@ -22,10 +24,19 @@ public:
     void HandleInput();
     void Reset();
 
+    bool CheckMouse(Vector2, Rectangle, std::string, int state);
+
 private:
+    Vector2 _mouse;
+    Rectangle _rectBack;
+    Rectangle _rectAgain;
+    Music _musicEnd;
+
     float _screenWidth;
     float _screenHeight;
-    Texture2D _bgGameOver;
+    std::string _gameOver = "GAME OVER";
+    std::string _back = "BACK TO MENU";
+    std::string _again = "PLAY AGAIN";
 };
 
 #endif /* !GAMEOVER_HPP_ */

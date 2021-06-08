@@ -13,29 +13,30 @@
 #include "../States/Menu.hpp"
 #include "../Map/Map.hpp"
 
-class Game : public State {
-    public:
-        Game();
-        ~Game();
+class Game : public State
+{
+public:
+    Game();
+    ~Game();
 
-        void Draw();
-        void Update();
-        void Clear();
-        void HandleInput();
-        void Reset();
+    void Draw();
+    void Update();
+    void Clear();
+    void HandleInput();
+    void Reset();
 
-    private:
-        float _screenWidth;
-        float _screenHeight;
+private:
+    float _screenWidth;
+    float _screenHeight;
 
-        Rectangle _rectGame;
-        std::vector<std::string> _map;
+    Rectangle _rectGame;
+    std::vector<std::string> _map;
 
-        Texture2D _brick;
-        Texture2D _wall;
-        Texture2D _grass;
+    Texture2D _brick;
+    Texture2D _wall;
+    Texture2D _grass;
 
-        Camera _camera = {0};
+    Camera _camera = {0};
 };
 
 #endif /* !GAME_HPP_ */
