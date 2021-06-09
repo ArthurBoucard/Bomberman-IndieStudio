@@ -12,6 +12,7 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Game.hpp"
 #include "../States/GameOver.hpp"
+#include "../States/GameSettings.hpp"
 
 class Menu : public State
 {
