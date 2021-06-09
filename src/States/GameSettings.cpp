@@ -23,7 +23,7 @@ bool GameSettings::CheckMouse(Vector2 mouse, Rectangle rect, const char *text, i
 {
     if (CheckCollisionPointRec(mouse, rect))
     {
-        if (state == 2)
+        if (state == 2 && _nbTotalPlayers > 1 && _nbTotalPlayers <= 4)
             DrawText(text, _screenWidth / static_cast<float>(1.1), _screenHeight / static_cast<float>(1.2), (_screenWidth / 7) - (_screenHeight / 10), GRAY);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             return true;
