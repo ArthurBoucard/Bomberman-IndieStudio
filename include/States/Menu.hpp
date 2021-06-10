@@ -11,8 +11,12 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Game.hpp"
+#include "../States/GameOver.hpp"
+#include "../States/GameSettings.hpp"
+#include "../Raylib/Raylib.hpp"
 
-class Menu : public State {
+class Menu : public State
+{
     public:
         Menu();
         ~Menu();
@@ -22,24 +26,30 @@ class Menu : public State {
         void Clear();
         void HandleInput();
         void Reset();
-        bool CheckMouse(Vector2, Rectangle, const char *, int state);
+        bool CheckMouse(Vector2, Raylib::Rectangle, int state);
 
     private:
-        Rectangle _rect_game;
-        Rectangle _rect_settings;
-        Rectangle _rect_tuto;
-        Rectangle _rect_stat;
+        Raylib::Rectangle _rectPlayGame;
+        Raylib::Rectangle _rectSettings;
+        Raylib::Rectangle _rectHowToPlay;
+        Raylib::Rectangle _rectStats;
+
         Vector2 _mouse;
-        Texture2D _bg;
-        Music _music_menu;
 
         float _screenWidth;
         float _screenHeight;
-        const char *_play_game = (char *)"PLAY GAME";
-        const char *_title = (char *)"BOMBERMAN";
-        const char *_settings = (char *)"SETTINGS";
-        const char *_tuto = (char *)"HOW TO PLAY";
-        const char *_stat = (char *)"STATS";
+
+        Raylib::Text _playGame;
+        Raylib::Text _title;
+        Raylib::Text _settings;
+        Raylib::Text _howToPlay;
+        Raylib::Text _stat;
+
+        Raylib::Music _music;
+
+        Raylib::Texture2D _bg;
+
+        Raylib::WindowTools _window;
 };
 
 #endif /* !Menu_HPP_ */

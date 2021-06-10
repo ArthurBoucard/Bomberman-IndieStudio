@@ -9,9 +9,7 @@
 
 Bomberman::Bomberman()
 {
-    InitAudioDevice();
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    SetTargetFPS(60);
+    _initRaylib.Init();
 }
 
 Bomberman::~Bomberman()
@@ -31,5 +29,4 @@ void Bomberman::GameLoop()
             context->HandleInput();
         EndDrawing();
     }
-    CloseAudioDevice();
 }
