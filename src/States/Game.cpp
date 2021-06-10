@@ -69,7 +69,7 @@ Game::Game(int nbPlayer, int nbIA)
                 Position *pos = new Position(x, z, 0);
                 pos->link(AI->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 0);
+                Player *pl = new Player("AI", 2);
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(model);
@@ -101,37 +101,25 @@ void Game::Draw()
     BeginMode3D(_camera);
         for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
             // Draw Texture
-            bool isTexture2D = false;
-            for (j = 0; j < _texture2DList.size(); j++) {
-                if (_texture2DList[j]->getLink() == _positionList[i]->getLink()) {
-                    isTexture2D = true;
-                    break;
-                }
-            }
-            if (isTexture2D)
-                DrawCubeTexture(_texture2DList[j]->getTexture(),
-                    (Vector3){_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ(),
-                            _positionList[i]->getY() - 9},
-                                1, 1, 1, WHITE);
+            for (j = 0; j < _texture2DList.size(); j++)
+                if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
+                    DrawCubeTexture(_texture2DList[j]->getTexture(),
+                        (Vector3){_positionList[i]->getX() - 6,
+                            _positionList[i]->getZ(),
+                                _positionList[i]->getY() - 9},
+                                    1, 1, 1, WHITE);
             // Draw Model3D
-            bool isModel3D = false;
-            for (j = 0; j < _model3DList.size(); j++) {
-                if (_model3DList[j]->getLink() == _positionList[i]->getLink()) {
-                    isModel3D = true;
-                    break;
-                }
-            }
-            if (isModel3D)
-                DrawModelEx(_model3DList[j]->getModel(),
-                    (Vector3){_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.5f,
-                            _positionList[i]->getY() - 9},
-                                (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f,
-                                    (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
+            for (j = 0; j < _model3DList.size(); j++)
+                if (_model3DList[j]->getLink() == _positionList[i]->getLink())
+                    DrawModelEx(_model3DList[j]->getModel(),
+                        (Vector3){_positionList[i]->getX() - 6,
+                            _positionList[i]->getZ() - 0.5f,
+                                _positionList[i]->getY() - 9},
+                                    (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f,
+                                        (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
             // Draw Bomb
-            for (std::size_t x = 0; x < _bombList.size(); x++) {
-                if (_bombList[x]->getLink() == _positionList[i]->getLink()) {
+            for (j = 0; j < _bombList.size(); j++) {
+                if (_bombList[j]->getLink() == _positionList[i]->getLink()) {
                     DrawSphere({_positionList[i]->getX() - 6,
                         _positionList[i]->getZ() - 0.1f,
                             _positionList[i]->getY() - 9},
