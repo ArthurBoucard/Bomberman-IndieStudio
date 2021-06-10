@@ -10,14 +10,10 @@
 
 #include <iostream>
 
-// class Position;
-// class Breakable;
-// class Texture2DComp;
-
 class Components {
     public:
-        Components();
-        ~Components();
+        Components() {};
+        ~Components() {};
 
     protected:
     private:
