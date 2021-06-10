@@ -25,8 +25,8 @@ Game::Game()
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
-    _model = LoadModel("../assets/pictures/guy.iqm");
-    _texture = LoadTexture("../assets/pictures/guytex.png");
+    _model = LoadModel("../assets/skin/guy.iqm");
+    _texture = LoadTexture("../assets/skin/guytex2.png");
     _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
     _position = { -4.5, 0.0f, 4.25};
 
