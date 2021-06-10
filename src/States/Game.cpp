@@ -129,12 +129,21 @@ void Game::Draw()
                             _positionList[i]->getY() - 9},
                                 (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f,
                                     (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
+            // Draw Bomb
+            std::cout << _bombList.size() << std::endl;
+            for (std::size_t x = 0; x < _bombList.size(); x++) {
+                if (_bombList[x]->getLink() == _positionList[i]->getLink()) {
+                    DrawSphere({_positionList[i]->getX(),
+                        _positionList[i]->getZ(),
+                            _positionList[i]->getY()},
+                                0.3, DARKGRAY);
+                    DrawSphereWires({_positionList[i]->getX(),
+                        _positionList[i]->getZ(),
+                            _positionList[i]->getY()},
+                                0.3, 16, 16, BLACK);
+                }
+            }
         }
-        // if (IsKeyDown(KEY_RIGHT_SHIFT)) {
-        //     Vector3 pos = { _position.x, _position.y + 0.3f, _position.z};
-        //     DrawSphere(pos, 0.3, DARKGRAY);
-        //     DrawSphereWires(pos, 0.3, 16, 16, BLACK);
-        // }
     EndMode3D();
 }
 
@@ -161,7 +170,7 @@ void Game::HandleInput()
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             _context->TransitionTo(new Menu);
     }
-
+    // PLayer control
     if (_nbPlayer > 0) {
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
             if (_playerList[i]->getPlayerID() == 0) {
@@ -191,6 +200,28 @@ void Game::HandleInput()
                 if (IsKeyDown(KEY_DOWN))
                     _positionList[j]->setY(_positionList[j]->getY() + _speed);
                 break;
+            }
+        }
+    }
+    // Bombs
+    if (IsKeyDown(KEY_RIGHT_SHIFT) && _nbPlayer == 2) {
+        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
+            if (_playerList[i]->getPlayerID() == 1) {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+                bool isBomb = false;                                                        //
+                for (std::size_t k = 0; k < _bombList.size(); k++)                          //
+                    if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
+                        isBomb = true;                                                      // = only one bomb per player for
+                if (!isBomb) {                                                              // the moment
+                    Entity *bomb = new Entity;
+                    Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
+                    pos->link(bomb->getId());
+                    _positionList.push_back(pos);
+                    Bomb *b = new Bomb;
+                    b->link(bomb->getId());
+                    b->linkPlayer(_playerList[i]->getLink());
+                    _bombList.push_back(b);
+                }
             }
         }
     }

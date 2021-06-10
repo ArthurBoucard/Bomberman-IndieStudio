@@ -46,6 +46,7 @@ class Game : public State {
         std::vector<Texture2DComp *> _texture2DList;
         std::vector<Player *> _playerList;
         std::vector<Model3D *> _model3DList;
+        std::vector<Bomb *> _bombList;
 };
 
 #endif /* !GAME_HPP_ */

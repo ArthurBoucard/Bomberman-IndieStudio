@@ -19,6 +19,7 @@ extern int idValue;
 #include "Texture2DComp.hpp"
 #include "Player.hpp"
 #include "Model3D.hpp"
+#include "Bomb.hpp"
 
 class Entity {
     public:
