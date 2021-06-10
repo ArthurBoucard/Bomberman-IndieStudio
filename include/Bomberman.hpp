@@ -26,6 +26,8 @@ class Bomberman
 
         void GameLoop();
 
+        Raylib::InitRaylib _initRaylib;
+
     protected:
     private:
 };
