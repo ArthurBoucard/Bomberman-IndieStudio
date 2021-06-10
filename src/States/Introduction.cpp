@@ -26,8 +26,6 @@ void Introduction::Draw()
 
 void Introduction::Update()
 {
-    // _screenWidth = _window.GetScreenWidth();
-    // _screenHeight = _window.GetScreenHeight();
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
 
@@ -38,7 +36,6 @@ void Introduction::Update()
 void Introduction::Clear()
 {
     _window.ClearBackground(RAYWHITE);
-    // ClearBackground(RAYWHITE);
 }
 
 void Introduction::HandleInput()

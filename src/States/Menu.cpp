@@ -55,8 +55,6 @@ void Menu::Draw()
 
 void Menu::Update()
 {
-    // _screenWidth = _window.GetScreenWidth();
-    // _screenHeight = _window.GetScreenHeight();
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
     _mouse = GetMousePosition();
@@ -77,7 +75,6 @@ void Menu::Update()
 
 void Menu::Clear()
 {
-    // _window.ClearBackground(RAYWHITE);
     ClearBackground(RAYWHITE);
 }
 
