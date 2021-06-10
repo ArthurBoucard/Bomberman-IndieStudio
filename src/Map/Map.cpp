@@ -83,6 +83,4 @@ void Map::placePlayers(int nbPlayer, int nbIA)  // 0 = player 1 || 1 = player 2 
         for (int j = 1; j < _map[i].length(); j++)
             if (_map[i][j] == '$' || _map[i][j] == 'S')
                 _map[i][j] = ' ';
-    for (int i = 1; i < _map.size(); i++)
-        std::cout << _map[i] << std::endl;
 }
