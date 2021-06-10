@@ -12,31 +12,41 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 #include "../Map/Map.hpp"
+#include "../Components/Entity.hpp"
 
-class Game : public State
-{
-public:
-    Game();
-    ~Game();
+class Game : public State {
+    public:
+        Game(int nbPlayer, int nbIA);
+        ~Game();
 
-    void Draw();
-    void Update();
-    void Clear();
-    void HandleInput();
-    void Reset();
+        void Draw();
+        void Update();
+        void Clear();
+        void HandleInput();
+        void Reset();
 
-private:
-    float _screenWidth;
-    float _screenHeight;
+    private:
+        float _screenWidth;
+        float _screenHeight;
 
-    Rectangle _rectGame;
-    std::vector<std::string> _map;
+        int _nbPlayer;
+        int _nbIA;
 
-    Texture2D _brick;
-    Texture2D _wall;
-    Texture2D _grass;
+        Rectangle _rectGame;
+        std::vector<std::string> _map;
 
-    Camera _camera = {0};
+        Camera _camera = {0};
+
+        Texture2D _texture;
+
+        float _speed = 0.05;
+
+        std::vector<Position *> _positionList;
+        std::vector<Breakable *> _breakableList;
+        std::vector<Texture2DComp *> _texture2DList;
+        std::vector<Player *> _playerList;
+        std::vector<Model3D *> _model3DList;
+        std::vector<Bomb *> _bombList;
 };
 
 #endif /* !GAME_HPP_ */

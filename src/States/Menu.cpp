@@ -80,9 +80,9 @@ void Menu::Clear()
 
 void Menu::HandleInput()
 {
-    if (CheckMouse(_mouse, _rectPlayGame, 1) == true)
-        _context->TransitionTo(new Game);
-    if (CheckMouse(_mouse, _rectSettings, 2) == true)
+    if (CheckMouse(_mouse, _rect_game, _play_game.c_str(), 1) == true)
+        _context->TransitionTo(new GameSettings);
+    if (CheckMouse(_mouse, _rect_settings, _settings.c_str(), 2) == true)
         printf("Settings\n");
     if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
         printf("Tuto\n");
