@@ -2,27 +2,27 @@
 ** EPITECH PROJECT, 2021
 ** B-YEP-400-LYN-4-1-indiestudio-arthur.boucard
 ** File description:
-** Texture2DComp
+** Model3D
 */
 
-#ifndef TEXTURE2DCOMP_HPP_
-#define TEXTURE2DCOMP_HPP_
+#ifndef MODEL3D_HPP_
+#define MODEL3D_HPP_
 
 #include "Components.hpp"
 #include "../Raylib/Raylib.hpp"
 
-class Texture2DComp: public Components {
+class Model3D {
     public:
-        Texture2DComp(Texture2D texture);
-        ~Texture2DComp();
+        Model3D(Model model);
+        ~Model3D();
 
         void link(int id);
         int getLink();
-        Texture2D getTexture();
+        Model getModel();
     protected:
         int _link;
-        Texture2D _texture;
+        Model _model;
     private:
 };
 
-#endif /* !TEXTURE2DCOMP_HPP_ */
+#endif /* !MODEL3D_HPP_ */

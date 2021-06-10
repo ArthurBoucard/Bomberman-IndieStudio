@@ -10,9 +10,9 @@
 
 #include <iostream>
 
-class Position;
-class Breakable;
-class Texture2DComp;
+// class Position;
+// class Breakable;
+// class Texture2DComp;
 
 class Components {
     public:
