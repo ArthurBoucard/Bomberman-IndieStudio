@@ -9,28 +9,34 @@
 
 Menu::Menu()
 {
-    _music_menu = LoadMusicStream("../assets/music/music_menu.mp3");
-    PlayMusicStream(_music_menu);
-    _bg = LoadTexture("../assets/pictures/bg.png");
+    _music.LoadMusic("../assets/music/music_menu.mp3");
+    _music.Play();
+    _bg.LoadFile("../assets/pictures/bg.png");
+
+    _playGame = Raylib::Text("PLAY GAME");
+    _title = Raylib::Text("BOMBERMAN");
+    _settings = Raylib::Text("SETTINGS");
+    _howToPlay = Raylib::Text("HOW TO PLAY");
+    _stat = Raylib::Text("STATS");
 }
 
 Menu::~Menu()
 {
 }
 
-bool Menu::CheckMouse(Vector2 mouse, Rectangle rect, const char *text, int state)
+bool Menu::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
 {
     if (CheckCollisionPointRec(mouse, rect))
     {
-        DrawRectangleRounded(rect, 50, 50, RED);
+        rect.Draw(50, 50, RED);
         if (state == 1)
-            DrawText(text, rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+            _playGame.Draw(rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
         if (state == 2)
-            DrawText(text, rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+            _settings.Draw(rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
         if (state == 3)
-            DrawText(text, rect.x + _screenWidth / 90, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+            _howToPlay.Draw(rect.x + _screenWidth / 90, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
         if (state == 4)
-            DrawText(text, rect.x + _screenWidth / 20, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+            _stat.Draw(rect.x + _screenWidth / 20, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             return true;
@@ -40,11 +46,11 @@ bool Menu::CheckMouse(Vector2 mouse, Rectangle rect, const char *text, int state
 
 void Menu::Draw()
 {
-    DrawTexture(_bg, 0, 0, RAYWHITE);
-    DrawRectangleRounded(_rect_game, 50, 50, RAYWHITE);
-    DrawRectangleRounded(_rect_settings, 50, 50, RAYWHITE);
-    DrawRectangleRounded(_rect_tuto, 50, 50, RAYWHITE);
-    DrawRectangleRounded(_rect_stat, 50, 50, RAYWHITE);
+    _bg.Draw(0, 0, RAYWHITE);
+    _rectPlayGame.Draw(50, 50, RAYWHITE);
+    _rectSettings.Draw(50, 50, RAYWHITE);
+    _rectHowToPlay.Draw(50, 50, RAYWHITE);
+    _rectStats.Draw(50, 50, RAYWHITE);
 }
 
 void Menu::Update()
@@ -53,17 +59,18 @@ void Menu::Update()
     _screenHeight = GetScreenHeight();
     _mouse = GetMousePosition();
 
-    _rect_game = {_screenWidth / static_cast<float>(2.7), _screenHeight / 2, _screenWidth / 4, _screenHeight / 8};
-    _rect_settings = {_screenWidth / 6, _screenHeight / static_cast<float>(1.3), _screenWidth / 6, _screenHeight / 10};
-    _rect_tuto = {_screenWidth / static_cast<float>(2.4), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10};
-    _rect_stat = {_screenWidth / static_cast<float>(1.45), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10};
+    _rectPlayGame = Raylib::Rectangle(_screenWidth / static_cast<float>(2.7), _screenHeight / 2, _screenWidth / 4, _screenHeight / 8);
+    _rectSettings = Raylib::Rectangle(_screenWidth / 6, _screenHeight / static_cast<float>(1.3), _screenWidth / 6, _screenHeight / 10);
+    _rectHowToPlay = Raylib::Rectangle(_screenWidth / static_cast<float>(2.4), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10);
+    _rectStats = Raylib::Rectangle(_screenWidth / static_cast<float>(1.45), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10);
 
-    DrawText(_title.c_str(), _screenWidth / static_cast<float>(4.5), _screenHeight / 6, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
-    DrawText(_play_game.c_str(), _rect_game.x + _screenWidth / 40, _rect_game.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
-    DrawText(_settings.c_str(), _rect_settings.x + _screenWidth / 40, _rect_settings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-    DrawText(_tuto.c_str(), _rect_tuto.x + _screenWidth / 90, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-    DrawText(_stat.c_str(), _rect_stat.x + _screenWidth / 20, _rect_tuto.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-    UpdateMusicStream(_music_menu);
+    _title.Draw(_screenWidth / static_cast<float>(4.5), _screenHeight / 6, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
+    _playGame.Draw(_rectPlayGame.x + _screenWidth / 40, _rectPlayGame.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+    _settings.Draw(_rectSettings.x + _screenWidth / 40, _rectSettings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    _howToPlay.Draw(_rectHowToPlay.x + _screenWidth / 90, _rectHowToPlay.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+    _stat.Draw(_rectStats.x + _screenWidth / 20, _rectHowToPlay.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+
+    _music.Update();
 }
 
 void Menu::Clear()
@@ -73,13 +80,13 @@ void Menu::Clear()
 
 void Menu::HandleInput()
 {
-    if (CheckMouse(_mouse, _rect_game, _play_game.c_str(), 1) == true)
+    if (CheckMouse(_mouse, _rectPlayGame, 1) == true)
         _context->TransitionTo(new Game);
-    if (CheckMouse(_mouse, _rect_settings, _settings.c_str(), 2) == true)
+    if (CheckMouse(_mouse, _rectSettings, 2) == true)
         printf("Settings\n");
-    if (CheckMouse(_mouse, _rect_tuto, _tuto.c_str(), 3) == true)
+    if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
         printf("Tuto\n");
-    if (CheckMouse(_mouse, _rect_stat, _stat.c_str(), 4) == true)
+    if (CheckMouse(_mouse, _rectStats, 4) == true)
         printf("Stat\n");
 }
 
