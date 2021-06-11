@@ -33,10 +33,6 @@ Game::Game(int nbPlayer, int nbIA)
     _texture = LoadTexture("../assets/skin/guytex8.png");
     _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
 
-    _animsCount = 0;
-    _anims = LoadModelAnimations("../assets/skin/guyanim.iqm", &_animsCount);
-    _animFrameCounter = 0;
-
     for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
         for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
             if (_map[x][z] != 'X') {
@@ -69,28 +65,34 @@ Game::Game(int nbPlayer, int nbIA)
                 _texture2DList.push_back(tex);
             }
             if (_map[x][z] == '@') {
-                Entity *AI = new Entity;
-                Position *pos = new Position(x, z, 0);
+                Entity *AI = new Entity;                            //Entity
+                Position *pos = new Position(x, z, 0);              //Position
                 pos->link(AI->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2);
+                Player *pl = new Player("AI", 2);                   //Player
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);
+                Model3D *mod = new Model3D(_model);                 //Model3D
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
+                Jump *jp = new Jump();                              //Jump
+                jp->link(AI->getId());
+                _jumpList.push_back(jp);
             }
             if (_map[x][z] == '0' || _map[x][z] == '1') {
-                Entity *player = new Entity;
-                Position *pos = new Position(x, z, 0);
+                Entity *player = new Entity;                        //Entity
+                Position *pos = new Position(x, z, 0);              //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("player", _map[x][z] - 48);
+                Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);
+                Model3D *mod = new Model3D(_model);                 //Model3D
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
+                Jump *jp = new Jump();                              //Jump
+                jp->link(player->getId());
+                _jumpList.push_back(jp);
             }
         }
     }
@@ -98,23 +100,23 @@ Game::Game(int nbPlayer, int nbIA)
 
 Game::~Game()
 {
-    for (int i = 0; i < _animsCount; i++) UnloadModelAnimation(_anims[i]);
     UnloadModel(_model);
 }
 
 void Game::Draw()
 {
-    if (_isJump)
-    {
-        _animFrameCounter++;
-        UpdateModelAnimation(_model, _anims[0], _animFrameCounter);
-        if (_animFrameCounter >= _anims[0].frameCount)
-        {
-            _animFrameCounter = 0;
-            _isJump = false;
+    //Animation of bomb placement
+    for (std::size_t i = 0, j = 0; i < _jumpList.size(); i++, j = 0) {
+        for (j = 0; _jumpList[i]->getLink() != _model3DList[j]->getLink(); j++) {}
+        if (_jumpList[i]->getJump()) {
+            _jumpList[i]->setFrameCount(_jumpList[i]->getFrameCount() + 1);
+            UpdateModelAnimation(_model3DList[j]->getModel(), _jumpList[i]->getAnim(), _jumpList[i]->getFrameCount());
+            if (_jumpList[i]->getFrameCount() >= _jumpList[i]->getAnim().frameCount) {
+                _jumpList[i]->setFrameCount(0);
+                _jumpList[i]->setJump(false);
+            }
         }
     }
-
     BeginMode3D(_camera);
         for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
             // Draw Texture
@@ -201,7 +203,7 @@ void Game::HandleInput()
     }
     // Bombs
     if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2) {
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
+        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
             if (_playerList[i]->getPlayerID() == 1) {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
                 // bool isBomb = false;                                                        //
@@ -218,13 +220,13 @@ void Game::HandleInput()
                     b->linkPlayer(_playerList[i]->getLink());
                     _bombList.push_back(b);
                 // }
+                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+                _jumpList[k]->setJump(true);
+                _jumpList[k]->setFrameCount(0);
             }
         }
     } else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0) {
-        _isJump = true;
-        _animFrameCounter = 0;
-
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
+        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
             if (_playerList[i]->getPlayerID() == 0) {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
                 // bool isBomb = false;                                                        //
@@ -241,6 +243,9 @@ void Game::HandleInput()
                     b->linkPlayer(_playerList[i]->getLink());
                     _bombList.push_back(b);
                 // }
+                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+                _jumpList[k]->setJump(true);
+                _jumpList[k]->setFrameCount(0);
             }
         }
     }

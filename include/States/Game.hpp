@@ -41,11 +41,6 @@ class Game : public State {
 
         Model _model;
 
-        int _animsCount;
-        ModelAnimation *_anims;
-        int _animFrameCounter;
-
-        bool _isJump = false;
         float _speed = 0.05;
 
         std::vector<Position *> _positionList;
@@ -53,6 +48,7 @@ class Game : public State {
         std::vector<Texture2DComp *> _texture2DList;
         std::vector<Player *> _playerList;
         std::vector<Model3D *> _model3DList;
+        std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
 };
 
