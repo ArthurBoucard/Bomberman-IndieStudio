@@ -35,13 +35,13 @@ Game::Game(int nbPlayer, int nbIA)
     _model1 = LoadModel("../assets/skin/guy.iqm");
     _model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    _model2 = _model1;
+    _model2 = LoadModel("../assets/skin/guy.iqm");
     _model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    _model3 = _model1;
+    _model3 = LoadModel("../assets/skin/guy.iqm");
     _model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    _model4 = _model1;
+    _model4 = LoadModel("../assets/skin/guy.iqm");
     _model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     _animsCount = 0;
@@ -275,10 +275,11 @@ void Game::Reset()
 
 Texture2D Game::getSkin()
 {
-    int r = rand() % _files.size() - 1;
+    int r = rand() % (_files.size() - 1);
 
     std::string str = "../assets/skin/texture/" + _files[r];
 
+    _files.erase(_files.begin() + r);
     return LoadTexture(str.c_str());
 }
 
@@ -309,7 +310,4 @@ void Game::ReadFiles()
         int index = std::distance(_files.begin(), it);
         _files.erase(_files.begin() + index);
     }
-
-    for (auto file : _files) std::cout << file << "| ";
-    std::cout << std::endl;
 }
