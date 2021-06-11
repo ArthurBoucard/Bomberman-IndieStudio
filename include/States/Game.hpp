@@ -39,6 +39,13 @@ class Game : public State {
 
         Texture2D _texture;
 
+        Model _model;
+
+        int _animsCount;
+        ModelAnimation *_anims;
+        int _animFrameCounter;
+
+        bool _isJump = false;
         float _speed = 0.05;
 
         std::vector<Position *> _positionList;
