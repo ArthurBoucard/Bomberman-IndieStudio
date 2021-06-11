@@ -48,9 +48,35 @@ void Map::proceduralGenClassical()
 {
     srand (time(NULL));
 
-    for (int i = 2; i < _map.size(); i += 2)
+    for (int i = 2; i < _map.size(); i += 4)
         for (int j = 2; j < _map[i].length(); j += 2)
             _map[i][j] = 'X';
+
+    for (int i = 1; i < _map.size(); i++)
+        for (int j = 1; j < _map[i].length(); j++)
+            if (_map[i][j] == ' ' && rand() % 5 != 0)
+                _map[i][j] = '#';
+
+    for (int i = 1; i < _map.size(); i++)
+        for (int j = 1; j < _map[i].length(); j++)
+            if (_map[i][j] == '$')
+                _map[i][j] = ' ';
+}
+
+void Map::proceduralGenLab()
+{
+    srand (time(NULL));
+
+    int k = 0;
+
+    for (int i = 1; i < _map.size(); i += 1) {
+                if (k == 3 || k == 6)
+                    i += 1;
+                k++;
+        for (int j = 1; j < _map[i].length(); j += 2) {
+            _map[i][j] = 'X';
+        }
+    }
 
     for (int i = 1; i < _map.size(); i++)
         for (int j = 1; j < _map[i].length(); j++)
