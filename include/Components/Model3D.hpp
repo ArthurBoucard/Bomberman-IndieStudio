@@ -13,12 +13,13 @@
 
 class Model3D {
     public:
-        Model3D(Model model);
+        Model3D();
         ~Model3D();
 
         void link(int id);
         int getLink();
         Model getModel();
+        void setModel(Model model);
     protected:
         int _link;
         Model _model;

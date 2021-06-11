@@ -14,6 +14,10 @@
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
+#include <algorithm>
+#include <iostream>
+#include <dirent.h>
+
 class Game : public State {
     public:
         Game(int nbPlayer, int nbIA);
@@ -24,6 +28,10 @@ class Game : public State {
         void Clear();
         void HandleInput();
         void Reset();
+
+        Texture2D getSkin();
+
+        void ReadFiles();
 
     private:
         float _screenWidth;
@@ -37,15 +45,16 @@ class Game : public State {
 
         Camera _camera = {0};
 
-        Texture2D _texture;
-
         float _speed = 0.05;
+
+        std::vector<std::string> _files;
 
         std::vector<Position *> _positionList;
         std::vector<Breakable *> _breakableList;
         std::vector<Texture2DComp *> _texture2DList;
         std::vector<Player *> _playerList;
         std::vector<Model3D *> _model3DList;
+        std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
 };
 

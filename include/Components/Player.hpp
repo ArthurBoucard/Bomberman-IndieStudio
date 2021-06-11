@@ -19,7 +19,7 @@ class Player : public Components {
         void link(int id);
         int getLink();
         std::string getPlayerName();
-        int getPlayerID(); // 1 = player 1 || 2 = player 2 || 0 = AI
+        int getPlayerID(); // 0 = player 1 || 1 = player 2 || 2 = AI
     protected:
         int _link;
         std::string _name;

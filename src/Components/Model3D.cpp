@@ -7,9 +7,8 @@
 
 #include "../../include/Components/Model3D.hpp"
 
-Model3D::Model3D(Model model)
+Model3D::Model3D()
 {
-    _model = model;
 }
 
 Model3D::~Model3D()
@@ -29,4 +28,8 @@ int Model3D::getLink()
 Model Model3D::getModel()
 {
     return _model;
+}
+void Model3D::setModel(Model model)
+{
+    _model = model;
 }
