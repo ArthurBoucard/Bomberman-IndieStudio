@@ -14,6 +14,10 @@
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
+#include <algorithm>
+#include <iostream>
+#include <dirent.h>
+
 class Game : public State {
     public:
         Game(int nbPlayer, int nbIA);
@@ -24,6 +28,10 @@ class Game : public State {
         void Clear();
         void HandleInput();
         void Reset();
+
+        Texture2D getSkin();
+
+        void ReadFiles();
 
     private:
         float _screenWidth;
@@ -37,9 +45,10 @@ class Game : public State {
 
         Camera _camera = {0};
 
-        Texture2D _texture;
-
-        Model _model;
+        Model _model1;
+        Model _model2;
+        Model _model3;
+        Model _model4;
 
         int _animsCount;
         ModelAnimation *_anims;
@@ -47,6 +56,8 @@ class Game : public State {
 
         bool _isJump = false;
         float _speed = 0.05;
+
+        std::vector<std::string> _files;
 
         std::vector<Position *> _positionList;
         std::vector<Breakable *> _breakableList;

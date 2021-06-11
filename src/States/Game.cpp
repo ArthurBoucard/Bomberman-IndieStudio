@@ -9,6 +9,7 @@
 
 Game::Game(int nbPlayer, int nbIA)
 {
+    srand (time(NULL));
     Map map = Map();
 
     _nbPlayer = nbPlayer;
@@ -29,9 +30,19 @@ Game::Game(int nbPlayer, int nbIA)
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
-    _model = LoadModel("../assets/skin/guy.iqm");
-    _texture = LoadTexture("../assets/skin/guytex8.png");
-    _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
+    ReadFiles();
+
+    _model1 = LoadModel("../assets/skin/guy.iqm");
+    _model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    _model2 = _model1;
+    _model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    _model3 = _model1;
+    _model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    _model4 = _model1;
+    _model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     _animsCount = 0;
     _anims = LoadModelAnimations("../assets/skin/guyanim.iqm", &_animsCount);
@@ -76,7 +87,7 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("AI", 0);
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);
+                Model3D *mod = new Model3D(_model1);
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
             }
@@ -88,7 +99,7 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("player", _map[x][z] - 48);
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);
+                Model3D *mod = new Model3D(_model1);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
             }
@@ -99,7 +110,7 @@ Game::Game(int nbPlayer, int nbIA)
 Game::~Game()
 {
     for (int i = 0; i < _animsCount; i++) UnloadModelAnimation(_anims[i]);
-    UnloadModel(_model);
+    UnloadModel(_model1);
 }
 
 void Game::Draw()
@@ -107,7 +118,7 @@ void Game::Draw()
     if (_isJump)
     {
         _animFrameCounter++;
-        UpdateModelAnimation(_model, _anims[0], _animFrameCounter);
+        UpdateModelAnimation(_model1, _anims[0], _animFrameCounter);
         if (_animFrameCounter >= _anims[0].frameCount)
         {
             _animFrameCounter = 0;
@@ -260,4 +271,45 @@ void Game::HandleInput()
 
 void Game::Reset()
 {
+}
+
+Texture2D Game::getSkin()
+{
+    int r = rand() % _files.size() - 1;
+
+    std::string str = "../assets/skin/texture/" + _files[r];
+
+    return LoadTexture(str.c_str());
+}
+
+void Game::ReadFiles()
+{
+
+    DIR *dir; struct dirent *diread;
+
+    if ((dir = opendir("../assets/skin/texture")) != nullptr) {
+        while ((diread = readdir(dir)) != nullptr) {
+            _files.push_back(diread->d_name);
+        }
+        closedir (dir);
+    }
+
+    std::vector<std::string>::iterator it;
+
+    it = find(_files.begin(), _files.end(), ".");
+    if (it != _files.end())
+    {
+        int index = std::distance(_files.begin(), it);
+        _files.erase(_files.begin() + index);
+    }
+
+    it = find(_files.begin(), _files.end(), "..");
+    if (it != _files.end())
+    {
+        int index = std::distance(_files.begin(), it);
+        _files.erase(_files.begin() + index);
+    }
+
+    for (auto file : _files) std::cout << file << "| ";
+    std::cout << std::endl;
 }
