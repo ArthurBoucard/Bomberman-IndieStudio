@@ -32,17 +32,17 @@ Game::Game(int nbPlayer, int nbIA)
 
     ReadFiles();
 
-    Model _model1 = LoadModel("../assets/skin/guy.iqm");
-    _model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    Model model1 = LoadModel("../assets/skin/guy.iqm");
+    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    Model _model2 = LoadModel("../assets/skin/guy.iqm");
-    _model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    Model model2 = LoadModel("../assets/skin/guy.iqm");
+    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    Model _model3 = LoadModel("../assets/skin/guy.iqm");
-    _model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    Model model3 = LoadModel("../assets/skin/guy.iqm");
+    model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
-    Model _model4 = LoadModel("../assets/skin/guy.iqm");
-    _model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    Model model4 = LoadModel("../assets/skin/guy.iqm");
+    model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     int whichAI = 0;
 
@@ -87,9 +87,9 @@ Game::Game(int nbPlayer, int nbIA)
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D();                       //Model3D
                 if (whichAI == 0)
-                    mod->setModel(_model3);
+                    mod->setModel(model3);
                 else
-                    mod->setModel(_model4);
+                    mod->setModel(model4);
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump();                              //Jump
@@ -106,10 +106,10 @@ Game::Game(int nbPlayer, int nbIA)
                 pl->link(player->getId());
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D();                       //Model3D
-                if (_map[x][z] == 0)
-                    mod->setModel(_model1);
+                if (_map[x][z] == '0')
+                    mod->setModel(model1);
                 else
-                    mod->setModel(_model2);
+                    mod->setModel(model2);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump();                              //Jump
@@ -284,6 +284,7 @@ Texture2D Game::getSkin()
 
     std::string str = "../assets/skin/texture/" + _files[r];
 
+    _files.erase(_files.begin() + r);
     return LoadTexture(str.c_str());
 }
 
