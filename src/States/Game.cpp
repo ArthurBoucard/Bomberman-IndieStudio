@@ -9,6 +9,7 @@
 
 Game::Game(int nbPlayer, int nbIA)
 {
+    srand (time(NULL));
     Map map = Map();
 
     _nbPlayer = nbPlayer;
@@ -29,9 +30,21 @@ Game::Game(int nbPlayer, int nbIA)
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
-    _model = LoadModel("../assets/skin/guy.iqm");
-    _texture = LoadTexture("../assets/skin/guytex8.png");
-    _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
+    ReadFiles();
+
+    Model _model1 = LoadModel("../assets/skin/guy.iqm");
+    _model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    Model _model2 = LoadModel("../assets/skin/guy.iqm");
+    _model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    Model _model3 = LoadModel("../assets/skin/guy.iqm");
+    _model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    Model _model4 = LoadModel("../assets/skin/guy.iqm");
+    _model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+
+    int whichAI = 0;
 
     for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
         for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
@@ -72,12 +85,17 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("AI", 2);                   //Player
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);                 //Model3D
+                Model3D *mod = new Model3D();                       //Model3D
+                if (whichAI == 0)
+                    mod->setModel(_model3);
+                else
+                    mod->setModel(_model4);
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump();                              //Jump
                 jp->link(AI->getId());
                 _jumpList.push_back(jp);
+                whichAI++;
             }
             if (_map[x][z] == '0' || _map[x][z] == '1') {
                 Entity *player = new Entity;                        //Entity
@@ -87,7 +105,11 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(_model);                 //Model3D
+                Model3D *mod = new Model3D();                       //Model3D
+                if (_map[x][z] == 0)
+                    mod->setModel(_model1);
+                else
+                    mod->setModel(_model2);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump();                              //Jump
@@ -100,7 +122,8 @@ Game::Game(int nbPlayer, int nbIA)
 
 Game::~Game()
 {
-    UnloadModel(_model);
+    for (std::size_t i = 0; i < _model3DList.size(); i++)
+        UnloadModel(_model3DList[i]->getModel());
 }
 
 void Game::Draw()
@@ -253,4 +276,40 @@ void Game::HandleInput()
 
 void Game::Reset()
 {
+}
+
+Texture2D Game::getSkin()
+{
+    int r = rand() % (_files.size() - 1);
+
+    std::string str = "../assets/skin/texture/" + _files[r];
+
+    return LoadTexture(str.c_str());
+}
+
+void Game::ReadFiles()
+{
+
+    DIR *dir; struct dirent *diread;
+
+    if ((dir = opendir("../assets/skin/texture")) != nullptr) {
+        while ((diread = readdir(dir)) != nullptr) {
+            _files.push_back(diread->d_name);
+        }
+        closedir (dir);
+    }
+
+    std::vector<std::string>::iterator it;
+
+    it = find(_files.begin(), _files.end(), ".");
+    if (it != _files.end()) {
+        int index = std::distance(_files.begin(), it);
+        _files.erase(_files.begin() + index);
+    }
+
+    it = find(_files.begin(), _files.end(), "..");
+    if (it != _files.end()) {
+        int index = std::distance(_files.begin(), it);
+        _files.erase(_files.begin() + index);
+    }
 }
