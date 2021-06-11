@@ -29,9 +29,13 @@ Game::Game(int nbPlayer, int nbIA)
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
-    Model model = LoadModel("../assets/pictures/guy.iqm");
-    _texture = LoadTexture("../assets/pictures/guytex.png");
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
+    _model = LoadModel("../assets/skin/guy.iqm");
+    _texture = LoadTexture("../assets/skin/guytex8.png");
+    _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = _texture;
+
+    _animsCount = 0;
+    _anims = LoadModelAnimations("../assets/skin/guyanim.iqm", &_animsCount);
+    _animFrameCounter = 0;
 
     for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
         for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
@@ -72,7 +76,7 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("AI", 2);
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(model);
+                Model3D *mod = new Model3D(_model);
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
             }
@@ -84,7 +88,7 @@ Game::Game(int nbPlayer, int nbIA)
                 Player *pl = new Player("player", _map[x][z] - 48);
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D(model);
+                Model3D *mod = new Model3D(_model);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
             }
@@ -94,10 +98,23 @@ Game::Game(int nbPlayer, int nbIA)
 
 Game::~Game()
 {
+    for (int i = 0; i < _animsCount; i++) UnloadModelAnimation(_anims[i]);
+    UnloadModel(_model);
 }
 
 void Game::Draw()
 {
+    if (_isJump)
+    {
+        _animFrameCounter++;
+        UpdateModelAnimation(_model, _anims[0], _animFrameCounter);
+        if (_animFrameCounter >= _anims[0].frameCount)
+        {
+            _animFrameCounter = 0;
+            _isJump = false;
+        }
+    }
+
     BeginMode3D(_camera);
         for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
             // Draw Texture
@@ -204,6 +221,9 @@ void Game::HandleInput()
             }
         }
     } else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0) {
+        _isJump = true;
+        _animFrameCounter = 0;
+
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
             if (_playerList[i]->getPlayerID() == 0) {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
