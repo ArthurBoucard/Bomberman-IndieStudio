@@ -34,6 +34,7 @@ class Game : public State {
 
         void ReadFiles();
 
+        void spawnBomb(int nbPlayer);
     private:
         float _screenWidth;
         float _screenHeight;

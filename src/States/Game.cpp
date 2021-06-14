@@ -225,54 +225,10 @@ void Game::HandleInput()
         }
     }
     // Bombs
-    if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2) {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 1) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
-                // bool isBomb = false;                                                        //
-                // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
-                //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
-                //         isBomb = true;                                                      // = only one bomb per player for
-                // if (!isBomb) {                                                              // the moment
-                    Entity *bomb = new Entity;
-                    Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
-                    std::cout << "=========="  << std::endl;
-                    pos->link(bomb->getId());
-                    _positionList.push_back(pos);
-                    Bomb *b = new Bomb;
-                    b->link(bomb->getId());
-                    b->linkPlayer(_playerList[i]->getLink());
-                    _bombList.push_back(b);
-                // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
-                _jumpList[k]->setJump(true);
-                _jumpList[k]->setFrameCount(0);
-            }
-        }
-    } else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0) {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 0) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
-                // bool isBomb = false;                                                        //
-                // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
-                //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
-                //         isBomb = true;                                                      // = only one bomb per player for
-                // if (!isBomb) {                                                              // the moment
-                    Entity *bomb = new Entity;
-                    Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
-                    pos->link(bomb->getId());
-                    _positionList.push_back(pos);
-                    Bomb *b = new Bomb;
-                    b->link(bomb->getId());
-                    b->linkPlayer(_playerList[i]->getLink());
-                    _bombList.push_back(b);
-                // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
-                _jumpList[k]->setJump(true);
-                _jumpList[k]->setFrameCount(0);
-            }
-        }
-    }
+    if (IsKeyPressed(KEY_Q) && _nbPlayer > 0)
+        spawnBomb(0);
+    if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2)
+        spawnBomb(1);
 }
 
 void Game::Reset()
@@ -313,5 +269,31 @@ void Game::ReadFiles()
     if (it != _files.end()) {
         int index = std::distance(_files.begin(), it);
         _files.erase(_files.begin() + index);
+    }
+}
+
+void Game::spawnBomb(int nbPlayer)
+{
+    for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
+        if (_playerList[i]->getPlayerID() == nbPlayer) {
+            for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+            // bool isBomb = false;                                                        //
+            // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
+            //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
+            //         isBomb = true;                                                      // = only one bomb per player for
+            // if (!isBomb) {                                                              // the moment
+                Entity *bomb = new Entity;
+                Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb;
+                b->link(bomb->getId());
+                b->linkPlayer(_playerList[i]->getLink());
+                _bombList.push_back(b);
+            // }
+            for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+            _jumpList[k]->setJump(true);
+            _jumpList[k]->setFrameCount(0);
+        }
     }
 }
