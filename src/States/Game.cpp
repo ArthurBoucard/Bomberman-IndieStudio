@@ -235,7 +235,8 @@ void Game::HandleInput()
                 //         isBomb = true;                                                      // = only one bomb per player for
                 // if (!isBomb) {                                                              // the moment
                     Entity *bomb = new Entity;
-                    Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
+                    Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
+                    std::cout << "=========="  << std::endl;
                     pos->link(bomb->getId());
                     _positionList.push_back(pos);
                     Bomb *b = new Bomb;
@@ -258,7 +259,7 @@ void Game::HandleInput()
                 //         isBomb = true;                                                      // = only one bomb per player for
                 // if (!isBomb) {                                                              // the moment
                     Entity *bomb = new Entity;
-                    Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
+                    Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
                     pos->link(bomb->getId());
                     _positionList.push_back(pos);
                     Bomb *b = new Bomb;

@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <iostream>
 #include <dirent.h>
+#include <cmath>
 
 class Game : public State {
     public:
