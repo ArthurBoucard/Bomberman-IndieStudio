@@ -10,20 +10,12 @@
 
 #include <iostream>
 
-class Position;
-class Breakable;
-class Texture2DComp;
-
 class Components {
     public:
-        Components();
-        ~Components();
+        Components() {};
+        ~Components() {};
 
-        // virtual std::pair<int, int> getPos();   //Position
-
-        // virtual void breakBrick();  //Breakable
     protected:
-        // std::pair<int, int> _pos;
     private:
 };
 

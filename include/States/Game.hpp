@@ -14,9 +14,13 @@
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
+#include <string>
+#include <algorithm>
+#include <iostream>
+
 class Game : public State {
     public:
-        Game();
+        Game(int nbPlayer, int nbIA);
         ~Game();
 
         void Draw();
@@ -25,24 +29,31 @@ class Game : public State {
         void HandleInput();
         void Reset();
 
+        Texture2D getSkin();
+
     private:
         float _screenWidth;
         float _screenHeight;
+
+        int _nbPlayer;
+        int _nbIA;
 
         Rectangle _rectGame;
         std::vector<std::string> _map;
 
         Camera _camera = {0};
 
-        Model _model;
-        Texture2D _texture;
-        Vector3 _position;
-
         float _speed = 0.05;
 
         std::vector<Position *> _positionList;
         std::vector<Breakable *> _breakableList;
         std::vector<Texture2DComp *> _texture2DList;
+        std::vector<Player *> _playerList;
+        std::vector<Model3D *> _model3DList;
+        std::vector<Jump *> _jumpList;
+        std::vector<Bomb *> _bombList;
+
+        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
 };
 
 #endif /* !GAME_HPP_ */

@@ -91,7 +91,7 @@ void GameSettings::HandleInput()
     if (CheckMouse(_mouse, _rectMiIA, "", 1) == true && _nbIA > 0)
         _nbIA--;
     if (CheckMouse(_mouse, _rectValidate, "=>", 2) == true && _nbTotalPlayers > 1)
-        _context->TransitionTo(new Game);
+        _context->TransitionTo(new Game(_nbPlayers, _nbIA));
 }
 
 void GameSettings::Reset()
