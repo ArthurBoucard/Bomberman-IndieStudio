@@ -14,9 +14,9 @@
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
+#include <string>
 #include <algorithm>
 #include <iostream>
-#include <dirent.h>
 
 class Game : public State {
     public:
@@ -30,8 +30,6 @@ class Game : public State {
         void Reset();
 
         Texture2D getSkin();
-
-        void ReadFiles();
 
     private:
         float _screenWidth;
@@ -47,8 +45,6 @@ class Game : public State {
 
         float _speed = 0.05;
 
-        std::vector<std::string> _files;
-
         std::vector<Position *> _positionList;
         std::vector<Breakable *> _breakableList;
         std::vector<Texture2DComp *> _texture2DList;
@@ -56,6 +52,8 @@ class Game : public State {
         std::vector<Model3D *> _model3DList;
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
+
+        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
 };
 
 #endif /* !GAME_HPP_ */
