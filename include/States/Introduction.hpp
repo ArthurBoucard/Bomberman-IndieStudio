@@ -29,10 +29,14 @@ class Introduction : public State
 
     private:
         float _scale = 5;
+        float _screenWidth;
+        float _screenHeight;
 
         Raylib::Music _music;
 
         Raylib::Texture2D _bouboule;
+
+        Raylib::WindowTools _window;
 };
 
 #endif /* !INTRODUCTION_HPP_ */

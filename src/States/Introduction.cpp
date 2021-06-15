@@ -11,7 +11,7 @@ Introduction::Introduction()
 {
     _music.LoadMusic("../assets/music/poutine.mp3");
     _music.Play();
-    _bouboule.LoadFile("../assets/img/Bouboule.png");
+    _bouboule.LoadFile("../assets/pictures/Bouboule.png");
 }
 
 Introduction::~Introduction()
@@ -20,19 +20,22 @@ Introduction::~Introduction()
 
 void Introduction::Draw()
 {
-    Vector2 pos= {(GetScreenWidth()/2 - _bouboule.getWidth()/2 * _scale), (GetScreenHeight()/2 - _bouboule.getHeight()/2 * _scale)};
-    _bouboule.DrawEx(pos, 0, _scale, WHITE);
+    Vector2 pos = {(_screenWidth / 2 - _bouboule.getWidth() / 2 * _scale), (_screenHeight / 2 - _bouboule.getHeight() / 2 * _scale)};
+    _bouboule.Draw(pos, 0, _scale, WHITE);
 }
 
 void Introduction::Update()
 {
+    _screenWidth = GetScreenWidth();
+    _screenHeight = GetScreenHeight();
+
     _music.Update();
     UpdateScale();
 }
 
 void Introduction::Clear()
 {
-    ClearBackground(RAYWHITE);
+    _window.ClearBackground(RAYWHITE);
 }
 
 void Introduction::HandleInput()
@@ -42,15 +45,16 @@ void Introduction::HandleInput()
 }
 
 void Introduction::Reset()
-{}
+{
+}
 
 void Introduction::UpdateScale()
 {
-    if ((_bouboule.getWidth()/2 * _scale) < GetScreenWidth() + 20)
+    if ((_bouboule.getWidth() / 2 * _scale) < _screenWidth + 20)
         _scale = _scale - 0.0001;
     else
         _scale = _scale - 0.014;
 
-    if ((_bouboule.getWidth()/2 * _scale) < GetScreenWidth())
+    if ((_bouboule.getWidth() / 2 * _scale) < _screenWidth)
         _context->TransitionTo(new Menu);
 }

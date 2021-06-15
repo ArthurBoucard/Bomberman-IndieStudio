@@ -1,5 +1,5 @@
 XXXXXXXXXXXXXXX
-X$$         $$X
+XS$         $SX
 X$           $X
 X             X
 X             X
@@ -9,5 +9,5 @@ X             X
 X             X
 X             X
 X$           $X
-X$$         $$X
+XS$         $SX
 XXXXXXXXXXXXXXX
