@@ -9,7 +9,6 @@
 
 Game::Game(int nbPlayer, int nbIA)
 {
-    srand (time(NULL));
     Map map = Map();
 
     _nbPlayer = nbPlayer;
@@ -29,8 +28,6 @@ Game::Game(int nbPlayer, int nbIA)
     _camera.up = (Vector3){0.0f, 1.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
-
-    ReadFiles();
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
     model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
@@ -280,37 +277,20 @@ void Game::Reset()
 
 Texture2D Game::getSkin()
 {
-    int r = rand() % (_files.size() - 1);
+    int index = GetRandomValue(0, (_skin.size() - 1));
 
-    std::string str = "../assets/skin/texture/" + _files[r];
+    std::cout << "> " << index << std::endl;
+    std::cout << "> " << _skin.size() - 1 << std::endl;
+    for (int i = 0; i < _skin.size(); i++)
+        std::cout << _skin[i] << " | ";
 
-    _files.erase(_files.begin() + r);
+    std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
+    _skin.erase(_skin.begin() + index);
+
+    std::cout << std::endl;
+    for (int i = 0; i < _skin.size(); i++)
+        std::cout << _skin[i] << " | ";
+    std::cout << std::endl;
+
     return LoadTexture(str.c_str());
-}
-
-void Game::ReadFiles()
-{
-
-    DIR *dir; struct dirent *diread;
-
-    if ((dir = opendir("../assets/skin/texture")) != nullptr) {
-        while ((diread = readdir(dir)) != nullptr) {
-            _files.push_back(diread->d_name);
-        }
-        closedir (dir);
-    }
-
-    std::vector<std::string>::iterator it;
-
-    it = find(_files.begin(), _files.end(), ".");
-    if (it != _files.end()) {
-        int index = std::distance(_files.begin(), it);
-        _files.erase(_files.begin() + index);
-    }
-
-    it = find(_files.begin(), _files.end(), "..");
-    if (it != _files.end()) {
-        int index = std::distance(_files.begin(), it);
-        _files.erase(_files.begin() + index);
-    }
 }
