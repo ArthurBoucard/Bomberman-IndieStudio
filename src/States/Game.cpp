@@ -23,9 +23,9 @@ Game::Game(int nbPlayer, int nbIA)
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = (Vector3){0.0f, 10.0f, 10.0f};
-    _camera.target = (Vector3){0.0f, 0.0f, 0.0f};
-    _camera.up = (Vector3){0.0f, 1.0f, 0.0f};
+    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.target = {0.0f, 0.0f, 0.0f};
+    _camera.up = {0.0f, 1.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
@@ -143,7 +143,7 @@ void Game::Draw()
             for (j = 0; j < _texture2DList.size(); j++)
                 if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
                     DrawCubeTexture(_texture2DList[j]->getTexture(),
-                        (Vector3){_positionList[i]->getX() - 6,
+                        {_positionList[i]->getX() - 6,
                             _positionList[i]->getZ(),
                                 _positionList[i]->getY() - 9},
                                     1, 1, 1, WHITE);
@@ -151,11 +151,11 @@ void Game::Draw()
             for (j = 0; j < _model3DList.size(); j++)
                 if (_model3DList[j]->getLink() == _positionList[i]->getLink())
                     DrawModelEx(_model3DList[j]->getModel(),
-                        (Vector3){_positionList[i]->getX() - 6,
+                        {_positionList[i]->getX() - 6,
                             _positionList[i]->getZ() - 0.5f,
                                 _positionList[i]->getY() - 9},
-                                    (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f,
-                                        (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
+                                    { 1.0f, 0.0f, 0.0f }, -90.0f,
+                                        { 0.15f, 0.15f, 0.15f }, WHITE);
             // Draw Bomb
             for (j = 0; j < _bombList.size(); j++) {
                 if (_bombList[j]->getLink() == _positionList[i]->getLink()) {
