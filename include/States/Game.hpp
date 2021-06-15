@@ -35,6 +35,7 @@ class Game : public State {
         void ReadFiles();
 
         void spawnBomb(int nbPlayer);
+        bool testCollision(int direction, int pPos);
     private:
         float _screenWidth;
         float _screenHeight;
@@ -49,6 +50,8 @@ class Game : public State {
 
         float _speed = 0.05;
 
+        int _lastWall = 0;
+
         std::vector<std::string> _files;
 
         std::vector<Position *> _positionList;
@@ -58,6 +61,7 @@ class Game : public State {
         std::vector<Model3D *> _model3DList;
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
+        // std::vector<Solid *> _solidList;
 };
 
 #endif /* !GAME_HPP_ */

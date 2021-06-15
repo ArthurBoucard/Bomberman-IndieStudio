@@ -73,6 +73,7 @@ Game::Game(int nbPlayer, int nbIA)
                 _positionList.push_back(pos);
                 Breakable *br = new Breakable;
                 br->link(brick->getId());
+                _breakableList.push_back(br);
                 Texture2DComp *tex = new Texture2DComp(brickT);
                 tex->link(brick->getId());
                 _texture2DList.push_back(tex);
@@ -213,13 +214,17 @@ void Game::HandleInput()
             if (_playerList[i]->getPlayerID() == 1) {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
                 if (IsKeyDown(KEY_LEFT))
-                    _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                    if (testCollision(4, j))
+                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_RIGHT))
-                    _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                    if (testCollision(2, j))
+                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
                 if (IsKeyDown(KEY_UP))
-                    _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                    if (testCollision(1, j))
+                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
                 if (IsKeyDown(KEY_DOWN))
-                    _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                    if (testCollision(3, j))
+                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
                 break;
             }
         }
@@ -296,4 +301,82 @@ void Game::spawnBomb(int nbPlayer)
             _jumpList[k]->setFrameCount(0);
         }
     }
+}
+
+bool Game::testCollision(int direction, int pPos) // 1 = UP | 2 = RIGHT | 3 = DOWN | 4 = LEFT
+{
+    std::size_t sPos;
+    std::size_t bPos;
+
+    if (_lastWall != direction && _lastWall != 0)
+        return true;
+
+    if (direction == 1) {
+        for (bPos = 0; bPos < _breakableList.size(); bPos++) {
+            for (sPos = 0; _breakableList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+            if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
+                round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+                _lastWall = 1;
+                return false;
+                }
+        }
+        _lastWall = 0;
+        return true;
+    } else if (direction == 2) {
+        for (bPos = 0; bPos < _breakableList.size(); bPos++) {
+            for (sPos = 0; _breakableList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+            if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
+                round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+                _lastWall = 2;
+                return false;
+                }
+        }
+        _lastWall = 0;
+        return true;
+    }else if (direction == 3) {
+        for (bPos = 0; bPos < _breakableList.size(); bPos++) {
+            for (sPos = 0; _breakableList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+            if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
+                round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+                _lastWall = 3;
+                return false;
+                }
+        }
+        _lastWall = 0;
+        return true;
+    }else if (direction == 4) {
+        for (bPos = 0; bPos < _breakableList.size(); bPos++) {
+            for (sPos = 0; _breakableList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+            if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
+                round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+                _lastWall = 4;
+                return false;
+                }
+        }
+        _lastWall = 0;
+        return true;
+    }
+    return false;
+
+    // if (_lastWall != direction) {
+    //     for (bPos = 0; bPos < _breakableList.size(); bPos++) {
+    //         for (sPos = 0; _breakableList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+    //         if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
+    //             round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+    //             _lastWall = 0;
+    //             return false;
+    //             }
+    //     }
+    // }
+
+    // if (direction == 1)
+    //     _lastWall = 1;
+    // else if (direction == 2)
+    //     _lastWall = 2;
+    // else if (direction == 3)
+    //     _lastWall = 3;
+    // else if (direction == 4)
+    //     _lastWall = 4;
+
+    // return true;
 }
