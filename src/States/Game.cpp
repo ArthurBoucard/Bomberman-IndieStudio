@@ -279,18 +279,8 @@ Texture2D Game::getSkin()
 {
     int index = GetRandomValue(0, (_skin.size() - 1));
 
-    std::cout << "> " << index << std::endl;
-    std::cout << "> " << _skin.size() - 1 << std::endl;
-    for (int i = 0; i < _skin.size(); i++)
-        std::cout << _skin[i] << " | ";
-
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
     _skin.erase(_skin.begin() + index);
-
-    std::cout << std::endl;
-    for (int i = 0; i < _skin.size(); i++)
-        std::cout << _skin[i] << " | ";
-    std::cout << std::endl;
 
     return LoadTexture(str.c_str());
 }
