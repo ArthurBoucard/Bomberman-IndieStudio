@@ -179,6 +179,19 @@ void Game::Draw()
                                 0.4f, 16, 16, BLACK);
                 }
             }
+            // Draw Flame
+            for (j = 0; j < _flameList.size(); j++) {
+                if (_flameList[j]->getLink() == _positionList[i]->getLink()) {
+                    DrawSphere({_positionList[i]->getX() - 6,
+                        _positionList[i]->getZ() - 0.1f,
+                            _positionList[i]->getY() - 9},
+                                0.35f, RED);
+                    DrawSphereWires({_positionList[i]->getX() - 6,
+                        _positionList[i]->getZ() - 0.1f,
+                            _positionList[i]->getY() - 9},
+                                0.35f, 16, 16, ORANGE);
+                }
+            }
         }
     EndMode3D();
 }
@@ -187,6 +200,118 @@ void Game::Update()
 {
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+
+    for (std::size_t i = 0; i < _bombList.size(); i++) {
+        clock_t end = clock();
+        if (end - _bombList[i]->getClock() >= 900000)
+            _bombList[i]->setIsExplode(true);
+    }
+    // Make bomb explode
+    for (std::size_t i = 0, p = 0; i < _bombList.size(); i++) {
+        if (_bombList[i]->getIsExplode()) {
+            for (p = 0; _bombList[i]->getLink() != _positionList[p]->getLink(); p++) {}
+            for (int dir = 1; dir <= 4; dir++) {
+                Entity *flame = new Entity;
+                Flame *fl = new Flame(_bombList[i]->getRadius(), dir, *_positionList[p]);
+                fl->link(flame->getId());
+                _flameList.push_back(fl);
+                Position *pos = new Position(_positionList[p]->getX(), _positionList[p]->getY(), _positionList[p]->getZ());
+                pos->link(flame->getId());
+                _positionList.push_back(pos);
+            }
+            deleteEntity(_bombList[i]->getLink());
+        }
+    }
+    // Move flames of exploded bomb
+    for (std::size_t i = 0, p = 0, p2 = 0, k = 0, m = 0; i < _flameList.size(); i++) {
+        clock_t end = clock();
+        if (end - _flameList[i]->getClock() >= 30000) {
+            _flameList[i]->resetClock();
+            if (_flameList[i]->getDist() == 0) {
+                deleteEntity(_flameList[i]->getLink());
+                break;
+            }
+            for (p = 0; _flameList[i]->getLink() != _positionList[p]->getLink(); p++) {}
+            _flameList[i]->move();
+            if (_flameList[i]->getDirection() == 1) {
+                _positionList[p]->setX(_positionList[p]->getX() - 1);
+                for (k = 0; k < _solidList.size(); k++) {
+                    for (p2 = 0; p2 < _positionList.size(); p2++) {
+                        if (_positionList[p]->getX() == _positionList[p2]->getX() &&
+                            _positionList[p]->getY() == _positionList[p2]->getY() &&
+                            _positionList[p]->getZ() == _positionList[p2]->getZ()) {
+                            if (_solidList[k]->getLink() == _positionList[p2]->getLink()) {
+                                for (m = 0; m < _breakableList.size(); m++)
+                                    if (_breakableList[m]->getLink() == _positionList[p2]->getLink()) {
+                                        _breakableList[m]->breakBrick();
+                                        deleteEntity(_breakableList[m]->getLink());
+                                    }
+                                deleteEntity(_flameList[i]->getLink());
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if (_flameList[i]->getDirection() == 2) {
+                _positionList[p]->setY(_positionList[p]->getY() + 1);
+                for (k = 0; k < _solidList.size(); k++) {
+                    for (p2 = 0; p2 < _positionList.size(); p2++) {
+                        if (_positionList[p]->getX() == _positionList[p2]->getX() &&
+                            _positionList[p]->getY() == _positionList[p2]->getY() &&
+                            _positionList[p]->getZ() == _positionList[p2]->getZ()) {
+                            if (_solidList[k]->getLink() == _positionList[p2]->getLink()) {
+                                for (m = 0; m < _breakableList.size(); m++)
+                                    if (_breakableList[m]->getLink() == _positionList[p2]->getLink()) {
+                                        _breakableList[m]->breakBrick();
+                                        deleteEntity(_breakableList[m]->getLink());
+                                    }
+                                deleteEntity(_flameList[i]->getLink());
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if (_flameList[i]->getDirection() == 3) {
+                _positionList[p]->setX(_positionList[p]->getX() + 1);
+                for (k = 0; k < _solidList.size(); k++) {
+                    for (p2 = 0; p2 < _positionList.size(); p2++) {
+                        if (_positionList[p]->getX() == _positionList[p2]->getX() &&
+                            _positionList[p]->getY() == _positionList[p2]->getY() &&
+                            _positionList[p]->getZ() == _positionList[p2]->getZ()) {
+                            if (_solidList[k]->getLink() == _positionList[p2]->getLink()) {
+                                for (m = 0; m < _breakableList.size(); m++)
+                                    if (_breakableList[m]->getLink() == _positionList[p2]->getLink()) {
+                                        _breakableList[m]->breakBrick();
+                                        deleteEntity(_breakableList[m]->getLink());
+                                    }
+                                deleteEntity(_flameList[i]->getLink());
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if (_flameList[i]->getDirection() == 4) {
+                _positionList[p]->setY(_positionList[p]->getY() - 1);
+                for (k = 0; k < _solidList.size(); k++) {
+                    for (p2 = 0; p2 < _positionList.size(); p2++) {
+                        if (_positionList[p]->getX() == _positionList[p2]->getX() &&
+                            _positionList[p]->getY() == _positionList[p2]->getY() &&
+                            _positionList[p]->getZ() == _positionList[p2]->getZ()) {
+                            if (_solidList[k]->getLink() == _positionList[p2]->getLink()) {
+                                for (m = 0; m < _breakableList.size(); m++)
+                                    if (_breakableList[m]->getLink() == _positionList[p2]->getLink()) {
+                                        _breakableList[m]->breakBrick();
+                                        deleteEntity(_breakableList[m]->getLink());
+                                    }
+                                deleteEntity(_flameList[i]->getLink());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Game::Clear()
@@ -297,7 +422,7 @@ void Game::spawnBomb(int nbPlayer)
                 Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
                 pos->link(bomb->getId());
                 _positionList.push_back(pos);
-                Bomb *b = new Bomb;
+                Bomb *b = new Bomb(3);
                 b->link(bomb->getId());
                 b->linkPlayer(_playerList[i]->getLink());
                 _bombList.push_back(b);
@@ -329,4 +454,37 @@ bool Game::testCollision(int direction, int pPos) // 1 = UP | 2 = RIGHT | 3 = DO
     }
     _lastWall = 0;
     return true;
+}
+
+void Game::deleteEntity(int id)
+{
+    int i;
+
+    for (i = 0; i < _positionList.size(); i++)
+        if (_positionList[i]->getLink() == id)
+            _positionList.erase(_positionList.begin() + i);
+    for (i = 0; i < _breakableList.size(); i++)
+        if (_breakableList[i]->getLink() == id)
+            _breakableList.erase(_breakableList.begin() + i);
+    for (i = 0; i < _texture2DList.size(); i++)
+        if (_texture2DList[i]->getLink() == id)
+            _texture2DList.erase(_texture2DList.begin() + i);
+    for (i = 0; i < _playerList.size(); i++)
+        if (_playerList[i]->getLink() == id)
+            _playerList.erase(_playerList.begin() + i);
+    for (i = 0; i < _model3DList.size(); i++)
+        if (_model3DList[i]->getLink() == id)
+            _model3DList.erase(_model3DList.begin() + i);
+    for (i = 0; i < _jumpList.size(); i++)
+        if (_jumpList[i]->getLink() == id)
+            _jumpList.erase(_jumpList.begin() + i);
+    for (i = 0; i < _bombList.size(); i++)
+        if (_bombList[i]->getLink() == id)
+            _bombList.erase(_bombList.begin() + i);
+    for (i = 0; i < _solidList.size(); i++)
+        if (_solidList[i]->getLink() == id)
+            _solidList.erase(_solidList.begin() + i);
+    for (i = 0; i < _flameList.size(); i++)
+        if (_flameList[i]->getLink() == id)
+            _flameList.erase(_flameList.begin() + i);
 }

@@ -36,6 +36,7 @@ class Game : public State {
 
         void spawnBomb(int nbPlayer);
         bool testCollision(int direction, int pPos);
+        void deleteEntity(int id);
     private:
         float _screenWidth;
         float _screenHeight;
@@ -62,6 +63,7 @@ class Game : public State {
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
         std::vector<Solid *> _solidList;
+        std::vector<Flame *> _flameList;
 };
 
 #endif /* !GAME_HPP_ */
