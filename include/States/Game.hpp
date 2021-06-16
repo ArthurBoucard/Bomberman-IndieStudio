@@ -28,6 +28,7 @@ class Game : public State {
         void Clear();
         void HandleInput();
         void Reset();
+        void move_ai(std::size_t j);
 
         Texture2D getSkin();
 
@@ -53,7 +54,7 @@ class Game : public State {
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
 
-        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
+        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 };
 
 #endif /* !GAME_HPP_ */
