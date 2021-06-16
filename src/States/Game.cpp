@@ -11,6 +11,11 @@ Game::Game(int nbPlayer, int nbIA)
 {
     Map map = Map();
 
+    _music.LoadMusic("../assets/music/game.xm");
+    _music.Play();
+
+    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
+
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
 
@@ -201,7 +206,7 @@ void Game::Update()
 
     for (int i = 0; i < _playerList.size(); i++) {
         if (_playerList[i]->getPlayerID() >= 2) {
-            while ((clock() - start) < 100000);
+            while ((clock() - start) < 300000);
             for (int n = 0; n < _positionList.size(); n++)
                 if (_positionList[n]->getLink() == _playerList[i]->getLink())
                     moveAi(n, i);
@@ -209,6 +214,8 @@ void Game::Update()
     }
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+
+    _music.Update();
 }
 
 void Game::Clear()
@@ -292,7 +299,6 @@ void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
 {
     int rand = GetRandomValue(0, 4);
 
-    printf("%d\n", rand);
     if (rand == 0)
         _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
     if (rand == 1)

@@ -63,8 +63,11 @@ class Game : public State {
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
 
-        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         std::vector<Solid *> _solidList;
+        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
+
+        Raylib::Music _music;
+        Sound _poseBomb;
 };
 
 #endif /* !GAME_HPP_ */
