@@ -46,6 +46,7 @@ class Menu : public State
         Raylib::Text _stat;
 
         Raylib::Music _music;
+        Sound _button;
 
         Raylib::Texture2D _bg;
 

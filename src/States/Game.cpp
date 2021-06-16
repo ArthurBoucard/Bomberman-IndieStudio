@@ -11,6 +11,11 @@ Game::Game(int nbPlayer, int nbIA)
 {
     Map map = Map();
 
+    _music.LoadMusic("../assets/music/game.xm");
+    _music.Play();
+
+    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
+
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
 
@@ -177,6 +182,8 @@ void Game::Update()
 {
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+
+    _music.Update();
 }
 
 void Game::Clear()
@@ -243,6 +250,7 @@ void Game::HandleInput()
                 for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
                 _jumpList[k]->setJump(true);
                 _jumpList[k]->setFrameCount(0);
+                PlaySound(_poseBomb);
             }
         }
     } else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0) {
@@ -266,6 +274,7 @@ void Game::HandleInput()
                 for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
                 _jumpList[k]->setJump(true);
                 _jumpList[k]->setFrameCount(0);
+                PlaySound(_poseBomb);
             }
         }
     }
