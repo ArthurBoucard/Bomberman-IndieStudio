@@ -21,6 +21,7 @@ extern int idValue;
 #include "Model3D.hpp"
 #include "Bomb.hpp"
 #include "Jump.hpp"
+#include "Solid.hpp"
 
 class Entity {
     public:
