@@ -36,7 +36,7 @@ class Game : public State {
         void ReadFiles();
 
         void spawnBomb(int nbPlayer);
-        bool testCollision(int direction, int pPos);
+        bool testCollision(int dir, Position *pos);
         void deleteEntity(int id);
     private:
         float _screenWidth;

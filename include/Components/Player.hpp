@@ -9,7 +9,10 @@
 #define PLAYER_HPP_
 
 #include "Components.hpp"
+#include "Position.hpp"
 #include "../Raylib/Raylib.hpp"
+
+#include <cmath>
 
 class Player : public Components {
     public:
@@ -22,12 +25,16 @@ class Player : public Components {
         int getPlayerID() const; // 0 = player 1 || 1 = player 2 || 2 = AI
         void setClock(clock_t cl);
         clock_t getClock() const;
+        void updateBBox(Position pos);
+        BoundingBox getBBox();
 
     protected:
         int _link;
         std::string _name;
         int _id;
         clock_t _start;
+        Mesh _mesh;
+        BoundingBox _bBox;
     private:
 };
 

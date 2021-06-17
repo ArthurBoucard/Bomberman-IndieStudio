@@ -48,9 +48,9 @@ Game::Game(int nbPlayer, int nbIA)
 
     int whichAI = 0;
 
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
+    for (float x = 0; x < _map.size(); x++)
     {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
+        for (float z = 0; z < _map[x].size(); z++)
         {
             if (_map[x][z] != 'X')
             {
@@ -330,16 +330,16 @@ void Game::HandleInput()
                 {
                 }
                 if (IsKeyDown(KEY_A))
-                    if (testCollision(4, j))
+                    if (testCollision(4, _positionList[j]))
                         _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_D))
-                    if (testCollision(2, j))
+                    if (testCollision(2, _positionList[j]))
                         _positionList[j]->setX(_positionList[j]->getX() + _speed);
                 if (IsKeyDown(KEY_W))
-                    if (testCollision(1, j))
+                    if (testCollision(1, _positionList[j]))
                         _positionList[j]->setY(_positionList[j]->getY() - _speed);
                 if (IsKeyDown(KEY_S))
-                    if (testCollision(3, j))
+                    if (testCollision(3, _positionList[j]))
                         _positionList[j]->setY(_positionList[j]->getY() + _speed);
                 break;
             }
@@ -355,16 +355,16 @@ void Game::HandleInput()
                 {
                 }
                 if (IsKeyDown(KEY_LEFT))
-                    if (testCollision(4, j))
+                    if (testCollision(4, _positionList[j]))
                         _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_RIGHT))
-                    if (testCollision(2, j))
+                    if (testCollision(2, _positionList[j]))
                         _positionList[j]->setX(_positionList[j]->getX() + _speed);
                 if (IsKeyDown(KEY_UP))
-                    if (testCollision(1, j))
+                    if (testCollision(1, _positionList[j]))
                         _positionList[j]->setY(_positionList[j]->getY() - _speed);
                 if (IsKeyDown(KEY_DOWN))
-                    if (testCollision(3, j))
+                    if (testCollision(3, _positionList[j]))
                         _positionList[j]->setY(_positionList[j]->getY() + _speed);
                 break;
             }
@@ -438,26 +438,40 @@ void Game::spawnBomb(int nbPlayer)
     }
 }
 
-bool Game::testCollision(int direction, int pPos) // 1 = UP | 2 = RIGHT | 3 = DOWN | 4 = LEFT
+bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3 | RIGHT = 4
 {
-    std::size_t sPos;
-    std::size_t bPos;
+    bool collision = true;
 
-    if (_lastWall != direction && _lastWall != 0) {
-        _lastWall = 0;
-        return true;
+    for (std::size_t p = 0, e = 0; p < _solidList.size(); p++) {
+        for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++) {}
+        if (CheckCollisionBoxes(
+            (BoundingBox){(Vector3){ pos->getX() - 6 - 0.5/2,
+                                     pos->getZ() - 1/2,
+                                     pos->getY() - 9 - 0.5/2 },
+                          (Vector3){ pos->getX() - 6 + 0.5/2,
+                                     pos->getZ() + 1/2,
+                                     pos->getY() - 9 + 0.5/2 }},
+            (BoundingBox){(Vector3){ _positionList[e]->getX() - 6 - 0.5,
+                                     _positionList[e]->getZ() - 0.5,
+                                     _positionList[e]->getY() - 9 - 0.5 },
+                          (Vector3){ _positionList[e]->getX() - 6 + 0.5,
+                                     _positionList[e]->getZ() + 0.5,
+                                     _positionList[e]->getY() - 9 + 0.5 }})) {
+            collision = false;
+            // break;
+        }
     }
-
-    for (bPos = 0; bPos < _solidList.size(); bPos++) {
-        for (sPos = 0; _solidList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
-        if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
-            round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
-            _lastWall = direction;
-            return false;
-            }
+    if (!collision) {
+        if (dir == 1)
+            pos->setY(pos->getY() + 0.05);
+        else if (dir == 2)
+            pos->setX(pos->getX() - 0.05);
+        else if (dir == 3)
+            pos->setY(pos->getY() - 0.05);
+        else if (dir == 4)
+            pos->setX(pos->getX() + 0.05);
     }
-    _lastWall = 0;
-    return true;
+    return collision;
 }
 
 void Game::deleteEntity(int id)
