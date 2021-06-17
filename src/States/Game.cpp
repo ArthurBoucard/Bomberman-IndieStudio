@@ -442,23 +442,32 @@ bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3
 {
     bool collision = true;
 
+    if (!_lastCol) {
+        if (_lastDir == dir)
+            return false;
+        else {
+            _lastCol = true;
+            _lastDir = dir;
+            return true;
+        }
+    }
     for (std::size_t p = 0, e = 0; p < _solidList.size(); p++) {
         for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++) {}
         if (CheckCollisionBoxes(
-            (BoundingBox){(Vector3){ pos->getX() - 6 - 0.5/2,
-                                     pos->getZ() - 1/2,
-                                     pos->getY() - 9 - 0.5/2 },
-                          (Vector3){ pos->getX() - 6 + 0.5/2,
-                                     pos->getZ() + 1/2,
-                                     pos->getY() - 9 + 0.5/2 }},
-            (BoundingBox){(Vector3){ _positionList[e]->getX() - 6 - 0.5,
-                                     _positionList[e]->getZ() - 0.5,
-                                     _positionList[e]->getY() - 9 - 0.5 },
-                          (Vector3){ _positionList[e]->getX() - 6 + 0.5,
-                                     _positionList[e]->getZ() + 0.5,
-                                     _positionList[e]->getY() - 9 + 0.5 }})) {
+            (BoundingBox){(Vector3){ static_cast<float>(pos->getX() - 6 - 0.5/2),
+                                     static_cast<float>(pos->getZ() - 1/2),
+                                     static_cast<float>(pos->getY() - 9 - 0.5/2) },
+                          (Vector3){ static_cast<float>(pos->getX() - 6 + 0.5/2),
+                                     static_cast<float>(pos->getZ() + 1/2),
+                                     static_cast<float>(pos->getY() - 9 + 0.5/2) }},
+            (BoundingBox){(Vector3){ static_cast<float>(_positionList[e]->getX() - 6 - 0.5),
+                                     static_cast<float>(_positionList[e]->getZ() - 0.5),
+                                     static_cast<float>(_positionList[e]->getY() - 9 - 0.5) },
+                          (Vector3){ static_cast<float>(_positionList[e]->getX() - 6 + 0.5),
+                                     static_cast<float>(_positionList[e]->getZ() + 0.5),
+                                     static_cast<float>(_positionList[e]->getY() - 9 + 0.5) }})) {
             collision = false;
-            // break;
+            break;
         }
     }
     if (!collision) {
@@ -471,6 +480,8 @@ bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3
         else if (dir == 4)
             pos->setX(pos->getX() + 0.05);
     }
+    _lastCol = collision;
+    _lastDir = dir;
     return collision;
 }
 

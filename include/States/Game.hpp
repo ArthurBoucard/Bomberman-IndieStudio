@@ -53,6 +53,8 @@ class Game : public State {
         float _speed = 0.05;
 
         int _lastWall = 0;
+        bool _lastCol = true;
+        bool _lastDir = 0;
 
         std::vector<std::string> _files;
 
