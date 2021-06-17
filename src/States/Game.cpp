@@ -7,7 +7,7 @@
 
 #include "../../include/States/Game.hpp"
 
-Game::Game(int nbPlayer, int nbIA)
+Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 {
     Map map = Map();
 
@@ -43,9 +43,12 @@ Game::Game(int nbPlayer, int nbIA)
 
     int whichAI = 0;
 
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
-            if (_map[x][z] != 'X') {
+    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
+    {
+        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
+        {
+            if (_map[x][z] != 'X')
+            {
                 Entity *ground = new Entity;
                 Position *pos = new Position(x, z, -1);
                 pos->link(ground->getId());
@@ -54,7 +57,8 @@ Game::Game(int nbPlayer, int nbIA)
                 tex->link(ground->getId());
                 _texture2DList.push_back(tex);
             }
-            if (_map[x][z] == 'X') {
+            if (_map[x][z] == 'X')
+            {
                 Entity *wall = new Entity;
                 Position *pos = new Position(x, z, 0);
                 pos->link(wall->getId());
@@ -63,7 +67,8 @@ Game::Game(int nbPlayer, int nbIA)
                 tex->link(wall->getId());
                 _texture2DList.push_back(tex);
             }
-            if (_map[x][z] == '#') {
+            if (_map[x][z] == '#')
+            {
                 Entity *brick = new Entity;
                 Position *pos = new Position(x, z, 0);
                 pos->link(brick->getId());
@@ -74,42 +79,44 @@ Game::Game(int nbPlayer, int nbIA)
                 tex->link(brick->getId());
                 _texture2DList.push_back(tex);
             }
-            if (_map[x][z] == '@') {
-                Entity *AI = new Entity;                            //Entity
-                Position *pos = new Position(x, z, 0);              //Position
+            if (_map[x][z] == '@')
+            {
+                Entity *AI = new Entity;               //Entity
+                Position *pos = new Position(x, z, 0); //Position
                 pos->link(AI->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2);                   //Player
+                Player *pl = new Player("AI", 2); //Player
                 pl->link(AI->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D();                       //Model3D
+                Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
                     mod->setModel(model3);
                 else
                     mod->setModel(model4);
                 mod->link(AI->getId());
                 _model3DList.push_back(mod);
-                Jump *jp = new Jump();                              //Jump
+                Jump *jp = new Jump(); //Jump
                 jp->link(AI->getId());
                 _jumpList.push_back(jp);
                 whichAI++;
             }
-            if (_map[x][z] == '0' || _map[x][z] == '1') {
-                Entity *player = new Entity;                        //Entity
-                Position *pos = new Position(x, z, 0);              //Position
+            if (_map[x][z] == '0' || _map[x][z] == '1')
+            {
+                Entity *player = new Entity;           //Entity
+                Position *pos = new Position(x, z, 0); //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
                 Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D();                       //Model3D
+                Model3D *mod = new Model3D(); //Model3D
                 if (_map[x][z] == '0')
                     mod->setModel(model1);
                 else
                     mod->setModel(model2);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
-                Jump *jp = new Jump();                              //Jump
+                Jump *jp = new Jump(); //Jump
                 jp->link(player->getId());
                 _jumpList.push_back(jp);
             }
@@ -126,50 +133,58 @@ Game::~Game()
 void Game::Draw()
 {
     //Animation of bomb placement
-    for (std::size_t i = 0, j = 0; i < _jumpList.size(); i++, j = 0) {
-        for (j = 0; _jumpList[i]->getLink() != _model3DList[j]->getLink(); j++) {}
-        if (_jumpList[i]->getJump()) {
+    for (std::size_t i = 0, j = 0; i < _jumpList.size(); i++, j = 0)
+    {
+        for (j = 0; _jumpList[i]->getLink() != _model3DList[j]->getLink(); j++)
+        {
+        }
+        if (_jumpList[i]->getJump())
+        {
             _jumpList[i]->setFrameCount(_jumpList[i]->getFrameCount() + 1);
             UpdateModelAnimation(_model3DList[j]->getModel(), _jumpList[i]->getAnim(), _jumpList[i]->getFrameCount());
-            if (_jumpList[i]->getFrameCount() >= _jumpList[i]->getAnim().frameCount) {
+            if (_jumpList[i]->getFrameCount() >= _jumpList[i]->getAnim().frameCount)
+            {
                 _jumpList[i]->setFrameCount(0);
                 _jumpList[i]->setJump(false);
             }
         }
     }
     BeginMode3D(_camera);
-        for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
-            // Draw Texture
-            for (j = 0; j < _texture2DList.size(); j++)
-                if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
-                    DrawCubeTexture(_texture2DList[j]->getTexture(),
-                        {_positionList[i]->getX() - 6,
-                            _positionList[i]->getZ(),
-                                _positionList[i]->getY() - 9},
-                                    1, 1, 1, WHITE);
-            // Draw Model3D
-            for (j = 0; j < _model3DList.size(); j++)
-                if (_model3DList[j]->getLink() == _positionList[i]->getLink())
-                    DrawModelEx(_model3DList[j]->getModel(),
-                        {_positionList[i]->getX() - 6,
-                            _positionList[i]->getZ() - 0.5f,
-                                _positionList[i]->getY() - 9},
-                                    { 1.0f, 0.0f, 0.0f }, -90.0f,
-                                        { 0.15f, 0.15f, 0.15f }, WHITE);
-            // Draw Bomb
-            for (j = 0; j < _bombList.size(); j++) {
-                if (_bombList[j]->getLink() == _positionList[i]->getLink()) {
-                    DrawSphere({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
+    for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0)
+    {
+        // Draw Texture
+        for (j = 0; j < _texture2DList.size(); j++)
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
+                DrawCubeTexture(_texture2DList[j]->getTexture(),
+                                {_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ(),
+                                 _positionList[i]->getY() - 9},
+                                1, 1, 1, WHITE);
+        // Draw Model3D
+        for (j = 0; j < _model3DList.size(); j++)
+            if (_model3DList[j]->getLink() == _positionList[i]->getLink())
+                DrawModelEx(_model3DList[j]->getModel(),
+                            {_positionList[i]->getX() - 6,
+                             _positionList[i]->getZ() - 0.5f,
+                             _positionList[i]->getY() - 9},
+                            {1.0f, 0.0f, 0.0f}, -90.0f,
+                            {0.15f, 0.15f, 0.15f}, WHITE);
+        // Draw Bomb
+        for (j = 0; j < _bombList.size(); j++)
+        {
+            if (_bombList[j]->getLink() == _positionList[i]->getLink())
+            {
+                DrawSphere({_positionList[i]->getX() - 6,
+                            _positionList[i]->getZ() - 0.1f,
                             _positionList[i]->getY() - 9},
-                                0.4f, DARKGRAY);
-                    DrawSphereWires({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
-                            _positionList[i]->getY() - 9},
+                           0.4f, DARKGRAY);
+                DrawSphereWires({_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ() - 0.1f,
+                                 _positionList[i]->getY() - 9},
                                 0.4f, 16, 16, BLACK);
-                }
             }
         }
+    }
     EndMode3D();
 }
 
@@ -189,10 +204,15 @@ void Game::HandleInput()
     Vector2 mouse = GetMousePosition();
 
     // PLayer control
-    if (_nbPlayer > 0) {
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 0) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    if (_nbPlayer > 0)
+    {
+        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 0)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 if (IsKeyDown(KEY_A))
                     _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_D))
@@ -205,10 +225,15 @@ void Game::HandleInput()
             }
         }
     }
-    if (_nbPlayer == 2) {
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 1) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    if (_nbPlayer == 2)
+    {
+        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 1)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 if (IsKeyDown(KEY_LEFT))
                     _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_RIGHT))
@@ -222,48 +247,63 @@ void Game::HandleInput()
         }
     }
     // Bombs
-    if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2) {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 1) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2)
+    {
+        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 1)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 // bool isBomb = false;                                                        //
                 // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
                 //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
                 //         isBomb = true;                                                      // = only one bomb per player for
                 // if (!isBomb) {                                                              // the moment
-                    Entity *bomb = new Entity;
-                    Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
-                    pos->link(bomb->getId());
-                    _positionList.push_back(pos);
-                    Bomb *b = new Bomb;
-                    b->link(bomb->getId());
-                    b->linkPlayer(_playerList[i]->getLink());
-                    _bombList.push_back(b);
+                Entity *bomb = new Entity;
+                Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb;
+                b->link(bomb->getId());
+                b->linkPlayer(_playerList[i]->getLink());
+                _bombList.push_back(b);
                 // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
+                {
+                }
                 _jumpList[k]->setJump(true);
                 _jumpList[k]->setFrameCount(0);
             }
         }
-    } else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0) {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 0) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    }
+    else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0)
+    {
+        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 0)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 // bool isBomb = false;                                                        //
                 // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
                 //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
                 //         isBomb = true;                                                      // = only one bomb per player for
                 // if (!isBomb) {                                                              // the moment
-                    Entity *bomb = new Entity;
-                    Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
-                    pos->link(bomb->getId());
-                    _positionList.push_back(pos);
-                    Bomb *b = new Bomb;
-                    b->link(bomb->getId());
-                    b->linkPlayer(_playerList[i]->getLink());
-                    _bombList.push_back(b);
+                Entity *bomb = new Entity;
+                Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb;
+                b->link(bomb->getId());
+                b->linkPlayer(_playerList[i]->getLink());
+                _bombList.push_back(b);
                 // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
+                {
+                }
                 _jumpList[k]->setJump(true);
                 _jumpList[k]->setFrameCount(0);
             }
