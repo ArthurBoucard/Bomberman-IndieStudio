@@ -22,6 +22,7 @@ extern int idValue;
 #include "Bomb.hpp"
 #include "Jump.hpp"
 #include "Solid.hpp"
+#include "Flame.hpp"
 
 class Entity {
     public:

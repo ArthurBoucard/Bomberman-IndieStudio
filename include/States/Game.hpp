@@ -37,6 +37,7 @@ class Game : public State {
 
         void spawnBomb(int nbPlayer);
         bool testCollision(int direction, int pPos);
+        void deleteEntity(int id);
     private:
         float _screenWidth;
         float _screenHeight;
@@ -62,8 +63,9 @@ class Game : public State {
         std::vector<Model3D *> _model3DList;
         std::vector<Jump *> _jumpList;
         std::vector<Bomb *> _bombList;
-
         std::vector<Solid *> _solidList;
+        std::vector<Flame *> _flameList;
+
         std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
 
         Raylib::Music _music;
