@@ -330,13 +330,17 @@ void Game::HandleInput()
                 {
                 }
                 if (IsKeyDown(KEY_A))
-                    _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                    if (testCollision(4, j))
+                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_D))
-                    _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                    if (testCollision(2, j))
+                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
                 if (IsKeyDown(KEY_W))
-                    _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                    if (testCollision(1, j))
+                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
                 if (IsKeyDown(KEY_S))
-                    _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                    if (testCollision(3, j))
+                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
                 break;
             }
         }
