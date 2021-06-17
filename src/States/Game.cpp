@@ -296,12 +296,12 @@ void Game::Update()
     // AI movment
     for (int i = 0; i < _playerList.size(); i++) {
         if (_playerList[i]->getPlayerID() >= 2) {
-            if (clock() - _playerList[i]->getClock() < 90000)
-                return;
-            _playerList[i]->setClock(clock());
-            for (int n = 0; n < _positionList.size(); n++)
-                if (_positionList[n]->getLink() == _playerList[i]->getLink())
-                    moveAi(n, i);
+            if (clock() - _playerList[i]->getClock() > 90000) {
+                _playerList[i]->setClock(clock());
+                for (int n = 0; n < _positionList.size(); n++)
+                    if (_positionList[n]->getLink() == _playerList[i]->getLink())
+                        moveAi(n, i);
+            }
         }
     }
 }
