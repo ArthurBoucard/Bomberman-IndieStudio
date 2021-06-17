@@ -215,11 +215,11 @@ void Game::Draw()
 
 void Game::Update()
 {
-    clock_t start = clock();
-
     for (int i = 0; i < _playerList.size(); i++) {
         if (_playerList[i]->getPlayerID() >= 2) {
-            while ((clock() - start) < 300000);
+            if (clock() - _playerList[i]->getClock() < 30000)
+                return;
+            _playerList[i]->setClock(clock());
             for (int n = 0; n < _positionList.size(); n++)
                 if (_positionList[n]->getLink() == _playerList[i]->getLink())
                     moveAi(n, i);
@@ -227,7 +227,6 @@ void Game::Update()
     }
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
-  
     _music.Update();
 
     for (std::size_t i = 0; i < _bombList.size(); i++) {
