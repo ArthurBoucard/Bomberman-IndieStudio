@@ -195,18 +195,18 @@ void Game::Draw()
                                  _positionList[i]->getY() - 9},
                                 0.4f, 16, 16, BLACK);
             }
-            // Draw Flame
-            for (j = 0; j < _flameList.size(); j++) {
-                if (_flameList[j]->getLink() == _positionList[i]->getLink()) {
-                    DrawSphere({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
-                            _positionList[i]->getY() - 9},
-                                0.35f, RED);
-                    DrawSphereWires({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
-                            _positionList[i]->getY() - 9},
-                                0.35f, 16, 16, ORANGE);
-                }
+        }
+        // Draw Flame
+        for (j = 0; j < _flameList.size(); j++) {
+            if (_flameList[j]->getLink() == _positionList[i]->getLink()) {
+                DrawSphere({_positionList[i]->getX() - 6,
+                    _positionList[i]->getZ() - 0.1f,
+                        _positionList[i]->getY() - 9},
+                            0.35f, RED);
+                DrawSphereWires({_positionList[i]->getX() - 6,
+                    _positionList[i]->getZ() - 0.1f,
+                        _positionList[i]->getY() - 9},
+                            0.35f, 16, 16, ORANGE);
             }
         }
     }
