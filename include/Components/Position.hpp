@@ -14,6 +14,7 @@
 
 class Position : public Components {
     public:
+        Position() {}
         Position(int posX, int posY, int posZ);
         ~Position();
 

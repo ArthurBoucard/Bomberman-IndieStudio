@@ -7,8 +7,11 @@
 
 #include "../../include/Components/Bomb.hpp"
 
-Bomb::Bomb()
+Bomb::Bomb(int radius)
 {
+    _clock = clock();
+    _isExplode = false;
+    _radius = radius;
 }
 
 Bomb::~Bomb()
@@ -43,4 +46,24 @@ int Bomb::getRadius()
 int Bomb::getTimeLeft()
 {
     return _timeLeft;
+}
+
+bool Bomb::getIsExplode()
+{
+    return _isExplode;
+}
+
+clock_t Bomb::getClock()
+{
+    return _clock;
+}
+
+void Bomb::setRadius(int radius)
+{
+    _radius = radius;
+}
+
+void Bomb::setIsExplode(bool isExplode)
+{
+    _isExplode = isExplode;
 }

@@ -13,7 +13,7 @@
 
 class Bomb {
     public:
-        Bomb();
+        Bomb(int radius);
         ~Bomb();
 
         void link(int id);
@@ -22,11 +22,18 @@ class Bomb {
         int getPlayerLink();
         int getRadius();
         int getTimeLeft();
+        bool getIsExplode();
+        clock_t getClock();
+
+        void setRadius(int radius);
+        void setIsExplode(bool isExplode);
     protected:
         int _link;
         int _playerLink;
         int _radius;
         int _timeLeft;
+        clock_t _clock;
+        bool _isExplode;
     private:
 };
 

@@ -28,7 +28,9 @@ public:
 
 private:
     Texture2D _bg;
+
     Vector2 _mouse;
+
     Rectangle _rectPlPlayers;
     Rectangle _rectMiPlayers;
     Rectangle _rectPlIA;
@@ -41,6 +43,7 @@ private:
     Rectangle _rectPlay;
     float _screenWidth;
     float _screenHeight;
+
     int _nbPlayers;
     int _nbIA;
     int _nbTotalPlayers;
@@ -49,6 +52,8 @@ private:
     int _skinChoicePl2;
     std::string _nbPlayersText = "Number of players";
     std::string _nbIAText = "Number of AI";
+
+    Sound _button;
 };
 
 #endif /* !GAME_HPP_ */
