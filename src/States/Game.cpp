@@ -35,10 +35,24 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin1 >= 0)
+    {
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
+    }
+    if (skin1 < 0)
+    {
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    }
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin2 >= 0)
+    {
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
+    }
+    if (skin2 < 0)
+    {
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    }
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
@@ -396,6 +410,16 @@ void Game::HandleInput()
 
 void Game::Reset()
 {
+}
+
+Texture2D Game::getSkin(int skin)
+{
+    int index = GetRandomValue(0, (_skin.size() - 1));
+
+    std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
+    _skin.erase(_skin.begin() + skin);
+
+    return LoadTexture(str.c_str());
 }
 
 Texture2D Game::getSkin()

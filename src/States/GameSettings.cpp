@@ -180,6 +180,12 @@ void GameSettings::Update()
                 _skinChoicePl1 = 0;
             if (_skinChoicePl1 < 0)
                 _skinChoicePl1 = 8;
+            _skinChoicePl2 = -1;
+        }
+        if (_nbPlayers == 0)
+        {
+            _skinChoicePl1 = -1;
+            _skinChoicePl2 = -1;
         }
         if (_skinChoicePl1 != _skinChoicePl2)
         {

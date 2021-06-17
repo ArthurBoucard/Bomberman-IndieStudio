@@ -32,6 +32,7 @@ public:
     void Reset();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
 
+    Texture2D getSkin(int);
     Texture2D getSkin();
 
     void ReadFiles();
