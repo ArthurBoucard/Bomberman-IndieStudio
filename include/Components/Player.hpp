@@ -20,14 +20,14 @@ class Player : public Components {
         int getLink() const;
         std::string getPlayerName() const;
         int getPlayerID() const; // 0 = player 1 || 1 = player 2 || 2 = AI
-        void setClock(clock_t cl) { start = cl; };
-        clock_t getClock() const { return start; };
+        void setClock(clock_t cl);
+        clock_t getClock() const;
 
     protected:
         int _link;
         std::string _name;
         int _id;
-        clock_t start;
+        clock_t _start;
     private:
 };
 

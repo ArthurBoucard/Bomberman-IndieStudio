@@ -11,7 +11,7 @@ Player::Player(std::string name, int id)
 {
     _name = name;
     _id = id;
-    start = clock();
+    _start = clock();
 }
 
 Player::~Player()
@@ -36,4 +36,14 @@ std::string Player::getPlayerName() const
 int Player::getPlayerID() const
 {
     return _id;
+}
+
+void Player::setClock(clock_t cl)
+{
+    _start = cl;
+}
+
+clock_t Player::getClock() const
+{
+    return _start;
 }
