@@ -93,21 +93,12 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
             if (_map[x][z] == '@')
             {
-<<<<<<< HEAD
-                Entity *AI = new Entity;               //Entity
-                Position *pos = new Position(x, z, 0); //Position
-                pos->link(AI->getId());
-                _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2); //Player
-                pl->link(AI->getId());
-=======
                 Entity *ai = new Entity;               //Entity
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(ai->getId());
                 _positionList.push_back(pos);
                 Player *pl = new Player("AI", 2 + whichAI); //Player
                 pl->link(ai->getId());
->>>>>>> d436fcdfbd3f365a618b3d9f3de52a48d1f2a8c9
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
@@ -117,11 +108,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 mod->link(ai->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump(); //Jump
-<<<<<<< HEAD
-                jp->link(AI->getId());
-=======
                 jp->link(ai->getId());
->>>>>>> d436fcdfbd3f365a618b3d9f3de52a48d1f2a8c9
                 _jumpList.push_back(jp);
                 whichAI++;
             }
@@ -209,22 +196,21 @@ void Game::Draw()
                                 0.4f, 16, 16, BLACK);
             }
         }
-<<<<<<< HEAD
-=======
         // Draw Flame
-        for (j = 0; j < _flameList.size(); j++) {
-            if (_flameList[j]->getLink() == _positionList[i]->getLink()) {
+        for (j = 0; j < _flameList.size(); j++)
+        {
+            if (_flameList[j]->getLink() == _positionList[i]->getLink())
+            {
                 DrawSphere({_positionList[i]->getX() - 6,
-                    _positionList[i]->getZ() - 0.1f,
-                        _positionList[i]->getY() - 9},
-                            0.35f, RED);
+                            _positionList[i]->getZ() - 0.1f,
+                            _positionList[i]->getY() - 9},
+                           0.35f, RED);
                 DrawSphereWires({_positionList[i]->getX() - 6,
-                    _positionList[i]->getZ() - 0.1f,
-                        _positionList[i]->getY() - 9},
-                            0.35f, 16, 16, ORANGE);
+                                 _positionList[i]->getZ() - 0.1f,
+                                 _positionList[i]->getY() - 9},
+                                0.35f, 16, 16, ORANGE);
             }
         }
->>>>>>> d436fcdfbd3f365a618b3d9f3de52a48d1f2a8c9
     }
     EndMode3D();
 }
@@ -235,16 +221,22 @@ void Game::Update()
     _screenHeight = GetScreenHeight();
     _music.Update();
 
-    for (std::size_t i = 0; i < _bombList.size(); i++) {
+    for (std::size_t i = 0; i < _bombList.size(); i++)
+    {
         clock_t end = clock();
         if (end - _bombList[i]->getClock() >= 900000)
             _bombList[i]->setIsExplode(true);
     }
     // Make bomb explode
-    for (std::size_t i = 0, p = 0; i < _bombList.size(); i++) {
-        if (_bombList[i]->getIsExplode()) {
-            for (p = 0; _bombList[i]->getLink() != _positionList[p]->getLink(); p++) {}
-            for (int dir = 1; dir <= 4; dir++) {
+    for (std::size_t i = 0, p = 0; i < _bombList.size(); i++)
+    {
+        if (_bombList[i]->getIsExplode())
+        {
+            for (p = 0; _bombList[i]->getLink() != _positionList[p]->getLink(); p++)
+            {
+            }
+            for (int dir = 1; dir <= 4; dir++)
+            {
                 Entity *flame = new Entity;
                 Flame *fl = new Flame(_bombList[i]->getRadius(), dir, *_positionList[p]);
                 fl->link(flame->getId());
@@ -257,15 +249,20 @@ void Game::Update()
         }
     }
     // Move flames of exploded bomb
-    for (std::size_t i = 0, p = 0, p2 = 0, k = 0, m = 0; i < _flameList.size(); i++) {
+    for (std::size_t i = 0, p = 0, p2 = 0, k = 0, m = 0; i < _flameList.size(); i++)
+    {
         clock_t end = clock();
-        if (end - _flameList[i]->getClock() >= 30000) {
+        if (end - _flameList[i]->getClock() >= 30000)
+        {
             _flameList[i]->resetClock();
-            if (_flameList[i]->getDist() == 0) {
+            if (_flameList[i]->getDist() == 0)
+            {
                 deleteEntity(_flameList[i]->getLink());
                 break;
             }
-            for (p = 0; _flameList[i]->getLink() != _positionList[p]->getLink(); p++) {}
+            for (p = 0; _flameList[i]->getLink() != _positionList[p]->getLink(); p++)
+            {
+            }
             _flameList[i]->move();
             if (_flameList[i]->getDirection() == 1)
                 _positionList[p]->setX(_positionList[p]->getX() - 1);
@@ -276,14 +273,19 @@ void Game::Update()
             else if (_flameList[i]->getDirection() == 4)
                 _positionList[p]->setY(_positionList[p]->getY() - 1);
             // Test if flame goes in wall or brick
-            for (k = 0; k < _solidList.size(); k++) {
-                for (p2 = 0; p2 < _positionList.size(); p2++) {
+            for (k = 0; k < _solidList.size(); k++)
+            {
+                for (p2 = 0; p2 < _positionList.size(); p2++)
+                {
                     if (_positionList[p]->getX() == _positionList[p2]->getX() &&
                         _positionList[p]->getY() == _positionList[p2]->getY() &&
-                        _positionList[p]->getZ() == _positionList[p2]->getZ()) {
-                        if (_solidList[k]->getLink() == _positionList[p2]->getLink()) {
+                        _positionList[p]->getZ() == _positionList[p2]->getZ())
+                    {
+                        if (_solidList[k]->getLink() == _positionList[p2]->getLink())
+                        {
                             for (m = 0; m < _breakableList.size(); m++)
-                                if (_breakableList[m]->getLink() == _positionList[p2]->getLink()) {
+                                if (_breakableList[m]->getLink() == _positionList[p2]->getLink())
+                                {
                                     _breakableList[m]->breakBrick();
                                     deleteEntity(_breakableList[m]->getLink());
                                 }
@@ -294,12 +296,16 @@ void Game::Update()
                 }
             }
             // Test if flame goes in player
-            for (k = 0; k < _playerList.size(); k++) {
-                for (p2 = 0; p2 < _positionList.size(); p2++) {
+            for (k = 0; k < _playerList.size(); k++)
+            {
+                for (p2 = 0; p2 < _positionList.size(); p2++)
+                {
                     if (_positionList[p]->getX() == round(_positionList[p2]->getX()) &&
                         _positionList[p]->getY() == round(_positionList[p2]->getY()) &&
-                        _positionList[p]->getZ() == round(_positionList[p2]->getZ()) && p != p2) {
-                        if (_playerList[k]->getLink() == _positionList[p2]->getLink()) {
+                        _positionList[p]->getZ() == round(_positionList[p2]->getZ()) && p != p2)
+                    {
+                        if (_playerList[k]->getLink() == _positionList[p2]->getLink())
+                        {
                             deleteEntity(_playerList[k]->getLink()); // delete player
                             deleteEntity(_flameList[i]->getLink());
                             break;
@@ -310,9 +316,12 @@ void Game::Update()
         }
     }
     // AI movment
-    for (int i = 0; i < _playerList.size(); i++) {
-        if (_playerList[i]->getPlayerID() >= 2) {
-            if (clock() - _playerList[i]->getClock() > 90000) {
+    for (int i = 0; i < _playerList.size(); i++)
+    {
+        if (_playerList[i]->getPlayerID() >= 2)
+        {
+            if (clock() - _playerList[i]->getClock() > 90000)
+            {
                 _playerList[i]->setClock(clock());
                 for (int n = 0; n < _positionList.size(); n++)
                     if (_positionList[n]->getLink() == _playerList[i]->getLink())
@@ -379,75 +388,10 @@ void Game::HandleInput()
         }
     }
     // Bombs
-<<<<<<< HEAD
-    if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2)
-    {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
-        {
-            if (_playerList[i]->getPlayerID() == 1)
-            {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
-                {
-                }
-                // bool isBomb = false;                                                        //
-                // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
-                //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
-                //         isBomb = true;                                                      // = only one bomb per player for
-                // if (!isBomb) {                                                              // the moment
-                Entity *bomb = new Entity;
-                Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
-                pos->link(bomb->getId());
-                _positionList.push_back(pos);
-                Bomb *b = new Bomb;
-                b->link(bomb->getId());
-                b->linkPlayer(_playerList[i]->getLink());
-                _bombList.push_back(b);
-                // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
-                {
-                }
-                _jumpList[k]->setJump(true);
-                _jumpList[k]->setFrameCount(0);
-            }
-        }
-    }
-    else if (IsKeyPressed(KEY_Q) && _nbPlayer > 0)
-    {
-        for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
-        {
-            if (_playerList[i]->getPlayerID() == 0)
-            {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
-                {
-                }
-                // bool isBomb = false;                                                        //
-                // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
-                //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
-                //         isBomb = true;                                                      // = only one bomb per player for
-                // if (!isBomb) {                                                              // the moment
-                Entity *bomb = new Entity;
-                Position *pos = new Position(_positionList[j]->getX(), _positionList[j]->getY(), _positionList[j]->getZ());
-                pos->link(bomb->getId());
-                _positionList.push_back(pos);
-                Bomb *b = new Bomb;
-                b->link(bomb->getId());
-                b->linkPlayer(_playerList[i]->getLink());
-                _bombList.push_back(b);
-                // }
-                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
-                {
-                }
-                _jumpList[k]->setJump(true);
-                _jumpList[k]->setFrameCount(0);
-            }
-        }
-    }
-=======
     if (IsKeyPressed(KEY_Q) && _nbPlayer > 0)
         spawnBomb(0);
     if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2)
         spawnBomb(1);
->>>>>>> d436fcdfbd3f365a618b3d9f3de52a48d1f2a8c9
 }
 
 void Game::Reset()
@@ -482,9 +426,13 @@ void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
 
 void Game::spawnBomb(int nbPlayer)
 {
-    for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++) {
-        if (_playerList[i]->getPlayerID() == nbPlayer) {
-            for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
+    {
+        if (_playerList[i]->getPlayerID() == nbPlayer)
+        {
+            for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+            {
+            }
             for (std::size_t p = 0; p < _positionList.size(); p++)
                 if (_positionList[j]->getX() == _positionList[p]->getX() &&
                     _positionList[j]->getY() == _positionList[p]->getY() &&
@@ -495,16 +443,18 @@ void Game::spawnBomb(int nbPlayer)
             //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
             //         isBomb = true;                                                      // = only one bomb per player for
             // if (!isBomb) {                                                              // the moment
-                Entity *bomb = new Entity;
-                Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
-                pos->link(bomb->getId());
-                _positionList.push_back(pos);
-                Bomb *b = new Bomb(2);
-                b->link(bomb->getId());
-                b->linkPlayer(_playerList[i]->getLink());
-                _bombList.push_back(b);
+            Entity *bomb = new Entity;
+            Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
+            pos->link(bomb->getId());
+            _positionList.push_back(pos);
+            Bomb *b = new Bomb(2);
+            b->link(bomb->getId());
+            b->linkPlayer(_playerList[i]->getLink());
+            _bombList.push_back(b);
             // }
-            for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++) {}
+            for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
+            {
+            }
             _jumpList[k]->setJump(true);
             _jumpList[k]->setFrameCount(0);
         }
@@ -516,18 +466,23 @@ bool Game::testCollision(int direction, int pPos) // 1 = UP | 2 = RIGHT | 3 = DO
     std::size_t sPos;
     std::size_t bPos;
 
-    if (_lastWall != direction && _lastWall != 0) {
+    if (_lastWall != direction && _lastWall != 0)
+    {
         _lastWall = 0;
         return true;
     }
 
-    for (bPos = 0; bPos < _solidList.size(); bPos++) {
-        for (sPos = 0; _solidList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++) {}
+    for (bPos = 0; bPos < _solidList.size(); bPos++)
+    {
+        for (sPos = 0; _solidList[bPos]->getLink() != _positionList[sPos]->getLink(); sPos++)
+        {
+        }
         if (round(_positionList[pPos]->getX()) == _positionList[sPos]->getX() &&
-            round(_positionList[pPos]->getY()) == _positionList[sPos]->getY()) {
+            round(_positionList[pPos]->getY()) == _positionList[sPos]->getY())
+        {
             _lastWall = direction;
             return false;
-            }
+        }
     }
     _lastWall = 0;
     return true;

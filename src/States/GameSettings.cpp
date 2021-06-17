@@ -215,21 +215,21 @@ void GameSettings::HandleInput()
     {
         PlaySound(_button);
         _nbIA--;
-        if (CheckMouse(_mouse, _rectValidate, "=>", 2) == true && _nbTotalPlayers > 1 && _verif == 0)
-            _verif = 1;
-        if (CheckMouse(_mouse, _rectPrevPlayer1, "", 1) == true && _verif == 1)
-            _skinChoicePl1--;
-        if (CheckMouse(_mouse, _rectAfterPlayer1, "", 1) == true && _verif == 1)
-            _skinChoicePl1++;
-        if (CheckMouse(_mouse, _rectPrevPlayer2, "", 1) == true && _verif == 1)
-            _skinChoicePl2--;
-        if (CheckMouse(_mouse, _rectAfterPlayer2, "", 1) == true && _verif == 1)
-            _skinChoicePl2++;
-        if (CheckMouse(_mouse, _rectValidate, "=>", 2) && _nbPlayers == 0 && _verif == 1)
-            _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
-        if (CheckMouse(_mouse, _rectPlay, "PLAY", 3) && _verif == 1)
-            _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
     }
+    if (CheckMouse(_mouse, _rectValidate, "=>", 2) == true && _nbTotalPlayers > 1 && _verif == 0)
+        _verif = 1;
+    if (CheckMouse(_mouse, _rectPrevPlayer1, "", 1) == true && _verif == 1)
+        _skinChoicePl1--;
+    if (CheckMouse(_mouse, _rectAfterPlayer1, "", 1) == true && _verif == 1)
+        _skinChoicePl1++;
+    if (CheckMouse(_mouse, _rectPrevPlayer2, "", 1) == true && _verif == 1)
+        _skinChoicePl2--;
+    if (CheckMouse(_mouse, _rectAfterPlayer2, "", 1) == true && _verif == 1)
+        _skinChoicePl2++;
+    if (CheckMouse(_mouse, _rectValidate, "=>", 2) && _nbPlayers == 0 && _verif == 1)
+        _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
+    if (CheckMouse(_mouse, _rectPlay, "PLAY", 3) && _verif == 1)
+        _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
 }
 
 void GameSettings::Reset()
