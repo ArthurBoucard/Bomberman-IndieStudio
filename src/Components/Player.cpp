@@ -34,5 +34,5 @@ std::string Player::getPlayerName()
 
 int Player::getPlayerID()
 {
-    return _id;    
+    return _id;
 }

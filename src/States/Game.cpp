@@ -9,8 +9,12 @@
 
 Game::Game(int nbPlayer, int nbIA)
 {
-    srand (time(NULL));
     Map map = Map();
+
+    _music.LoadMusic("../assets/music/game.xm");
+    _music.Play();
+
+    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -24,13 +28,11 @@ Game::Game(int nbPlayer, int nbIA)
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = (Vector3){0.0f, 10.0f, 10.0f};
-    _camera.target = (Vector3){0.0f, 0.0f, 0.0f};
-    _camera.up = (Vector3){0.0f, 1.0f, 0.0f};
+    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.target = {0.0f, 0.0f, 0.0f};
+    _camera.up = {0.0f, 1.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
-
-    ReadFiles();
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
     model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
@@ -46,9 +48,12 @@ Game::Game(int nbPlayer, int nbIA)
 
     int whichAI = 0;
 
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60) {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60) {
-            if (_map[x][z] != 'X') {
+    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
+    {
+        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
+        {
+            if (_map[x][z] != 'X')
+            {
                 Entity *ground = new Entity;
                 Position *pos = new Position(x, z, -1);
                 pos->link(ground->getId());
@@ -57,7 +62,8 @@ Game::Game(int nbPlayer, int nbIA)
                 tex->link(ground->getId());
                 _texture2DList.push_back(tex);
             }
-            if (_map[x][z] == 'X') {
+            if (_map[x][z] == 'X')
+            {
                 Entity *wall = new Entity;
                 Position *pos = new Position(x, z, 0);
                 pos->link(wall->getId());
@@ -69,7 +75,8 @@ Game::Game(int nbPlayer, int nbIA)
                 solid->link(wall->getId());
                 _solidList.push_back(solid);
             }
-            if (_map[x][z] == '#') {
+            if (_map[x][z] == '#')
+            {
                 Entity *brick = new Entity;
                 Position *pos = new Position(x, z, 0);
                 pos->link(brick->getId());
@@ -84,42 +91,44 @@ Game::Game(int nbPlayer, int nbIA)
                 solid->link(brick->getId());
                 _solidList.push_back(solid);
             }
-            if (_map[x][z] == '@') {
-                Entity *AI = new Entity;                            //Entity
-                Position *pos = new Position(x, z, 0);              //Position
-                pos->link(AI->getId());
+            if (_map[x][z] == '@')
+            {
+                Entity *ai = new Entity;               //Entity
+                Position *pos = new Position(x, z, 0); //Position
+                pos->link(ai->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2);                   //Player
-                pl->link(AI->getId());
+                Player *pl = new Player("AI", 2 + whichAI); //Player
+                pl->link(ai->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D();                       //Model3D
+                Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
                     mod->setModel(model3);
                 else
                     mod->setModel(model4);
-                mod->link(AI->getId());
+                mod->link(ai->getId());
                 _model3DList.push_back(mod);
-                Jump *jp = new Jump();                              //Jump
-                jp->link(AI->getId());
+                Jump *jp = new Jump(); //Jump
+                jp->link(ai->getId());
                 _jumpList.push_back(jp);
                 whichAI++;
             }
-            if (_map[x][z] == '0' || _map[x][z] == '1') {
-                Entity *player = new Entity;                        //Entity
-                Position *pos = new Position(x, z, 0);              //Position
+            if (_map[x][z] == '0' || _map[x][z] == '1')
+            {
+                Entity *player = new Entity;           //Entity
+                Position *pos = new Position(x, z, 0); //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
                 Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 _playerList.push_back(pl);
-                Model3D *mod = new Model3D();                       //Model3D
+                Model3D *mod = new Model3D(); //Model3D
                 if (_map[x][z] == '0')
                     mod->setModel(model1);
                 else
                     mod->setModel(model2);
                 mod->link(player->getId());
                 _model3DList.push_back(mod);
-                Jump *jp = new Jump();                              //Jump
+                Jump *jp = new Jump(); //Jump
                 jp->link(player->getId());
                 _jumpList.push_back(jp);
             }
@@ -136,48 +145,55 @@ Game::~Game()
 void Game::Draw()
 {
     //Animation of bomb placement
-    for (std::size_t i = 0, j = 0; i < _jumpList.size(); i++, j = 0) {
-        for (j = 0; _jumpList[i]->getLink() != _model3DList[j]->getLink(); j++) {}
-        if (_jumpList[i]->getJump()) {
+    for (std::size_t i = 0, j = 0; i < _jumpList.size(); i++, j = 0)
+    {
+        for (j = 0; _jumpList[i]->getLink() != _model3DList[j]->getLink(); j++)
+        {
+        }
+        if (_jumpList[i]->getJump())
+        {
             _jumpList[i]->setFrameCount(_jumpList[i]->getFrameCount() + 1);
             UpdateModelAnimation(_model3DList[j]->getModel(), _jumpList[i]->getAnim(), _jumpList[i]->getFrameCount());
-            if (_jumpList[i]->getFrameCount() >= _jumpList[i]->getAnim().frameCount) {
+            if (_jumpList[i]->getFrameCount() >= _jumpList[i]->getAnim().frameCount)
+            {
                 _jumpList[i]->setFrameCount(0);
                 _jumpList[i]->setJump(false);
             }
         }
     }
     BeginMode3D(_camera);
-        for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0) {
-            // Draw Texture
-            for (j = 0; j < _texture2DList.size(); j++)
-                if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
-                    DrawCubeTexture(_texture2DList[j]->getTexture(),
-                        (Vector3){_positionList[i]->getX() - 6,
-                            _positionList[i]->getZ(),
-                                _positionList[i]->getY() - 9},
-                                    1, 1, 1, WHITE);
-            // Draw Model3D
-            for (j = 0; j < _model3DList.size(); j++)
-                if (_model3DList[j]->getLink() == _positionList[i]->getLink())
-                    DrawModelEx(_model3DList[j]->getModel(),
-                        (Vector3){_positionList[i]->getX() - 6,
-                            _positionList[i]->getZ() - 0.5f,
-                                _positionList[i]->getY() - 9},
-                                    (Vector3){ 1.0f, 0.0f, 0.0f }, -90.0f,
-                                        (Vector3){ 0.15f, 0.15f, 0.15f }, WHITE);
-            // Draw Bomb
-            for (j = 0; j < _bombList.size(); j++) {
-                if (_bombList[j]->getLink() == _positionList[i]->getLink()) {
-                    DrawSphere({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
+    for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0)
+    {
+        // Draw Texture
+        for (j = 0; j < _texture2DList.size(); j++)
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
+                DrawCubeTexture(_texture2DList[j]->getTexture(),
+                                {_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ(),
+                                 _positionList[i]->getY() - 9},
+                                1, 1, 1, WHITE);
+        // Draw Model3D
+        for (j = 0; j < _model3DList.size(); j++)
+            if (_model3DList[j]->getLink() == _positionList[i]->getLink())
+                DrawModelEx(_model3DList[j]->getModel(),
+                            {_positionList[i]->getX() - 6,
+                             _positionList[i]->getZ() - 0.5f,
+                             _positionList[i]->getY() - 9},
+                            {1.0f, 0.0f, 0.0f}, -90.0f,
+                            {0.15f, 0.15f, 0.15f}, WHITE);
+        // Draw Bomb
+        for (j = 0; j < _bombList.size(); j++)
+        {
+            if (_bombList[j]->getLink() == _positionList[i]->getLink())
+            {
+                DrawSphere({_positionList[i]->getX() - 6,
+                            _positionList[i]->getZ() - 0.1f,
                             _positionList[i]->getY() - 9},
-                                0.4f, DARKGRAY);
-                    DrawSphereWires({_positionList[i]->getX() - 6,
-                        _positionList[i]->getZ() - 0.1f,
-                            _positionList[i]->getY() - 9},
+                           0.4f, DARKGRAY);
+                DrawSphereWires({_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ() - 0.1f,
+                                 _positionList[i]->getY() - 9},
                                 0.4f, 16, 16, BLACK);
-                }
             }
             // Draw Flame
             for (j = 0; j < _flameList.size(); j++) {
@@ -193,13 +209,26 @@ void Game::Draw()
                 }
             }
         }
+    }
     EndMode3D();
 }
 
 void Game::Update()
 {
+    clock_t start = clock();
+
+    for (int i = 0; i < _playerList.size(); i++) {
+        if (_playerList[i]->getPlayerID() >= 2) {
+            while ((clock() - start) < 300000);
+            for (int n = 0; n < _positionList.size(); n++)
+                if (_positionList[n]->getLink() == _playerList[i]->getLink())
+                    moveAi(n, i);
+        }
+    }
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+  
+    _music.Update();
 
     for (std::size_t i = 0; i < _bombList.size(); i++) {
         clock_t end = clock();
@@ -287,10 +316,15 @@ void Game::HandleInput()
     Vector2 mouse = GetMousePosition();
 
     // PLayer control
-    if (_nbPlayer > 0) {
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 0) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    if (_nbPlayer > 0)
+    {
+        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 0)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 if (IsKeyDown(KEY_A))
                     _positionList[j]->setX(_positionList[j]->getX() - _speed);
                 if (IsKeyDown(KEY_D))
@@ -303,10 +337,15 @@ void Game::HandleInput()
             }
         }
     }
-    if (_nbPlayer == 2) {
-        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++) {
-            if (_playerList[i]->getPlayerID() == 1) {
-                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++) {}
+    if (_nbPlayer == 2)
+    {
+        for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
+        {
+            if (_playerList[i]->getPlayerID() == 1)
+            {
+                for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
+                {
+                }
                 if (IsKeyDown(KEY_LEFT))
                     if (testCollision(4, j))
                         _positionList[j]->setX(_positionList[j]->getX() - _speed);
@@ -336,39 +375,28 @@ void Game::Reset()
 
 Texture2D Game::getSkin()
 {
-    int r = rand() % (_files.size() - 1);
+    int index = GetRandomValue(0, (_skin.size() - 1));
 
-    std::string str = "../assets/skin/texture/" + _files[r];
+    std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
+    _skin.erase(_skin.begin() + index);
 
-    _files.erase(_files.begin() + r);
     return LoadTexture(str.c_str());
 }
 
-void Game::ReadFiles()
+void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
 {
+    int rand = GetRandomValue(0, 4);
 
-    DIR *dir; struct dirent *diread;
-
-    if ((dir = opendir("../assets/skin/texture")) != nullptr) {
-        while ((diread = readdir(dir)) != nullptr) {
-            _files.push_back(diread->d_name);
-        }
-        closedir (dir);
-    }
-
-    std::vector<std::string>::iterator it;
-
-    it = find(_files.begin(), _files.end(), ".");
-    if (it != _files.end()) {
-        int index = std::distance(_files.begin(), it);
-        _files.erase(_files.begin() + index);
-    }
-
-    it = find(_files.begin(), _files.end(), "..");
-    if (it != _files.end()) {
-        int index = std::distance(_files.begin(), it);
-        _files.erase(_files.begin() + index);
-    }
+    if (rand == 0)
+        _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
+    if (rand == 1)
+        _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() + _speed * 5);
+    if (rand == 2)
+        _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() - _speed * 5);
+    if (rand == 3)
+        _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() + _speed * 5);
+    if (rand == 4)
+        spawnBomb(_playerList[playerIndex]->getPlayerID());
 }
 
 void Game::spawnBomb(int nbPlayer)

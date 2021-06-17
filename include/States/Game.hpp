@@ -14,9 +14,9 @@
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
+#include <string>
 #include <algorithm>
 #include <iostream>
-#include <dirent.h>
 #include <cmath>
 
 class Game : public State {
@@ -29,6 +29,7 @@ class Game : public State {
         void Clear();
         void HandleInput();
         void Reset();
+        void moveAi(std::size_t positionIndex, std::size_t playerIndex);
 
         Texture2D getSkin();
 
@@ -64,6 +65,11 @@ class Game : public State {
         std::vector<Bomb *> _bombList;
         std::vector<Solid *> _solidList;
         std::vector<Flame *> _flameList;
+
+        std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7 ,8, 9};
+
+        Raylib::Music _music;
+        Sound _poseBomb;
 };
 
 #endif /* !GAME_HPP_ */
