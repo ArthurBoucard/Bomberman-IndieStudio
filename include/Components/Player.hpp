@@ -17,13 +17,17 @@ class Player : public Components {
         ~Player();
 
         void link(int id);
-        int getLink();
-        std::string getPlayerName();
-        int getPlayerID(); // 0 = player 1 || 1 = player 2 || 2 = AI
+        int getLink() const;
+        std::string getPlayerName() const;
+        int getPlayerID() const; // 0 = player 1 || 1 = player 2 || 2 = AI
+        void setClock(clock_t cl);
+        clock_t getClock() const;
+
     protected:
         int _link;
         std::string _name;
         int _id;
+        clock_t _start;
     private:
 };
 
