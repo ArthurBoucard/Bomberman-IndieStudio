@@ -18,6 +18,8 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
+    if (skin1 < skin2)
+        skin2--;
 
     map.createMap();
     map.proceduralGenClassical();
@@ -36,23 +38,17 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
     if (skin1 >= 0)
-    {
         model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
-    }
     if (skin1 < 0)
-    {
         model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
-    }
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
+    std::cout << skin2 << std::endl;
+    std::cout << _skin[skin2] << std::endl;
     if (skin2 >= 0)
-    {
         model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
-    }
     if (skin2 < 0)
-    {
         model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
-    }
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();

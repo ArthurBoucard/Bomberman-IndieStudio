@@ -104,11 +104,11 @@ void GameSettings::Update()
             _rectPrevPlayer2 = {_screenWidth / 3, _screenHeight / static_cast<float>(1.455), _screenWidth / 34, _screenHeight / 15};
 
             if (_skinChoicePl1 == 0)
-                DrawText("RED", _screenWidth / 2.2, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), RED);
+                DrawText("RED", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), RED);
             if (_skinChoicePl1 == 1)
                 DrawText("YELLOW", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), YELLOW);
             if (_skinChoicePl1 == 2)
-                DrawText("WHITE", _screenWidth / 2.3, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
+                DrawText("WHITE", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
             if (_skinChoicePl1 == 3)
                 DrawText("GREEN", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), GREEN);
             if (_skinChoicePl1 == 4)
@@ -127,11 +127,11 @@ void GameSettings::Update()
                 _skinChoicePl1 = 8;
 
             if (_skinChoicePl2 == 0)
-                DrawText("RED", _screenWidth / 2.2, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), RED);
+                DrawText("RED", _screenWidth / 2.5, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), RED);
             if (_skinChoicePl2 == 1)
                 DrawText("YELLOW", _screenWidth / 2.5, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), YELLOW);
             if (_skinChoicePl2 == 2)
-                DrawText("WHITE", _screenWidth / 2.3, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
+                DrawText("WHITE", _screenWidth / 2.5, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
             if (_skinChoicePl2 == 3)
                 DrawText("GREEN", _screenWidth / 2.5, _screenHeight / 1.5, (_screenWidth / 11) - (_screenHeight / 16), GREEN);
             if (_skinChoicePl2 == 4)
@@ -159,11 +159,11 @@ void GameSettings::Update()
             _rectPrevPlayer1 = {_screenWidth / 3, _screenHeight / static_cast<float>(2.455), _screenWidth / 34, _screenHeight / 15};
 
             if (_skinChoicePl1 == 0)
-                DrawText("RED", _screenWidth / 2.2, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), RED);
+                DrawText("RED", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), RED);
             if (_skinChoicePl1 == 1)
                 DrawText("YELLOW", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), YELLOW);
             if (_skinChoicePl1 == 2)
-                DrawText("WHITE", _screenWidth / 2.3, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
+                DrawText("WHITE", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), WHITE);
             if (_skinChoicePl1 == 3)
                 DrawText("GREEN", _screenWidth / 2.5, _screenHeight / 2.6, (_screenWidth / 11) - (_screenHeight / 16), GREEN);
             if (_skinChoicePl1 == 4)
