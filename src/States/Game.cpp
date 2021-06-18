@@ -162,7 +162,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     }
 }
 
-Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin1, int skin2)
+Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
 {
     _map = map;
 
@@ -175,10 +175,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
-    _skinChoicePl1 = skin1;
-    _skinChoicePl2 = skin2;
-    if (skin1 < skin2)
-        skin2--;
+    _saveSkin = skin;
+
+    for (int i = 0; i < skin.size();i ++)
+        std::cout << skin[i] << std::endl;
 
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
@@ -191,22 +191,16 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-    if (skin1 >= 0)
-        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
-    else
-        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-    if (skin2 >= 0)
-        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
-    else
-        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
-    model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[2].c_str());
 
     Model model4 = LoadModel("../assets/skin/guy.iqm");
-    model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[3].c_str());
 
     int whichAI = 0;
 
@@ -275,8 +269,12 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin
                 Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
                     mod->setModel(model3);
-                else
+                else if (whichAI == 1)
                     mod->setModel(model4);
+                else if (whichAI == 2)
+                    mod->setModel(model2);
+                else
+                    mod->setModel(model1);
                 mod->link(ai->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump(); //Jump
@@ -574,7 +572,7 @@ void Game::HandleInput()
     if (IsKeyPressed(KEY_P))
     {
         saveMap();
-        _context->TransitionTo(new Pause(_nbPlayer, _nbIA, _saveMap, _skinChoicePl1, _skinChoicePl2));
+        _context->TransitionTo(new Pause(_nbPlayer, _nbIA, _saveMap, _skinChoicePl1, _skinChoicePl2, _saveSkin));
     }
 }
 
@@ -589,6 +587,8 @@ Texture2D Game::getSkin(int skin)
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
     _skin.erase(_skin.begin() + skin);
 
+    _saveSkin.push_back(str);
+
     return LoadTexture(str.c_str());
 }
 
@@ -598,6 +598,8 @@ Texture2D Game::getSkin()
 
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
     _skin.erase(_skin.begin() + index);
+
+    _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
 }
@@ -784,9 +786,6 @@ void Game::saveMap()
                 if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '@')
                     map[x][y] = 'o';
     }
-
-    for(int i = 0; i < map.size(); ++i)
-        std::cout << map[i] << std::endl;
 
     _saveMap = map;
 }
