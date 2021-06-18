@@ -9,7 +9,10 @@
 #define PLAYER_HPP_
 
 #include "Components.hpp"
+#include "Position.hpp"
 #include "../Raylib/Raylib.hpp"
+
+#include <cmath>
 
 class Player : public Components {
     public:
@@ -24,6 +27,8 @@ class Player : public Components {
         clock_t getClock() const;
         void setSpeed(float speed);
         float getSpeed() const;
+        void updateBBox(Position pos);
+        BoundingBox getBBox();
 
     protected:
         int _link;
@@ -31,6 +36,8 @@ class Player : public Components {
         int _id;
         clock_t _start;
         float _speed;
+        Mesh _mesh;
+        BoundingBox _bBox;
     private:
 };
 

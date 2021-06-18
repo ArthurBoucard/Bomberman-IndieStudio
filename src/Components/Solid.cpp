@@ -24,3 +24,13 @@ int Solid::getLink()
 {
     return _link;
 }
+
+void Solid::updateRect(Position pos)
+{
+    _rect = {pos.getX(), pos.getY(), 1, 1};
+}
+
+Rectangle Solid::getRect()
+{
+    return _rect;
+}

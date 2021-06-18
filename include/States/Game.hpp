@@ -36,7 +36,7 @@ class Game : public State {
         void ReadFiles();
 
         void spawnBomb(int nbPlayer);
-        bool testCollision(int direction, int pPos);
+        bool testCollision(int dir, Position *pos);
         void deleteEntity(int id);
     private:
         float _screenWidth;
@@ -51,6 +51,8 @@ class Game : public State {
         Camera _camera = {0};
 
         int _lastWall = 0;
+        bool _lastCol = true;
+        int _lastDir = 0;
 
         std::vector<std::string> _files;
 

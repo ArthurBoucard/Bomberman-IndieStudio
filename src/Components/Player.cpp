@@ -13,6 +13,8 @@ Player::Player(std::string name, int id)
     _id = id;
     _start = clock();
     _speed = 0.05;
+    _mesh = GenMeshCube(0.5, 1, 0.5);
+    _bBox = GetMeshBoundingBox(_mesh);
 }
 
 Player::~Player()
@@ -56,4 +58,13 @@ void Player::setSpeed(float speed)
 float Player::getSpeed() const
 {
     return _speed;
+}
+void Player::updateBBox(Position pos)
+{
+    return;
+}
+
+BoundingBox Player::getBBox()
+{
+    return _bBox;
 }
