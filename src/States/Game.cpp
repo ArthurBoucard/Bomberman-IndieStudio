@@ -454,13 +454,13 @@ bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3
     for (std::size_t p = 0, e = 0; p < _solidList.size(); p++) {
         for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++) {}
         if (CheckCollisionBoxes(
-            (BoundingBox){{ static_cast<float>(pos->getX() - 6 - 0.5/2),
+            {{ static_cast<float>(pos->getX() - 6 - 0.5/2),
                             static_cast<float>(pos->getZ() - 1/2),
                             static_cast<float>(pos->getY() - 9 - 0.5/2) },
                           { static_cast<float>(pos->getX() - 6 + 0.5/2),
                             static_cast<float>(pos->getZ() + 1/2),
                             static_cast<float>(pos->getY() - 9 + 0.5/2) }},
-            (BoundingBox){{ static_cast<float>(_positionList[e]->getX() - 6 - 0.5),
+            {{ static_cast<float>(_positionList[e]->getX() - 6 - 0.5),
                             static_cast<float>(_positionList[e]->getZ() - 0.5),
                             static_cast<float>(_positionList[e]->getY() - 9 - 0.5) },
                           { static_cast<float>(_positionList[e]->getX() - 6 + 0.5),
