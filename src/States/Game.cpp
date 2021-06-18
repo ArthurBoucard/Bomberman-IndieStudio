@@ -125,8 +125,12 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
                     mod->setModel(model3);
-                else
+                else if (whichAI == 1)
                     mod->setModel(model4);
+                else if (whichAI == 2)
+                    mod->setModel(model2);
+                else
+                    mod->setModel(model1);
                 mod->link(ai->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump(); //Jump
