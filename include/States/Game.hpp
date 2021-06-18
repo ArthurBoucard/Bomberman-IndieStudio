@@ -80,9 +80,9 @@ private:
     std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     Raylib::Music _music;
-    Sound _poseBomb;
-    Sound _explosionBomb;
-    Sound _deathPlayer;
+    Raylib::Sound _poseBomb;
+    Raylib::Sound _explosionBomb;
+    Raylib::Sound _deathPlayer;
 };
 
 #endif /* !GAME_HPP_ */

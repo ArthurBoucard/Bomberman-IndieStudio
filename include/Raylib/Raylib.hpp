@@ -18,6 +18,7 @@
 #include "Text.hpp"
 #include "Rectangle.hpp"
 #include "WindowTools.hpp"
+#include "Sound.hpp"
 
 namespace Raylib {}
 

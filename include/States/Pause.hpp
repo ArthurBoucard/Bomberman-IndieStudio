@@ -50,6 +50,7 @@ private:
     int _skinChoicePl2;
 
     Raylib::Music _music;
+    Raylib::Sound _button;
 
     std::vector<std::string> _map;
 

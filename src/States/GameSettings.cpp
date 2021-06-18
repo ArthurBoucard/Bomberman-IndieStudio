@@ -17,7 +17,7 @@ GameSettings::GameSettings()
     _skinChoicePl1 = 0;
     _skinChoicePl2 = 0;
 
-    _button = LoadSound("../assets/sound/button.wav");
+    _button.Load("../assets/sound/button.wav");
 }
 
 GameSettings::~GameSettings()
@@ -204,38 +204,59 @@ void GameSettings::HandleInput()
 {
     if (CheckMouse(_mouse, _rectPlPlayers, "", 1) == true && _nbPlayers < 2 && _nbTotalPlayers != 4)
     {
-        PlaySound(_button);
+        _button.Play();
         _nbPlayers++;
     }
     if (CheckMouse(_mouse, _rectMiPlayers, "", 1) == true && _nbPlayers > 0)
     {
-        PlaySound(_button);
+        _button.Play();
         _nbPlayers--;
     }
     if (CheckMouse(_mouse, _rectPlIA, "", 1) == true && _nbIA < 4 && _nbTotalPlayers != 4)
     {
-        PlaySound(_button);
+        _button.Play();
         _nbIA++;
     }
     if (CheckMouse(_mouse, _rectMiIA, "", 1) == true && _nbIA > 0)
     {
-        PlaySound(_button);
+        _button.Play();
         _nbIA--;
     }
     if (CheckMouse(_mouse, _rectValidate, "=>", 2) == true && _nbTotalPlayers > 1 && _verif == 0)
+    {
+        _button.Play();
         _verif = 1;
+    }
     if (CheckMouse(_mouse, _rectPrevPlayer1, "", 1) == true && _verif == 1)
+    {
+        _button.Play();
         _skinChoicePl1--;
+    }
     if (CheckMouse(_mouse, _rectAfterPlayer1, "", 1) == true && _verif == 1)
+    {
+        _button.Play();
         _skinChoicePl1++;
+    }
     if (CheckMouse(_mouse, _rectPrevPlayer2, "", 1) == true && _verif == 1)
+    {
+        _button.Play();
         _skinChoicePl2--;
+    }
     if (CheckMouse(_mouse, _rectAfterPlayer2, "", 1) == true && _verif == 1)
+    {
+        _button.Play();
         _skinChoicePl2++;
+    }
     if (CheckMouse(_mouse, _rectValidate, "=>", 2) && _nbPlayers == 0 && _verif == 1)
+    {
+        _button.Play();
         _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
+    }
     if (CheckMouse(_mouse, _rectPlay, "PLAY", 3) && _verif == 1)
+    {
+        _button.Play();
         _context->TransitionTo(new Game(_nbPlayers, _nbIA, _skinChoicePl1, _skinChoicePl2));
+    }
 }
 
 void GameSettings::Reset()

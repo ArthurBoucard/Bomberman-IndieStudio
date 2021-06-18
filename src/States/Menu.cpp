@@ -13,7 +13,7 @@ Menu::Menu()
     _music.Play();
     _bg.LoadFile("../assets/pictures/bg.png");
 
-    _button = LoadSound("../assets/sound/button.wav");
+    _button.Load("../assets/sound/button.wav");
 
     _playGame = Raylib::Text("PLAY GAME");
     _title = Raylib::Text("BOMBERMAN");
@@ -84,22 +84,22 @@ void Menu::HandleInput()
 {
     if (CheckMouse(_mouse, _rectPlayGame, 1) == true)
     {
-        PlaySound(_button);
+        _button.Play();
         _context->TransitionTo(new GameSettings);
     }
     if (CheckMouse(_mouse, _rectSettings, 2) == true)
     {
-        PlaySound(_button);
+        _button.Play();
         printf("Settings\n");
     }
     if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
     {
-        PlaySound(_button);
+        _button.Play();
         printf("Tuto\n");
     }
     if (CheckMouse(_mouse, _rectStats, 4) == true)
     {
-        PlaySound(_button);
+        _button.Play();
         printf("Stat\n");
     }
 }
