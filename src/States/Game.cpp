@@ -711,7 +711,5 @@ void Game::saveMap()
                     map[x][y] = 'o';
     }
 
-    for(int i = 0; i < map.size(); i++)
-        std::cout << map[i] << std::endl;
     _saveMap = map;
 }
