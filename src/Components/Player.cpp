@@ -12,6 +12,7 @@ Player::Player(std::string name, int id)
     _name = name;
     _id = id;
     _start = clock();
+    _speed = 0.05;
 }
 
 Player::~Player()
@@ -46,4 +47,13 @@ void Player::setClock(clock_t cl)
 clock_t Player::getClock() const
 {
     return _start;
+}
+
+void Player::setSpeed(float speed)
+{
+    _speed = speed;
+}
+float Player::getSpeed() const
+{
+    return _speed;
 }

@@ -50,8 +50,6 @@ class Game : public State {
 
         Camera _camera = {0};
 
-        float _speed = 0.05;
-
         int _lastWall = 0;
 
         std::vector<std::string> _files;

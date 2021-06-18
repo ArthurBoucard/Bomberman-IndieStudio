@@ -314,12 +314,14 @@ void Game::Clear()
 void Game::HandleInput()
 {
     Vector2 mouse = GetMousePosition();
+    float _speed = 0;
 
     // PLayer control
     if (_nbPlayer > 0)
     {
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
         {
+            _speed = _playerList[i]->getSpeed();
             if (_playerList[i]->getPlayerID() == 0)
             {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
@@ -386,6 +388,7 @@ Texture2D Game::getSkin()
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
 {
     int rand = GetRandomValue(0, 4);
+    float _speed = _playerList[playerIndex]->getSpeed();
 
     if (rand == 0)
         _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
