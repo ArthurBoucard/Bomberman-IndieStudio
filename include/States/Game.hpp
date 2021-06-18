@@ -54,7 +54,7 @@ class Game : public State {
 
         int _lastWall = 0;
         bool _lastCol = true;
-        bool _lastDir = 0;
+        int _lastDir = 0;
 
         std::vector<std::string> _files;
 
