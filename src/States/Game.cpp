@@ -648,19 +648,14 @@ void Game::saveMap()
         int y = round(_positionList[i]->getY());
 
         for(int j = 0; j < _solidList.size(); j++)
-        {
             if (id == _solidList[j]->getLink())
                 map[x][y] = 'X';
-        }
 
         for(int j = 0; j < _breakableList.size(); j++)
-        {
             if (id == _breakableList[j]->getLink())
                 map[x][y] = '#';
-        }
 
         for(int j = 0; j < _playerList.size(); j++)
-        {
             if (id == _playerList[j]->getLink())
             {
                 if(_playerList[j]->getPlayerID() == 0)
@@ -670,14 +665,11 @@ void Game::saveMap()
                 if(_playerList[j]->getPlayerID() == 2)
                     map[x][y] = '@';
             }
-        }
 
         for(int j = 0; j < _bombList.size(); j++)
-        {
             if (id == _bombList[j]->getLink())
                 if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '@')
                     map[x][y] = 'o';
-        }
     }
 
     for(int i = 0; i < map.size(); i++)
