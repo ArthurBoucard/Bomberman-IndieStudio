@@ -444,11 +444,11 @@ bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3
 
     if (!_lastCol) {
         if (_lastDir == dir)
-            return false;
+            return _lastCol;
         else {
-            _lastCol = true;
+            _lastCol = collision;
             _lastDir = dir;
-            return true;
+            return _lastCol;
         }
     }
     for (std::size_t p = 0, e = 0; p < _solidList.size(); p++) {
