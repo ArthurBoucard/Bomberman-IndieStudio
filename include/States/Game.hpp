@@ -11,6 +11,7 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
+#include "../States/Pause.hpp"
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
@@ -22,6 +23,7 @@
 class Game : public State {
     public:
         Game(int nbPlayer, int nbIA);
+        Game(int nbPlayer, int nbIA, const std::vector<std::string> &map);
         ~Game();
 
         void Draw();
@@ -33,11 +35,12 @@ class Game : public State {
 
         Texture2D getSkin();
 
-        void ReadFiles();
-
         void spawnBomb(int nbPlayer);
         bool testCollision(int direction, int pPos);
         void deleteEntity(int id);
+
+        void saveMap();
+
     private:
         float _screenWidth;
         float _screenHeight;
@@ -47,14 +50,14 @@ class Game : public State {
 
         Rectangle _rectGame;
         std::vector<std::string> _map;
+        std::vector<std::string> _saveMap;
+        std::vector<std::string> _saveSkin;
 
         Camera _camera = {0};
 
         float _speed = 0.05;
 
         int _lastWall = 0;
-
-        std::vector<std::string> _files;
 
         std::vector<Position *> _positionList;
         std::vector<Breakable *> _breakableList;
