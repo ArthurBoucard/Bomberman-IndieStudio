@@ -81,7 +81,7 @@ void Pause::HandleInput()
     if (CheckMouse(_mouse, _rectBack, 2) == true)
         _context->TransitionTo(new Menu);
     if (CheckMouse(_mouse, _rectResume, 3) == true)
-        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map));
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skinChoicePl1, _skinChoicePl2));
 }
 
 void Pause::Reset()

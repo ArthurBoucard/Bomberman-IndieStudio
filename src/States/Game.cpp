@@ -43,15 +43,13 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     Model model1 = LoadModel("../assets/skin/guy.iqm");
     if (skin1 >= 0)
         model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
-    if (skin1 < 0)
+    else
         model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-    std::cout << skin2 << std::endl;
-    std::cout << _skin[skin2] << std::endl;
     if (skin2 >= 0)
         model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
-    if (skin2 < 0)
+    else
         model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
@@ -160,14 +158,23 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     }
 }
 
-Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map)
+Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin1, int skin2)
 {
+    _map = map;
+
     _music.LoadMusic("../assets/music/game.xm");
     _music.Play();
 
     _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
     _explosionBomb = LoadSound("../assets/sound/explosion.wav");
     _deathPlayer = LoadSound("../assets/sound/death.wav");
+
+    _nbPlayer = nbPlayer;
+    _nbIA = nbIA;
+    _skinChoicePl1 = skin1;
+    _skinChoicePl2 = skin2;
+    if (skin1 < skin2)
+        skin2--;
 
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
@@ -180,10 +187,16 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map)
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin1 >= 0)
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
+    else
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin2 >= 0)
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
+    else
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
@@ -193,11 +206,9 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map)
 
     int whichAI = 0;
 
-    _map = map;
-
-    for (float x = 0, w = 0; x < _map.size(); x++, w += 60)
+    for (float x = 0; x < _map.size(); x++)
     {
-        for (float z = 0, h = 0; z < _map[x].size(); z++, h += 60)
+        for (float z = 0; z < _map[x].size(); z++)
         {
             if (_map[x][z] == 'o')
             {
@@ -260,12 +271,8 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map)
                 Model3D *mod = new Model3D(); //Model3D
                 if (whichAI == 0)
                     mod->setModel(model3);
-                else if (whichAI == 1)
-                    mod->setModel(model4);
-                else if (whichAI == 2)
-                    mod->setModel(model2);
                 else
-                    mod->setModel(model1);
+                    mod->setModel(model4);
                 mod->link(ai->getId());
                 _model3DList.push_back(mod);
                 Jump *jp = new Jump(); //Jump
@@ -769,6 +776,9 @@ void Game::saveMap()
                 if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '@')
                     map[x][y] = 'o';
     }
+
+    for(int i = 0; i < map.size(); ++i)
+        std::cout << map[i] << std::endl;
 
     _saveMap = map;
 }
