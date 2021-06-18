@@ -14,19 +14,23 @@
 
 class Position : public Components {
     public:
+        Position() {}
         Position(int posX, int posY, int posZ);
         ~Position();
 
         void link(int id);
         int getLink();
-        int getX();
-        int getY();
-        int getZ();
+        float getX();
+        float getY();
+        float getZ();
+        void setX(float x);
+        void setY(float y);
+        void setZ(float z);
     protected:
         int _link;
-        int _x;
-        int _y;
-        int _z;
+        float _x;
+        float _y;
+        float _z;
     private:
 };
 

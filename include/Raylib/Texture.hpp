@@ -62,7 +62,7 @@ namespace Raylib {
                 DrawTexture(*this, posX, posY, tint);
                 return *this;
             }
-            inline Texture &DrawEx(Vector2 position, float rotation, float scale, Color tint)    //Draw texture with scale
+            inline Texture &Draw(Vector2 position, float rotation, float scale, Color tint)    //Draw texture with scale
             {
                 DrawTextureEx(*this, position, rotation, scale, tint);
                 return *this;

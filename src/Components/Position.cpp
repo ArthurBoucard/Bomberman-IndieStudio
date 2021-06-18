@@ -28,17 +28,32 @@ int Position::getLink()
     return _link;
 }
 
-int Position::getX()
+float Position::getX()
 {
     return _x;
 }
 
-int Position::getY()
+float Position::getY()
 {
     return _y;
 }
 
-int Position::getZ()
+float Position::getZ()
 {
     return _z;
+}
+
+void Position::setX(float x)
+{
+    _x = x;
+}
+
+void Position::setY(float y)
+{
+    _y = y;
+}
+
+void Position::setZ(float z)
+{
+    _z = z;
 }

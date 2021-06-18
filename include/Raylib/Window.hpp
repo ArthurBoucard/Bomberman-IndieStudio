@@ -12,22 +12,40 @@
 
 #include "Raylib.hpp"
 
-namespace Raylib {
-    class Window {
+namespace Raylib
+{
+    class Window
+    {
         public:
             Window() {}
-            Window(int width, int height, const std::string &title)               //Constructor - Creates window
+            Window(int width, int height, const std::string &title) //Constructor - Creates window
             {
                 InitWindow(width, height, title.c_str());
             }
-            ~Window()                                                             //Destructor - Cloases window
+            ~Window() //Destructor - Cloases window
             {
                 CloseWindow();
             }
 
-            inline bool ShouldClose()                                             //Check if KEY_ESCAPE pressed or Close icon pressed
+            inline bool ShouldClose() //Check if KEY_ESCAPE pressed or Close icon pressed
             {
                 return WindowShouldClose();
+            }
+
+            inline Window &ClearBackground(const ::Color &color = BLACK)
+            {
+                ::ClearBackground(color);
+                return *this;
+            }
+
+            inline int GetScreenWidth() const
+            {
+                return ::GetScreenWidth();
+            }
+
+            inline int GetScreenHeight() const
+            {
+                return ::GetScreenHeight();
             }
 
         protected:

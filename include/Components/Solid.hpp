@@ -2,27 +2,30 @@
 ** EPITECH PROJECT, 2021
 ** B-YEP-400-LYN-4-1-indiestudio-arthur.boucard
 ** File description:
-** Texture2DComp
+** Solid
 */
 
-#ifndef TEXTURE2DCOMP_HPP_
-#define TEXTURE2DCOMP_HPP_
+#ifndef SOLID_HPP_
+#define SOLID_HPP_
 
 #include "Components.hpp"
+#include "Position.hpp"
 #include "../Raylib/Raylib.hpp"
 
-class Texture2DComp: public Components {
+class Solid {
     public:
-        Texture2DComp(Texture2D texture);
-        ~Texture2DComp();
+        Solid();
+        ~Solid();
 
         void link(int id);
         int getLink();
-        Texture2D getTexture();
+        void updateRect(Position pos);
+        Rectangle getRect();
+
     protected:
         int _link;
-        Texture2D _texture;
+        Rectangle _rect;
     private:
 };
 
-#endif /* !TEXTURE2DCOMP_HPP_ */
+#endif /* !SOLID_HPP_ */

@@ -13,6 +13,8 @@ GameSettings::GameSettings()
     _bg = LoadTexture("../assets/pictures/bg.png");
     _nbIA = 0;
     _nbPlayers = 0;
+
+    _button = LoadSound("../assets/sound/button.wav");
 }
 
 GameSettings::~GameSettings()
@@ -83,15 +85,30 @@ void GameSettings::Clear()
 void GameSettings::HandleInput()
 {
     if (CheckMouse(_mouse, _rectPlPlayers, "", 1) == true && _nbPlayers < 2 && _nbTotalPlayers != 4)
+    {
+        PlaySound(_button);
         _nbPlayers++;
+    }
     if (CheckMouse(_mouse, _rectMiPlayers, "", 1) == true && _nbPlayers > 0)
+    {
+        PlaySound(_button);
         _nbPlayers--;
+    }
     if (CheckMouse(_mouse, _rectPlIA, "", 1) == true && _nbIA < 4 && _nbTotalPlayers != 4)
+    {
+        PlaySound(_button);
         _nbIA++;
+    }
     if (CheckMouse(_mouse, _rectMiIA, "", 1) == true && _nbIA > 0)
+    {
+        PlaySound(_button);
         _nbIA--;
+    }
     if (CheckMouse(_mouse, _rectValidate, "=>", 2) == true && _nbTotalPlayers > 1)
-        _context->TransitionTo(new Game);
+    {
+        PlaySound(_button);
+        _context->TransitionTo(new Game(_nbPlayers, _nbIA));
+    }
 }
 
 void GameSettings::Reset()
