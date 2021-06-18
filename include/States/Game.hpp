@@ -11,6 +11,7 @@
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
+#include "../States/Pause.hpp"
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
@@ -23,6 +24,8 @@ class Game : public State
 {
 public:
     Game(int nbPlayer, int nbIA, int skin1, int skin2);
+    Game(int nbPlayer, int nbIA);
+    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map);
     ~Game();
 
     void Draw();
@@ -35,11 +38,11 @@ public:
     Texture2D getSkin(int);
     Texture2D getSkin();
 
-    void ReadFiles();
-
     void spawnBomb(int nbPlayer);
-    bool testCollision(int direction, int pPos);
+    bool testCollision(int dir, Position *pos);
     void deleteEntity(int id);
+
+    void saveMap();
 
 private:
     float _screenWidth;
@@ -47,15 +50,21 @@ private:
 
     int _nbPlayer;
     int _nbIA;
-
     Rectangle _rectGame;
     std::vector<std::string> _map;
+    std::vector<std::string> _saveMap;
+    std::vector<std::string> _saveSkin;
+
+    int _skinChoicePl1;
+    int _skinChoicePl2;
 
     Camera _camera = {0};
 
     float _speed = 0.05;
 
     int _lastWall = 0;
+    bool _lastCol = true;
+    int _lastDir = 0;
 
     std::vector<std::string> _files;
 
@@ -73,6 +82,8 @@ private:
 
     Raylib::Music _music;
     Sound _poseBomb;
+    Sound _explosionBomb;
+    Sound _deathPlayer;
 };
 
 #endif /* !GAME_HPP_ */

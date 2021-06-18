@@ -12,6 +12,8 @@ Player::Player(std::string name, int id)
     _name = name;
     _id = id;
     _start = clock();
+    _mesh = GenMeshCube(0.5, 1, 0.5);
+    _bBox = GetMeshBoundingBox(_mesh);
 }
 
 Player::~Player()
@@ -46,4 +48,14 @@ void Player::setClock(clock_t cl)
 clock_t Player::getClock() const
 {
     return _start;
+}
+
+void Player::updateBBox(Position pos)
+{
+    return;
+}
+
+BoundingBox Player::getBBox()
+{
+    return _bBox;
 }

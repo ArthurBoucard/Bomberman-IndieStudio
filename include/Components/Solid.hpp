@@ -9,6 +9,7 @@
 #define SOLID_HPP_
 
 #include "Components.hpp"
+#include "Position.hpp"
 #include "../Raylib/Raylib.hpp"
 
 class Solid {
@@ -18,9 +19,12 @@ class Solid {
 
         void link(int id);
         int getLink();
+        void updateRect(Position pos);
+        Rectangle getRect();
 
     protected:
         int _link;
+        Rectangle _rect;
     private:
 };
 
