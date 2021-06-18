@@ -28,6 +28,9 @@ Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map)
 {
     _bg = LoadTexture("../assets/pictures/bg.png");
 
+    _music.LoadMusic("../assets/music/pause.mp3");
+    _music.Play();
+
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
     _map = map;
@@ -47,8 +50,11 @@ void Pause::Draw()
 
 void Pause::Update()
 {
+    _music.Update();
+
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+
     _mouse = GetMousePosition();
     DrawText(_pauseText.c_str(), _screenWidth / 2.8, _screenHeight / 6.8, (_screenWidth / 8) - (_screenHeight / 13), RAYWHITE);
 

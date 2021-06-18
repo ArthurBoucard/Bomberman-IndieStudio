@@ -75,6 +75,8 @@ class Game : public State {
 
         Raylib::Music _music;
         Sound _poseBomb;
+        Sound _explosionBomb;
+        Sound _deathPlayer;
 };
 
 #endif /* !GAME_HPP_ */

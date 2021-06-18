@@ -15,6 +15,8 @@ Game::Game(int nbPlayer, int nbIA)
     _music.Play();
 
     _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
+    _explosionBomb = LoadSound("../assets/sound/explosion.wav");
+    _deathPlayer = LoadSound("../assets/sound/death.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -152,6 +154,8 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map)
     _music.Play();
 
     _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
+    _explosionBomb = LoadSound("../assets/sound/explosion.wav");
+    _deathPlayer = LoadSound("../assets/sound/death.wav");
 
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
@@ -389,6 +393,7 @@ void Game::Update()
     for (std::size_t i = 0, p = 0, p2 = 0, k = 0, m = 0; i < _flameList.size(); i++) {
         clock_t end = clock();
         if (end - _flameList[i]->getClock() >= 30000) {
+            PlaySound(_explosionBomb);
             _flameList[i]->resetClock();
             if (_flameList[i]->getDist() == 0) {
                 deleteEntity(_flameList[i]->getLink());
@@ -431,6 +436,7 @@ void Game::Update()
                         if (_playerList[k]->getLink() == _positionList[p2]->getLink()) {
                             deleteEntity(_playerList[k]->getLink()); // delete player
                             deleteEntity(_flameList[i]->getLink());
+                            PlaySound(_deathPlayer);
                             break;
                         }
                     }
@@ -705,7 +711,5 @@ void Game::saveMap()
                     map[x][y] = 'o';
     }
 
-    for(int i = 0; i < map.size(); i++)
-        std::cout << map[i] << std::endl;
     _saveMap = map;
 }

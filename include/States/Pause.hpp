@@ -10,6 +10,7 @@
 
 #include "../StatesManagement/State.hpp"
 #include "../../include/States/Game.hpp"
+#include "../Raylib/Raylib.hpp"
 
 #include <iostream>
 #include <vector>
@@ -44,6 +45,8 @@ private:
     std::string _playAgain = "Play Again";
     std::string _resume = "Resume";
     std::string _backMenu = "Back To Menu";
+
+    Raylib::Music _music;
 
     std::vector<std::string> _map;
 
