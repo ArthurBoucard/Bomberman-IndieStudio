@@ -773,6 +773,10 @@ void Game::saveMap()
                     map[x][y] = '1';
                 if (_playerList[j]->getPlayerID() == 2)
                     map[x][y] = '@';
+                if (_playerList[j]->getPlayerID() == 3)
+                    map[x][y] = '@';
+                if (_playerList[j]->getPlayerID() == 4)
+                    map[x][y] = '@';
             }
 
         for (int j = 0; j < _bombList.size(); j++)
