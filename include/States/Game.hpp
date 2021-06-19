@@ -12,6 +12,7 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 #include "../States/Pause.hpp"
+#include "../States/Win.hpp"
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 

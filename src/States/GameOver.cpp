@@ -7,10 +7,16 @@
 
 #include "../../include/States/GameOver.hpp"
 
-GameOver::GameOver()
+GameOver::GameOver(int nbPlayer, int nbIA, int skinChoicePl1, int skinChoicePl2)
 {
     _musicEnd = LoadMusicStream("../assets/music/endGame.mp3");
     PlayMusicStream(_musicEnd);
+    _button.Load("../assets/sound/button.wav");
+
+    _nbPlayer = nbPlayer;
+    _nbIA = nbIA;
+    _skinChoicePl1 = skinChoicePl1;
+    _skinChoicePl2 = skinChoicePl2;
 }
 
 GameOver::~GameOver()
@@ -60,10 +66,14 @@ void GameOver::Clear()
 
 void GameOver::HandleInput()
 {
-    if (CheckMouse(_mouse, _rectBack, _back.c_str(), 1) == true)
+    if (CheckMouse(_mouse, _rectBack, _back.c_str(), 1) == true) {
+        _button.Play();
         _context->TransitionTo(new Menu);
-    if (CheckMouse(_mouse, _rectAgain, _again.c_str(), 2) == true)
-        _context->TransitionTo(new Menu);
+    }
+    if (CheckMouse(_mouse, _rectAgain, _again.c_str(), 2) == true) {
+        _button.Play();
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+    }
 }
 
 void GameOver::Reset()

@@ -505,10 +505,12 @@ void Game::Update()
     }
     if (testWin()) {
         if (_nbPlayer == 1) {
-            // Loose loose shit meal
-        } else {
-            // Winner winner chicken dinner
-        }
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
+                    _context->TransitionTo(new Win); //WINNER
+            _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+        } else
+            _context->TransitionTo(new Win); //WINNER
     }
 }
 
