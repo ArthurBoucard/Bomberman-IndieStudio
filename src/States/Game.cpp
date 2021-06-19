@@ -298,7 +298,17 @@ void Game::Update()
                             for (m = 0; m < _breakableList.size(); m++)
                                 if (_breakableList[m]->getLink() == _positionList[p2]->getLink())
                                 {
-                                    _breakableList[m]->breakBrick();
+                                    if (GetRandomValue(0, 2) == 2)
+                                    {
+                                        Entity *powerUp = new Entity;
+                                        PowerUp *pu = new PowerUp;
+                                        pu->link(powerUp->getId());
+                                        _powerUpList.push_back(pu);
+                                        _positionList[p2]->link(powerUp->getId());
+                                        Texture2DComp *tex = new Texture2DComp(pu->getTexture());
+                                        tex->link(powerUp->getId());
+                                        _texture2DList.push_back(tex);
+                                    }
                                     deleteEntity(_breakableList[m]->getLink());
                                 }
                             deleteEntity(_flameList[i]->getLink());
@@ -320,7 +330,6 @@ void Game::Update()
                         {
                             deleteEntity(_playerList[k]->getLink()); // delete player
                             deleteEntity(_flameList[i]->getLink());
-                            if (GetRandomValue(0, 2) == 2)
                             break;
                         }
                     }
@@ -485,35 +494,42 @@ bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3
 {
     bool collision = true;
 
-    if (!_lastCol) {
+    if (!_lastCol)
+    {
         if (_lastDir == dir)
             return _lastCol;
-        else {
+        else
+        {
             _lastCol = collision;
             _lastDir = dir;
             return _lastCol;
         }
     }
-    for (std::size_t p = 0, e = 0; p < _solidList.size(); p++) {
-        for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++) {}
+    for (std::size_t p = 0, e = 0; p < _solidList.size(); p++)
+    {
+        for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++)
+        {
+        }
         if (CheckCollisionBoxes(
-            {{ static_cast<float>(pos->getX() - 6 - 0.5/2),
-                            static_cast<float>(pos->getZ() - 1/2),
-                            static_cast<float>(pos->getY() - 9 - 0.5/2) },
-                          { static_cast<float>(pos->getX() - 6 + 0.5/2),
-                            static_cast<float>(pos->getZ() + 1/2),
-                            static_cast<float>(pos->getY() - 9 + 0.5/2) }},
-            {{ static_cast<float>(_positionList[e]->getX() - 6 - 0.5),
-                            static_cast<float>(_positionList[e]->getZ() - 0.5),
-                            static_cast<float>(_positionList[e]->getY() - 9 - 0.5) },
-                          { static_cast<float>(_positionList[e]->getX() - 6 + 0.5),
-                            static_cast<float>(_positionList[e]->getZ() + 0.5),
-                            static_cast<float>(_positionList[e]->getY() - 9 + 0.5) }})) {
+                {{static_cast<float>(pos->getX() - 6 - 0.5 / 2),
+                  static_cast<float>(pos->getZ() - 1 / 2),
+                  static_cast<float>(pos->getY() - 9 - 0.5 / 2)},
+                 {static_cast<float>(pos->getX() - 6 + 0.5 / 2),
+                  static_cast<float>(pos->getZ() + 1 / 2),
+                  static_cast<float>(pos->getY() - 9 + 0.5 / 2)}},
+                {{static_cast<float>(_positionList[e]->getX() - 6 - 0.5),
+                  static_cast<float>(_positionList[e]->getZ() - 0.5),
+                  static_cast<float>(_positionList[e]->getY() - 9 - 0.5)},
+                 {static_cast<float>(_positionList[e]->getX() - 6 + 0.5),
+                  static_cast<float>(_positionList[e]->getZ() + 0.5),
+                  static_cast<float>(_positionList[e]->getY() - 9 + 0.5)}}))
+        {
             collision = false;
             break;
         }
     }
-    if (!collision) {
+    if (!collision)
+    {
         if (dir == 1)
             pos->setY(pos->getY() + 0.05);
         else if (dir == 2)

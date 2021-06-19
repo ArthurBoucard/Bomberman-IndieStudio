@@ -13,18 +13,25 @@
 class PowerUp
 {
 public:
-    PowerUp() = default;
-    ~PowerUp() = default;
+    PowerUp();
+    ~PowerUp();
+    void link(int id);
+    int getLink() const;
     PowerUp *getPower() const;
-    void setPower();
-    virtual void usePower(Player *player) const = 0;
+    void usePower(Player *player) const;
+    Texture2D getTexture() const;
 
 protected:
     PowerUp *_power;
+    int _link;
+    Texture2D _tex;
 };
 
 class Speed : public PowerUp
 {
+public:
+    Speed();
     void usePower(Player *player) const;
+
 };
 #endif /* !POWERUP_HPP_ */
