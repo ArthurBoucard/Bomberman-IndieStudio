@@ -7,17 +7,23 @@
 
 #include "../../include/States/Game.hpp"
 
-Game::Game(int nbPlayer, int nbIA)
+Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 {
     Map map = Map();
 
     _music.LoadMusic("../assets/music/game.xm");
     _music.Play();
 
-    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
+    _poseBomb.Load("../assets/sound/poseBomb.wav");
+    _explosionBomb.Load("../assets/sound/explosion.wav");
+    _deathPlayer.Load("../assets/sound/death.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
+    _skinChoicePl1 = skin1;
+    _skinChoicePl2 = skin2;
+    if (skin1 < skin2)
+        skin2--;
 
     map.createMap();
     map.proceduralGenClassical();
@@ -35,10 +41,16 @@ Game::Game(int nbPlayer, int nbIA)
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin1 >= 0)
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin1);
+    else
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
+    if (skin2 >= 0)
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin(skin2);
+    else
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = getSkin();
@@ -52,6 +64,160 @@ Game::Game(int nbPlayer, int nbIA)
     {
         for (float z = 0; z < _map[x].size(); z++)
         {
+            if (_map[x][z] == 'o')
+            {
+                Entity *bomb = new Entity;
+                Position *pos = new Position(x, z, 0);
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb(2);
+                b->link(bomb->getId());
+                _bombList.push_back(b);
+            }
+            if (_map[x][z] != 'X')
+            {
+                Entity *ground = new Entity;
+                Position *pos = new Position(x, z, -1);
+                pos->link(ground->getId());
+                _positionList.push_back(pos);
+                Texture2DComp *tex = new Texture2DComp(grassT);
+                tex->link(ground->getId());
+                _texture2DList.push_back(tex);
+            }
+            if (_map[x][z] == 'X')
+            {
+                Entity *wall = new Entity;
+                Position *pos = new Position(x, z, 0);
+                pos->link(wall->getId());
+                _positionList.push_back(pos);
+                Texture2DComp *tex = new Texture2DComp(wallT);
+                tex->link(wall->getId());
+                _texture2DList.push_back(tex);
+                Solid *solid = new Solid();
+                solid->link(wall->getId());
+                _solidList.push_back(solid);
+            }
+            if (_map[x][z] == '#')
+            {
+                Entity *brick = new Entity;
+                Position *pos = new Position(x, z, 0);
+                pos->link(brick->getId());
+                _positionList.push_back(pos);
+                Breakable *br = new Breakable;
+                br->link(brick->getId());
+                _breakableList.push_back(br);
+                Texture2DComp *tex = new Texture2DComp(brickT);
+                tex->link(brick->getId());
+                _texture2DList.push_back(tex);
+                Solid *solid = new Solid();
+                solid->link(brick->getId());
+                _solidList.push_back(solid);
+            }
+            if (_map[x][z] == '@')
+            {
+                Entity *ai = new Entity;               //Entity
+                Position *pos = new Position(x, z, 0); //Position
+                pos->link(ai->getId());
+                _positionList.push_back(pos);
+                Player *pl = new Player("AI", 2 + whichAI); //Player
+                pl->link(ai->getId());
+                _playerList.push_back(pl);
+                Model3D *mod = new Model3D(); //Model3D
+                if (whichAI == 0)
+                    mod->setModel(model3);
+                else if (whichAI == 1)
+                    mod->setModel(model4);
+                else if (whichAI == 2)
+                    mod->setModel(model2);
+                else
+                    mod->setModel(model1);
+                mod->link(ai->getId());
+                _model3DList.push_back(mod);
+                Jump *jp = new Jump(); //Jump
+                jp->link(ai->getId());
+                _jumpList.push_back(jp);
+                whichAI++;
+            }
+            if (_map[x][z] == '0' || _map[x][z] == '1')
+            {
+                Entity *player = new Entity;           //Entity
+                Position *pos = new Position(x, z, 0); //Position
+                pos->link(player->getId());
+                _positionList.push_back(pos);
+                Player *pl = new Player("player", _map[x][z] - 48); //Player
+                pl->link(player->getId());
+                _playerList.push_back(pl);
+                Model3D *mod = new Model3D(); //Model3D
+                if (_map[x][z] == '0')
+                    mod->setModel(model1);
+                else
+                    mod->setModel(model2);
+                mod->link(player->getId());
+                _model3DList.push_back(mod);
+                Jump *jp = new Jump(); //Jump
+                jp->link(player->getId());
+                _jumpList.push_back(jp);
+            }
+        }
+    }
+}
+
+Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
+{
+    _map = map;
+
+    _music.LoadMusic("../assets/music/game.xm");
+    _music.Play();
+
+    _poseBomb.Load("../assets/sound/poseBomb.wav");
+    _explosionBomb.Load("../assets/sound/explosion.wav");
+    _deathPlayer.Load("../assets/sound/death.wav");
+
+    _nbPlayer = nbPlayer;
+    _nbIA = nbIA;
+    _saveSkin = skin;
+
+    for (int i = 0; i < skin.size();i ++)
+        std::cout << skin[i] << std::endl;
+
+    Texture2D brickT = LoadTexture("../assets/pictures/block.png");
+    Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
+    Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
+
+    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.target = {0.0f, 0.0f, 0.0f};
+    _camera.up = {0.0f, 1.0f, 0.0f};
+    _camera.fovy = 45.0f;
+    _camera.projection = CAMERA_PERSPECTIVE;
+
+    Model model1 = LoadModel("../assets/skin/guy.iqm");
+        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
+
+    Model model2 = LoadModel("../assets/skin/guy.iqm");
+        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
+
+    Model model3 = LoadModel("../assets/skin/guy.iqm");
+    model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[2].c_str());
+
+    Model model4 = LoadModel("../assets/skin/guy.iqm");
+    model4.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[3].c_str());
+
+    int whichAI = 0;
+
+    for (float x = 0; x < _map.size(); x++)
+    {
+        for (float z = 0; z < _map[x].size(); z++)
+        {
+            if (_map[x][z] == 'o')
+            {
+                Entity *bomb = new Entity;
+                Position *pos = new Position(x, z, 0);
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb(2);
+                b->link(bomb->getId());
+                _bombList.push_back(b);
+            }
             if (_map[x][z] != 'X')
             {
                 Entity *ground = new Entity;
@@ -266,6 +432,7 @@ void Game::Update()
         clock_t end = clock();
         if (end - _flameList[i]->getClock() >= 30000)
         {
+            _explosionBomb.Play();
             _flameList[i]->resetClock();
             if (_flameList[i]->getDist() == 0)
             {
@@ -309,6 +476,7 @@ void Game::Update()
                                         tex->link(powerUp->getId());
                                         _texture2DList.push_back(tex);
                                     }
+                                    _breakableList[m]->breakBrick();
                                     deleteEntity(_breakableList[m]->getLink());
                                 }
                             deleteEntity(_flameList[i]->getLink());
@@ -330,6 +498,7 @@ void Game::Update()
                         {
                             deleteEntity(_playerList[k]->getLink()); // delete player
                             deleteEntity(_flameList[i]->getLink());
+                            _deathPlayer.Play();
                             break;
                         }
                     }
@@ -420,10 +589,28 @@ void Game::HandleInput()
         spawnBomb(0);
     if (IsKeyPressed(KEY_RIGHT_SHIFT) && _nbPlayer == 2)
         spawnBomb(1);
+
+    if (IsKeyPressed(KEY_P))
+    {
+        saveMap();
+        _context->TransitionTo(new Pause(_nbPlayer, _nbIA, _saveMap, _skinChoicePl1, _skinChoicePl2, _saveSkin));
+    }
 }
 
 void Game::Reset()
 {
+}
+
+Texture2D Game::getSkin(int skin)
+{
+    int index = GetRandomValue(0, (_skin.size() - 1));
+
+    std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
+    _skin.erase(_skin.begin() + skin);
+
+    _saveSkin.push_back(str);
+
+    return LoadTexture(str.c_str());
 }
 
 Texture2D Game::getSkin()
@@ -432,6 +619,8 @@ Texture2D Game::getSkin()
 
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
     _skin.erase(_skin.begin() + index);
+
+    _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
 }
@@ -575,4 +764,50 @@ void Game::deleteEntity(int id)
     for (i = 0; i < _flameList.size(); i++)
         if (_flameList[i]->getLink() == id)
             _flameList.erase(_flameList.begin() + i);
+}
+
+void Game::saveMap()
+{
+    int id;
+    std::vector<std::string> map;
+
+    for (int i = 0; i < _map.size(); i++)
+        map.push_back("               ");
+
+    for (int i = 0; i < _positionList.size(); i++)
+    {
+        id = _positionList[i]->getLink();
+        int x = round(_positionList[i]->getX());
+        int y = round(_positionList[i]->getY());
+
+        for (int j = 0; j < _solidList.size(); j++)
+            if (id == _solidList[j]->getLink())
+                map[x][y] = 'X';
+
+        for (int j = 0; j < _breakableList.size(); j++)
+            if (id == _breakableList[j]->getLink())
+                map[x][y] = '#';
+
+        for (int j = 0; j < _playerList.size(); j++)
+            if (id == _playerList[j]->getLink())
+            {
+                if (_playerList[j]->getPlayerID() == 0)
+                    map[x][y] = '0';
+                if (_playerList[j]->getPlayerID() == 1)
+                    map[x][y] = '1';
+                if (_playerList[j]->getPlayerID() == 2)
+                    map[x][y] = '@';
+                if (_playerList[j]->getPlayerID() == 3)
+                    map[x][y] = '@';
+                if (_playerList[j]->getPlayerID() == 4)
+                    map[x][y] = '@';
+            }
+
+        for (int j = 0; j < _bombList.size(); j++)
+            if (id == _bombList[j]->getLink())
+                if (map[x][y] != '0' && map[x][y] != '1' && map[x][y] != '@')
+                    map[x][y] = 'o';
+    }
+
+    _saveMap = map;
 }
