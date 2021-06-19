@@ -160,6 +160,11 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
         }
     }
+    Entity *card = new Entity;
+    Card *c = new Card();
+    c->link(card->getId());
+    c->setRect({0, 0, 0, 0});
+    _cardList.push_back(c);
 }
 
 Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
@@ -537,10 +542,12 @@ void Game::Update()
     }
     if (testWin()) {
         if (_nbPlayer == 1) {
-            for (std::size_t i = 0; i < _playerList.size(); i++)
-                if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
-                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
-            _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+            std::size_t i;
+            for (i = 0; _playerList[i]->getPlayerID() != 0; i++);
+            if (_playerList[i]->getIsAlive() == true)
+                _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+            else
+                _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
         } else
             _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
     }
@@ -625,6 +632,9 @@ void Game::Reset()
 
 void Game::drawPlayerUI()
 {
+    // for (std::size_t i = 0; i < _cardList.size(); i++) {
+    //     _cardList[i]->getRect().Draw(50, 50, DARKGRAY);
+    // }
 }
 
 Texture2D Game::getSkin(int skin)

@@ -77,6 +77,7 @@ private:
     std::vector<Solid *> _solidList;
     std::vector<Flame *> _flameList;
     std::vector<PowerUp *> _powerUpList;
+    std::vector<Card *> _cardList;
 
     std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
