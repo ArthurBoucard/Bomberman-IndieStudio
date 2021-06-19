@@ -24,7 +24,9 @@ class HowToPlay : public State
 
     private:
         Raylib::Texture2D _bg;
-        
+        float _screenWidth;
+        float _screenHeight;
+
 };
 
 #endif /* !HOWTOPLAY_HPP_ */
