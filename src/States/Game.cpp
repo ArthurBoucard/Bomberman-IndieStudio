@@ -34,9 +34,9 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.position = {0.0f, 12.0f, 10.0f};
     _camera.target = {0.0f, 0.0f, 0.0f};
-    _camera.up = {0.0f, 1.0f, 0.0f};
+    _camera.up = {0.0f, 2.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
@@ -184,9 +184,9 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.position = {0.0f, 12.0f, 10.0f};
     _camera.target = {0.0f, 0.0f, 0.0f};
-    _camera.up = {0.0f, 1.0f, 0.0f};
+    _camera.up = {0.0f, 2.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
@@ -399,6 +399,7 @@ void Game::Draw()
             }
         }
     }
+    drawPlayerUI();
     EndMode3D();
 }
 
@@ -534,16 +535,14 @@ void Game::Update()
             }
         }
     }
-    if (testWin())
-    {
-        if (_nbPlayer == 1)
-        {
-            // Loose loose shit meal
-        }
-        else
-        {
-            // Winner winner chicken dinner
-        }
+    if (testWin()) {
+        if (_nbPlayer == 1) {
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
+                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+            _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+        } else
+            _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
     }
 }
 
@@ -621,6 +620,10 @@ void Game::HandleInput()
 }
 
 void Game::Reset()
+{
+}
+
+void Game::drawPlayerUI()
 {
 }
 

@@ -12,6 +12,7 @@
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
 #include "../States/Pause.hpp"
+#include "../States/Win.hpp"
 #include "../Map/Map.hpp"
 #include "../Components/Entity.hpp"
 
@@ -32,6 +33,7 @@ public:
     void Clear();
     void HandleInput();
     void Reset();
+    void drawPlayerUI();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
     void usePower();
 

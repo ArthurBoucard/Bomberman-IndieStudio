@@ -23,6 +23,7 @@ extern int idValue;
 #include "Jump.hpp"
 #include "Solid.hpp"
 #include "Flame.hpp"
+#include "Card.hpp"
 #include "PowerUp.hpp"
 
 class Entity {

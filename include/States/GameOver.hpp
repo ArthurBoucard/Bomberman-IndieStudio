@@ -15,7 +15,7 @@
 class GameOver : public State
 {
 public:
-    GameOver();
+    GameOver(int _nbPlayer, int _nbIA, int _skinChoicePl1, int _skinChoicePl2);
     ~GameOver();
 
     void Draw();
@@ -31,12 +31,18 @@ private:
     Rectangle _rectBack;
     Rectangle _rectAgain;
     Music _musicEnd;
+    Raylib::Sound _button;
 
     float _screenWidth;
     float _screenHeight;
     std::string _gameOver = "GAME OVER";
     std::string _back = "BACK TO MENU";
     std::string _again = "PLAY AGAIN";
+
+    int _nbPlayer;
+    int _nbIA;
+    int _skinChoicePl1;
+    int _skinChoicePl2;
 };
 
 #endif /* !GAMEOVER_HPP_ */
