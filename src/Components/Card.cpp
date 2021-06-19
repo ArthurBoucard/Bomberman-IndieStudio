@@ -47,7 +47,7 @@ Image Card::getHead() const
 
 void Card::setName(std::string name)
 {
-    _name = name
+    _name = name;
 }
 
 std::string Card::getName() const
@@ -72,7 +72,7 @@ int Card::getNbPowerUpSpeed() const
 
 Image Card::getPowerUpBombUp() const
 {
-    return _nbPowerUpBombUp;
+    return _powerUpBombUp;
 }
 
 void Card::setNbPowerUpBombUp(int nb)
@@ -87,7 +87,7 @@ int Card::getNbPowerUpSBombUp() const
 
 Image Card::getPowerUpFlameUp() const
 {
-    return _nbPowerUpFlameUp;
+    return _powerUpFlameUp;
 }
 void Card::setNbPowerUpFlameUp(int nb)
 {
@@ -101,7 +101,7 @@ int Card::getNbPowerUpFlameUp() const
 
 Image Card::getPowerUpWallPass() const
 {
-    return _powerUpWallPass
+    return _powerUpWallPass;
 }
 
 void Card::setNbPowerUpWallPass(int nb)
