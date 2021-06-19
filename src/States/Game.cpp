@@ -632,6 +632,9 @@ void Game::Reset()
 
 void Game::drawPlayerUI()
 {
+    // for (std::size_t i = 0; i < _cardList.size(); i++) {
+    //     _cardList[i]->getRect().Draw(50, 50, DARKGRAY);
+    // }
 }
 
 Texture2D Game::getSkin(int skin)
