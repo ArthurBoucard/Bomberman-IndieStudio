@@ -38,7 +38,7 @@ public:
     Texture2D getSkin();
 
     void spawnBomb(int nbPlayer);
-    bool testCollision(int dir, Position *pos);
+    bool testCollision(Position *pos, float x, float y);
     void deleteEntity(int id);
 
     void saveMap();
@@ -63,8 +63,6 @@ private:
     float _speed = 0.05;
 
     int _lastWall = 0;
-    bool _lastCol = true;
-    int _lastDir = 0;
 
     std::vector<std::string> _files;
 
