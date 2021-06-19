@@ -25,16 +25,28 @@ class Player : public Components {
         int getPlayerID() const; // 0 = player 1 || 1 = player 2 || 2 = AI
         void setClock(clock_t cl);
         clock_t getClock() const;
+        void setSpeed(float speed);
+        float getSpeed() const;
         void updateBBox(Position pos);
-        BoundingBox getBBox();
+        BoundingBox getBBox() const;
+        void setIsAlive(bool b);
+        bool getIsAlive() const;
+        std::size_t getNbBomb() const;
+        void setNbBomb(std::size_t n);
+        std::size_t getFlameSize() const;
+        void setFlameSize(std::size_t);
 
     protected:
         int _link;
         std::string _name;
         int _id;
         clock_t _start;
+        float _speed;
         Mesh _mesh;
         BoundingBox _bBox;
+        bool _isAlive;
+        std::size_t _nbBombs;
+        std::size_t _flameSize;
     private:
 };
 
