@@ -504,7 +504,11 @@ void Game::Update()
         }
     }
     if (testWin()) {
-        // Winner winner chicken dinner
+        if (_nbPlayer == 1) {
+            // Loose loose shit meal
+        } else {
+            // Winner winner chicken dinner
+        }
     }
 }
 
