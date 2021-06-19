@@ -332,7 +332,7 @@ void Game::Draw()
         }
     }
     BeginMode3D(_camera);
-    for (std::size_t i = 0, j = 0; i < _positionList.size(); i++, j = 0)
+    for (std::size_t i = 0, j = 0, p = 0; i < _positionList.size(); i++, j = 0)
     {
         // Draw Texture
         for (j = 0; j < _texture2DList.size(); j++)
@@ -343,14 +343,16 @@ void Game::Draw()
                                  _positionList[i]->getY() - 9},
                                 1, 1, 1, WHITE);
         // Draw Model3D
-        for (j = 0; j < _model3DList.size(); j++)
-            if (_model3DList[j]->getLink() == _positionList[i]->getLink())
+        for (j = 0; j < _model3DList.size(); j++) {
+            for (p = 0; _playerList[p]->getLink() != _model3DList[j]->getLink(); p++) {}
+            if (_model3DList[j]->getLink() == _positionList[i]->getLink() && _playerList[p]->getIsAlive())
                 DrawModelEx(_model3DList[j]->getModel(),
                             {_positionList[i]->getX() - 6,
                              _positionList[i]->getZ() - 0.5f,
                              _positionList[i]->getY() - 9},
                             {1.0f, 0.0f, 0.0f}, -90.0f,
                             {0.15f, 0.15f, 0.15f}, WHITE);
+        }
         // Draw Bomb
         for (j = 0; j < _bombList.size(); j++)
         {
@@ -477,7 +479,7 @@ void Game::Update()
                     {
                         if (_playerList[k]->getLink() == _positionList[p2]->getLink())
                         {
-                            deleteEntity(_playerList[k]->getLink()); // delete player
+                            _playerList[k]->setIsAlive(false); // make player dead
                             deleteEntity(_flameList[i]->getLink());
                             _deathPlayer.Play();
                             break;
@@ -501,6 +503,9 @@ void Game::Update()
             }
         }
     }
+    if (testWin()) {
+        // Winner winner chicken dinner
+    }
 }
 
 void Game::Clear()
@@ -517,7 +522,7 @@ void Game::HandleInput()
     {
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
         {
-            if (_playerList[i]->getPlayerID() == 0)
+            if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive())
             {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
                 {
@@ -542,7 +547,7 @@ void Game::HandleInput()
     {
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
         {
-            if (_playerList[i]->getPlayerID() == 1)
+            if (_playerList[i]->getPlayerID() == 1 && _playerList[i]->getIsAlive())
             {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
                 {
@@ -624,7 +629,7 @@ void Game::spawnBomb(int nbPlayer)
 {
     for (std::size_t i = 0, j = 0, k = 0; i < _playerList.size(); i++)
     {
-        if (_playerList[i]->getPlayerID() == nbPlayer)
+        if (_playerList[i]->getPlayerID() == nbPlayer && _playerList[i]->getIsAlive())
         {
             for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
             {
@@ -767,17 +772,13 @@ void Game::saveMap()
                 map[x][y] = '#';
 
         for (int j = 0; j < _playerList.size(); j++)
-            if (id == _playerList[j]->getLink())
+            if (id == _playerList[j]->getLink() && _playerList[j]->getIsAlive())
             {
                 if (_playerList[j]->getPlayerID() == 0)
                     map[x][y] = '0';
                 if (_playerList[j]->getPlayerID() == 1)
                     map[x][y] = '1';
-                if (_playerList[j]->getPlayerID() == 2)
-                    map[x][y] = '@';
-                if (_playerList[j]->getPlayerID() == 3)
-                    map[x][y] = '@';
-                if (_playerList[j]->getPlayerID() == 4)
+                if (_playerList[j]->getPlayerID() >= 2)
                     map[x][y] = '@';
             }
 
@@ -788,4 +789,15 @@ void Game::saveMap()
     }
 
     _saveMap = map;
+}
+
+bool Game::testWin()
+{
+    int nbPl = 0;
+    for (std::size_t i = 0;  i < _playerList.size(); i++)
+        if (_playerList[i]->getIsAlive())
+            nbPl++;
+    if (nbPl == 1)
+        return true;
+    return false;
 }
