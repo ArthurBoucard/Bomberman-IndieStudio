@@ -21,11 +21,14 @@ class HowToPlay : public State
         void Clear();
         void HandleInput();
         void Reset();
+        void UpdateScale();
 
     private:
         Raylib::Texture2D _bg;
         float _screenWidth;
         float _screenHeight;
+        float _scale = 1;
+        float _temp;
 
 };
 

@@ -95,7 +95,7 @@ void Menu::HandleInput()
     if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
     {
         _button.Play();
-        printf("Tuto\n");
+        _context->TransitionTo(new HowToPlay);
     }
     if (CheckMouse(_mouse, _rectStats, 4) == true)
     {
