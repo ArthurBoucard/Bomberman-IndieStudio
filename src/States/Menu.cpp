@@ -96,7 +96,6 @@ void Menu::HandleInput()
     if (CheckMouse(_mouse, _rectSettings, 2) == true)
     {
         _button.Play();
-        printf("Settings\n");
     }
     if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
     {
