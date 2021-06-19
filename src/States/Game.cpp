@@ -177,7 +177,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     _nbIA = nbIA;
     _saveSkin = skin;
 
-    for (int i = 0; i < skin.size();i ++)
+    for (int i = 0; i < skin.size(); i++)
         std::cout << skin[i] << std::endl;
 
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
@@ -191,10 +191,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
+    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
+    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[2].c_str());
@@ -336,12 +336,24 @@ void Game::Draw()
     {
         // Draw Texture
         for (j = 0; j < _texture2DList.size(); j++)
-            if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
+        {
+            int test = 0;
+            for (int n = 0; n < _powerUpList.size(); n++)
+                if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && _texture2DList[j]->getLink() == _powerUpList[n]->getLink())
+                    test = 1;
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && test == 0)
                 DrawCubeTexture(_texture2DList[j]->getTexture(),
                                 {_positionList[i]->getX() - 6,
                                  _positionList[i]->getZ(),
                                  _positionList[i]->getY() - 9},
                                 1, 1, 1, WHITE);
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && test == 1)
+                DrawCubeTexture(_texture2DList[j]->getTexture(),
+                                {_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ(),
+                                 _positionList[i]->getY() - 9},
+                                0.5, 0.5, 0.5, WHITE);
+        }
         // Draw Model3D
         for (j = 0; j < _model3DList.size(); j++)
             if (_model3DList[j]->getLink() == _positionList[i]->getLink())
@@ -380,14 +392,6 @@ void Game::Draw()
                                  _positionList[i]->getY() - 9},
                                 0.35f, 16, 16, ORANGE);
             }
-            // Draw Power Up
-            for (j = 0; j < _powerUpList.size(); j++)
-                if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
-                    DrawCubeTexture(_texture2DList[j]->getTexture(),
-                                    {_positionList[i]->getX() - 6,
-                                     _positionList[i]->getZ(),
-                                     _positionList[i]->getY() - 9},
-                                    0.5, 0.5, 0.5, WHITE);
         }
     }
     EndMode3D();
@@ -398,6 +402,9 @@ void Game::Update()
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
     _music.Update();
+
+    // Check if power up is picked up
+    usePower();
 
     for (std::size_t i = 0; i < _bombList.size(); i++)
     {
@@ -469,6 +476,7 @@ void Game::Update()
                                     {
                                         Entity *powerUp = new Entity;
                                         PowerUp *pu = new PowerUp;
+                                        pu->setPower();
                                         pu->link(powerUp->getId());
                                         _powerUpList.push_back(pu);
                                         _positionList[p2]->link(powerUp->getId());
@@ -478,6 +486,7 @@ void Game::Update()
                                     }
                                     _breakableList[m]->breakBrick();
                                     deleteEntity(_breakableList[m]->getLink());
+                                    break;
                                 }
                             deleteEntity(_flameList[i]->getLink());
                             break;
@@ -530,14 +539,12 @@ void Game::Clear()
 void Game::HandleInput()
 {
     Vector2 mouse = GetMousePosition();
-    float _speed = 0;
 
     // PLayer control
     if (_nbPlayer > 0)
     {
         for (std::size_t i = 0, j = 0; i < _playerList.size(); i++)
         {
-            _speed = _playerList[i]->getSpeed();
             if (_playerList[i]->getPlayerID() == 0)
             {
                 for (j = 0; _playerList[i]->getLink() != _positionList[j]->getLink(); j++)
@@ -545,16 +552,16 @@ void Game::HandleInput()
                 }
                 if (IsKeyDown(KEY_A))
                     if (testCollision(4, _positionList[j]))
-                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                        _positionList[j]->setX(_positionList[j]->getX() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_D))
                     if (testCollision(2, _positionList[j]))
-                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                        _positionList[j]->setX(_positionList[j]->getX() + _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_W))
                     if (testCollision(1, _positionList[j]))
-                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                        _positionList[j]->setY(_positionList[j]->getY() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_S))
                     if (testCollision(3, _positionList[j]))
-                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                        _positionList[j]->setY(_positionList[j]->getY() +  _playerList[i]->getSpeed());
                 break;
             }
         }
@@ -570,16 +577,16 @@ void Game::HandleInput()
                 }
                 if (IsKeyDown(KEY_LEFT))
                     if (testCollision(4, _positionList[j]))
-                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                        _positionList[j]->setX(_positionList[j]->getX() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_RIGHT))
                     if (testCollision(2, _positionList[j]))
-                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                        _positionList[j]->setX(_positionList[j]->getX() + _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_UP))
                     if (testCollision(1, _positionList[j]))
-                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                        _positionList[j]->setY(_positionList[j]->getY() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_DOWN))
                     if (testCollision(3, _positionList[j]))
-                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                        _positionList[j]->setY(_positionList[j]->getY() + _playerList[i]->getSpeed());
                 break;
             }
         }
@@ -679,6 +686,22 @@ void Game::spawnBomb(int nbPlayer)
     }
 }
 
+void Game::usePower()
+{
+    for (std::size_t i = 0; i < _playerList.size(); i++)
+        for (std::size_t j = 0; j < _positionList.size(); j++)
+            if (_playerList[i]->getLink() == _positionList[j]->getLink())
+                for (std::size_t n = 0; n < _powerUpList.size(); n++)
+                    for (std::size_t k = 0; k < _positionList.size(); k++)
+                        if (_powerUpList[n]->getLink() == _positionList[k]->getLink())
+                            if (_positionList[k]->getX() == round(_positionList[j]->getX()) && _positionList[k]->getY() == round(_positionList[j]->getY()))
+                            {
+                                _powerUpList[n]->usePower(_playerList[i]);
+                                std::cout << _playerList[i]->getSpeed() << std::endl;
+                                deleteEntity(_powerUpList[n]->getLink());
+                            }
+}
+
 bool Game::testCollision(int dir, Position *pos) // UP = 1 | LEFT = 2 | DOWN = 3 | RIGHT = 4
 {
     bool collision = true;
@@ -764,6 +787,9 @@ void Game::deleteEntity(int id)
     for (i = 0; i < _flameList.size(); i++)
         if (_flameList[i]->getLink() == id)
             _flameList.erase(_flameList.begin() + i);
+    for (i = 0; i < _powerUpList.size(); i++)
+        if (_powerUpList[i]->getLink() == id)
+            _powerUpList.erase(_powerUpList.begin() + i);
 }
 
 void Game::saveMap()

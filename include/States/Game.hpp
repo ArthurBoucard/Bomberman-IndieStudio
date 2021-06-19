@@ -33,6 +33,7 @@ public:
     void HandleInput();
     void Reset();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
+    void usePower();
 
     Texture2D getSkin(int);
     Texture2D getSkin();
@@ -58,8 +59,6 @@ private:
     int _skinChoicePl2;
 
     Camera _camera = {0};
-
-    float _speed = 0.05;
 
     int _lastWall = 0;
     bool _lastCol = true;

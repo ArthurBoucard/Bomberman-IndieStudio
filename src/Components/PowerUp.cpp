@@ -7,9 +7,14 @@
 
 #include "../../include/Components/PowerUp.hpp"
 
-PowerUp::PowerUp() {
-    int power = GetRandomValue(0, 0);
-    if (power == 0)
+PowerUp::PowerUp()
+{
+    ipower = GetRandomValue(0, 0);
+}
+
+void PowerUp::setPower()
+{
+    if (ipower == 0)
         _power = new Speed;
 }
 
@@ -28,28 +33,34 @@ int PowerUp::getLink() const
     return _link;
 }
 
-
-PowerUp *PowerUp::getPower() const {
+PowerUp *PowerUp::getPower() const
+{
     return _power;
 }
 
-void PowerUp::usePower(Player *player) const {
+void PowerUp::usePower(Player *player)
+{
     _power->usePower(player);
 }
 
-Texture2D PowerUp::getTexture() const {
+Texture2D PowerUp::getTexture() const
+{
     return _power->_tex;
 }
 
 Speed::Speed()
 {
     _power = nullptr;
-    _tex = LoadTexture("../../assets/pictures/SpeedUp.png");
+    _tex = LoadTexture("../assets/pictures/SpeedUp.png");
 }
 
-void Speed::usePower(Player *player) const
+Speed::~Speed()
+{
+}
+
+void Speed::usePower(Player *player)
 {
     float speed = player->getSpeed();
 
-    player->setSpeed(speed + 0.05);
+    player->setSpeed(speed + 0.01);
 }
