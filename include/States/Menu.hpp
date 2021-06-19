@@ -14,6 +14,7 @@
 #include "../States/GameOver.hpp"
 #include "../States/GameSettings.hpp"
 #include "../Raylib/Raylib.hpp"
+#include "../States/Win.hpp"
 
 class Menu : public State
 {
