@@ -692,7 +692,7 @@ void Game::spawnBomb(int nbPlayer)
                 Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
                 pos->link(bomb->getId());
                 _positionList.push_back(pos);
-                Bomb *b = new Bomb(2);
+                Bomb *b = new Bomb(_playerList[i]->getFlameSize());
                 b->link(bomb->getId());
                 b->linkPlayer(_playerList[i]->getLink());
                 _bombList.push_back(b);

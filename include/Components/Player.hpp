@@ -28,11 +28,13 @@ class Player : public Components {
         void setSpeed(float speed);
         float getSpeed() const;
         void updateBBox(Position pos);
-        BoundingBox getBBox();
+        BoundingBox getBBox() const;
         void setIsAlive(bool b);
-        bool getIsAlive();
-        std::size_t getNbBomb();
+        bool getIsAlive() const;
+        std::size_t getNbBomb() const;
         void setNbBomb(std::size_t n);
+        std::size_t getFlameSize() const;
+        void setFlameSize(std::size_t);
 
     protected:
         int _link;
@@ -44,6 +46,7 @@ class Player : public Components {
         BoundingBox _bBox;
         bool _isAlive;
         std::size_t _nbBombs;
+        std::size_t _flameSize;
     private:
 };
 

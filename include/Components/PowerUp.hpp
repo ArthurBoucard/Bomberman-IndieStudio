@@ -45,4 +45,12 @@ public:
     ~BombPower();
     virtual void usePower(Player *player);
 };
+
+class FlameUp : public PowerUp
+{
+public:
+    FlameUp();
+    ~FlameUp();
+    virtual void usePower(Player *player);
+};
 #endif /* !POWERUP_HPP_ */

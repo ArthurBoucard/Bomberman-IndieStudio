@@ -17,6 +17,7 @@ Player::Player(std::string name, int id)
     _bBox = GetMeshBoundingBox(_mesh);
     _isAlive = true;
     _nbBombs = 1;
+    _flameSize = 2;
 }
 
 Player::~Player()
@@ -66,7 +67,7 @@ void Player::updateBBox(Position pos)
     return;
 }
 
-BoundingBox Player::getBBox()
+BoundingBox Player::getBBox() const
 {
     return _bBox;
 }
@@ -76,12 +77,12 @@ void Player::setIsAlive(bool b)
     _isAlive = b;
 }
 
-bool Player::getIsAlive()
+bool Player::getIsAlive() const
 {
     return _isAlive;
 }
 
-std::size_t Player::getNbBomb()
+std::size_t Player::getNbBomb() const
 {
     return _nbBombs;
 }
@@ -89,4 +90,13 @@ std::size_t Player::getNbBomb()
 void Player::setNbBomb(std::size_t n)
 {
     _nbBombs = n;
+}
+
+std::size_t Player::getFlameSize() const
+{
+    return _flameSize;
+}
+void Player::setFlameSize(std::size_t size)
+{
+    _flameSize = size;
 }

@@ -9,7 +9,7 @@
 
 PowerUp::PowerUp()
 {
-    ipower = GetRandomValue(0, 1);
+    ipower = GetRandomValue(0, 2);
 }
 
 void PowerUp::setPower()
@@ -18,6 +18,8 @@ void PowerUp::setPower()
         _power = new Speed;
     if (ipower == 1)
         _power = new BombPower;
+    if (ipower == 2)
+        _power = new FlameUp;
 }
 
 PowerUp::~PowerUp()
@@ -82,4 +84,21 @@ void BombPower::usePower(Player *player)
     int nbBomb = player->getNbBomb();
 
     player->setNbBomb(nbBomb + 1);
+}
+
+FlameUp::FlameUp()
+{
+    _power = nullptr;
+    _tex = LoadTexture("../assets/pictures/fireUp.png");
+}
+
+FlameUp::~FlameUp()
+{
+}
+
+void FlameUp::usePower(Player *player)
+{
+    std::size_t flame = player->getFlameSize();
+
+    player->setFlameSize(flame + 1);
 }
