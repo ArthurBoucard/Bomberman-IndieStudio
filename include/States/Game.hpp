@@ -35,6 +35,7 @@ public:
     void Reset();
     void drawPlayerUI();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
+    void usePower();
 
     Texture2D getSkin(int);
     Texture2D getSkin();
@@ -62,8 +63,6 @@ private:
 
     Camera _camera = {0};
 
-    float _speed = 0.05;
-
     int _lastWall = 0;
 
     std::vector<std::string> _files;
@@ -77,6 +76,7 @@ private:
     std::vector<Bomb *> _bombList;
     std::vector<Solid *> _solidList;
     std::vector<Flame *> _flameList;
+    std::vector<PowerUp *> _powerUpList;
 
     std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 

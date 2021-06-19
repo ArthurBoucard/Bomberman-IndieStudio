@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 
-project(indie)
+project(bomberman)
 
 include(Findraylib.cmake)
 

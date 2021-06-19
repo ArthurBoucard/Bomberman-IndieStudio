@@ -177,7 +177,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     _nbIA = nbIA;
     _saveSkin = skin;
 
-    for (int i = 0; i < skin.size();i ++)
+    for (int i = 0; i < skin.size(); i++)
         std::cout << skin[i] << std::endl;
 
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
@@ -336,15 +336,30 @@ void Game::Draw()
     {
         // Draw Texture
         for (j = 0; j < _texture2DList.size(); j++)
-            if (_texture2DList[j]->getLink() == _positionList[i]->getLink())
+        {
+            int test = 0;
+            for (int n = 0; n < _powerUpList.size(); n++)
+                if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && _texture2DList[j]->getLink() == _powerUpList[n]->getLink())
+                    test = 1;
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && test == 0)
                 DrawCubeTexture(_texture2DList[j]->getTexture(),
                                 {_positionList[i]->getX() - 6,
                                  _positionList[i]->getZ(),
                                  _positionList[i]->getY() - 9},
                                 1, 1, 1, WHITE);
+            if (_texture2DList[j]->getLink() == _positionList[i]->getLink() && test == 1)
+                DrawCubeTexture(_texture2DList[j]->getTexture(),
+                                {_positionList[i]->getX() - 6,
+                                 _positionList[i]->getZ(),
+                                 _positionList[i]->getY() - 9},
+                                0.5, 0.5, 0.5, WHITE);
+        }
         // Draw Model3D
-        for (j = 0; j < _model3DList.size(); j++) {
-            for (p = 0; _playerList[p]->getLink() != _model3DList[j]->getLink(); p++) {}
+        for (j = 0; j < _model3DList.size(); j++)
+        {
+            for (p = 0; _playerList[p]->getLink() != _model3DList[j]->getLink(); p++)
+            {
+            }
             if (_model3DList[j]->getLink() == _positionList[i]->getLink() && _playerList[p]->getIsAlive())
                 DrawModelEx(_model3DList[j]->getModel(),
                             {_positionList[i]->getX() - 6,
@@ -393,6 +408,9 @@ void Game::Update()
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
     _music.Update();
+
+    // Check if power up is picked up
+    usePower();
 
     for (std::size_t i = 0; i < _bombList.size(); i++)
     {
@@ -460,8 +478,21 @@ void Game::Update()
                             for (m = 0; m < _breakableList.size(); m++)
                                 if (_breakableList[m]->getLink() == _positionList[p2]->getLink())
                                 {
+                                    if (GetRandomValue(0, 2) == 2)
+                                    {
+                                        Entity *powerUp = new Entity;
+                                        PowerUp *pu = new PowerUp;
+                                        pu->setPower();
+                                        pu->link(powerUp->getId());
+                                        _powerUpList.push_back(pu);
+                                        _positionList[p2]->link(powerUp->getId());
+                                        Texture2DComp *tex = new Texture2DComp(pu->getTexture());
+                                        tex->link(powerUp->getId());
+                                        _texture2DList.push_back(tex);
+                                    }
                                     _breakableList[m]->breakBrick();
                                     deleteEntity(_breakableList[m]->getLink());
+                                    break;
                                 }
                             deleteEntity(_flameList[i]->getLink());
                             break;
@@ -535,17 +566,17 @@ void Game::HandleInput()
                 {
                 }
                 if (IsKeyDown(KEY_A))
-                    if (testCollision( _positionList[j], _speed * (-1), 0))
-                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                    if (testCollision(_positionList[j], _playerList[i]->getSpeed() * (-1), 0))
+                        _positionList[j]->setX(_positionList[j]->getX() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_D))
-                    if (testCollision(_positionList[j], _speed, 0))
-                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                    if (testCollision(_positionList[j], _playerList[i]->getSpeed(), 0))
+                        _positionList[j]->setX(_positionList[j]->getX() + _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_W))
-                    if (testCollision(_positionList[j], 0, _speed * (-1)))
-                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                    if (testCollision(_positionList[j], 0, _playerList[i]->getSpeed() * (-1)))
+                        _positionList[j]->setY(_positionList[j]->getY() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_S))
-                    if (testCollision(_positionList[j], 0, _speed))
-                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                    if (testCollision(_positionList[j], 0, _playerList[i]->getSpeed()))
+                        _positionList[j]->setY(_positionList[j]->getY() + _playerList[i]->getSpeed());
                 break;
             }
         }
@@ -560,17 +591,17 @@ void Game::HandleInput()
                 {
                 }
                 if (IsKeyDown(KEY_LEFT))
-                    if (testCollision(_positionList[j], _speed * (-1), 0))
-                        _positionList[j]->setX(_positionList[j]->getX() - _speed);
+                    if (testCollision(_positionList[j], _playerList[i]->getSpeed() * (-1), 0))
+                        _positionList[j]->setX(_positionList[j]->getX() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_RIGHT))
-                    if (testCollision(_positionList[j], _speed, 0))
-                        _positionList[j]->setX(_positionList[j]->getX() + _speed);
+                    if (testCollision(_positionList[j], _playerList[i]->getSpeed(), 0))
+                        _positionList[j]->setX(_positionList[j]->getX() + _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_UP))
-                    if (testCollision(_positionList[j], 0, _speed * (-1)))
-                        _positionList[j]->setY(_positionList[j]->getY() - _speed);
+                    if (testCollision(_positionList[j], 0, _playerList[i]->getSpeed() * (-1)))
+                        _positionList[j]->setY(_positionList[j]->getY() - _playerList[i]->getSpeed());
                 if (IsKeyDown(KEY_DOWN))
-                    if (testCollision(_positionList[j], 0, _speed))
-                        _positionList[j]->setY(_positionList[j]->getY() + _speed);
+                    if (testCollision(_positionList[j], 0, _playerList[i]->getSpeed()))
+                        _positionList[j]->setY(_positionList[j]->getY() + _playerList[i]->getSpeed());
                 break;
             }
         }
@@ -625,17 +656,17 @@ void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
     int rand = GetRandomValue(0, 4);
 
     if (rand == 0)
-        if (testCollision(_positionList[positionIndex], _speed * (-1), 0))
-            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
+        if (testCollision(_positionList[positionIndex], _playerList[playerIndex]->getSpeed() * (-1), 0))
+            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _playerList[playerIndex]->getSpeed() * 5);
     if (rand == 1)
-        if (testCollision(_positionList[positionIndex], _speed, 0))
-            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() + _speed * 5);
+        if (testCollision(_positionList[positionIndex], _playerList[playerIndex]->getSpeed(), 0))
+            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() + _playerList[playerIndex]->getSpeed() * 5);
     if (rand == 2)
-        if (testCollision(_positionList[positionIndex], 0, _speed * (-1)))
-            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() - _speed * 5);
+        if (testCollision(_positionList[positionIndex], 0, _playerList[playerIndex]->getSpeed() * (-1)))
+            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() - _playerList[playerIndex]->getSpeed() * 5);
     if (rand == 3)
-        if (testCollision(_positionList[positionIndex], 0, _speed))
-            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() + _speed * 5);
+        if (testCollision(_positionList[positionIndex], 0, _playerList[playerIndex]->getSpeed()))
+            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() + _playerList[playerIndex]->getSpeed() * 5);
     if (rand == 4)
         spawnBomb(_playerList[playerIndex]->getPlayerID());
 }
@@ -654,27 +685,44 @@ void Game::spawnBomb(int nbPlayer)
                     round(_positionList[j]->getY()) == _positionList[p]->getY() &&
                     round(_positionList[j]->getZ()) == _positionList[p]->getZ() && j != p)
                     return;
-            // bool isBomb = false;                                                        //
-            // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
-            //     if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink())         // Verify that a bomb already exist
-            //         isBomb = true;                                                      // = only one bomb per player for
-            // if (!isBomb) {                                                              // the moment
-            Entity *bomb = new Entity;
-            Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
-            pos->link(bomb->getId());
-            _positionList.push_back(pos);
-            Bomb *b = new Bomb(2);
-            b->link(bomb->getId());
-            b->linkPlayer(_playerList[i]->getLink());
-            _bombList.push_back(b);
-            // }
-            for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
-            {
+            int nbBomb = 0;                                                     //
+            for (std::size_t k = 0; k < _bombList.size(); k++)                  //
+                if (_bombList[k]->getPlayerLink() == _playerList[i]->getLink()) // Verify that a bomb already exist
+                    nbBomb++;                                                   // = only one bomb per player for
+            if (nbBomb < _playerList[i]->getNbBomb())
+            { // the moment
+                Entity *bomb = new Entity;
+                Position *pos = new Position(round(_positionList[j]->getX()), round(_positionList[j]->getY()), round(_positionList[j]->getZ()));
+                pos->link(bomb->getId());
+                _positionList.push_back(pos);
+                Bomb *b = new Bomb(_playerList[i]->getFlameSize());
+                b->link(bomb->getId());
+                b->linkPlayer(_playerList[i]->getLink());
+                _bombList.push_back(b);
+                for (k = 0; _playerList[i]->getLink() != _jumpList[k]->getLink(); k++)
+                {
+                }
+                _jumpList[k]->setJump(true);
+                _jumpList[k]->setFrameCount(0);
             }
-            _jumpList[k]->setJump(true);
-            _jumpList[k]->setFrameCount(0);
         }
     }
+}
+
+void Game::usePower()
+{
+    for (std::size_t i = 0; i < _playerList.size(); i++)
+        for (std::size_t j = 0; j < _positionList.size(); j++)
+            if (_playerList[i]->getLink() == _positionList[j]->getLink())
+                for (std::size_t n = 0; n < _powerUpList.size(); n++)
+                    for (std::size_t k = 0; k < _positionList.size(); k++)
+                        if (_powerUpList[n]->getLink() == _positionList[k]->getLink())
+                            if (_positionList[k]->getX() == round(_positionList[j]->getX()) && _positionList[k]->getY() == round(_positionList[j]->getY()))
+                            {
+                                _powerUpList[n]->usePower(_playerList[i]);
+                                std::cout << _playerList[i]->getSpeed() << std::endl;
+                                deleteEntity(_powerUpList[n]->getLink());
+                            }
 }
 
 bool Game::testCollision(Position *pos, float x, float y) // UP = 1 | LEFT = 2 | DOWN = 3 | RIGHT = 4
@@ -738,6 +786,9 @@ void Game::deleteEntity(int id)
     for (i = 0; i < _flameList.size(); i++)
         if (_flameList[i]->getLink() == id)
             _flameList.erase(_flameList.begin() + i);
+    for (i = 0; i < _powerUpList.size(); i++)
+        if (_powerUpList[i]->getLink() == id)
+            _powerUpList.erase(_powerUpList.begin() + i);
 }
 
 void Game::saveMap()
@@ -785,7 +836,7 @@ void Game::saveMap()
 bool Game::testWin()
 {
     int nbPl = 0;
-    for (std::size_t i = 0;  i < _playerList.size(); i++)
+    for (std::size_t i = 0; i < _playerList.size(); i++)
         if (_playerList[i]->getIsAlive())
             nbPl++;
     if (nbPl == 1)

@@ -26,8 +26,8 @@ void Introduction::Draw()
 
 void Introduction::Update()
 {
-    _screenWidth = GetScreenWidth();
-    _screenHeight = GetScreenHeight();
+    _screenWidth = _window.GetScreenWidth();
+    _screenHeight = _window.GetScreenHeight();
 
     _music.Update();
     UpdateScale();
