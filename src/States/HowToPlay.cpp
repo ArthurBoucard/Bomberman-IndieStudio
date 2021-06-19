@@ -19,10 +19,16 @@ HowToPlay::~HowToPlay()
 
 void HowToPlay::Draw()
 {
+    //DrawTextureEx(_bg, {_screenWidth, _screenHeight}, 0, 0, WHITE);
+        _bg.Draw(0, 0, RAYWHITE);
+
 }
 
 void HowToPlay::Update()
-{}
+{
+    _screenWidth = GetScreenWidth();
+    _screenHeight = GetScreenHeight();
+}
 
 void HowToPlay::Clear()
 {}
