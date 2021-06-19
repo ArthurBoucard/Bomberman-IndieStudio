@@ -24,7 +24,7 @@ bool Pause::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
     return false;
 }
 
-Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skinChoicePl1, int skinChoicePl2)
+Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skinChoicePl1, int skinChoicePl2 , const std::vector<std::string> skin)
 {
     _skinChoicePl1 = skinChoicePl1;
     _skinChoicePl2 = skinChoicePl2;
@@ -35,6 +35,8 @@ Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int sk
     _music.Play();
 
     _button.Load("../assets/sound/button.wav");
+
+    _saveSkin = skin;
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
