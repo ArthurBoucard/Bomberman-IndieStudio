@@ -34,6 +34,8 @@ Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int sk
     _music.LoadMusic("../assets/music/pause.mp3");
     _music.Play();
 
+    _button.Load("../assets/sound/button.wav");
+
     _saveSkin = skin;
 
     _nbPlayer = nbPlayer;
@@ -79,11 +81,20 @@ void Pause::Clear()
 void Pause::HandleInput()
 {
     if (CheckMouse(_mouse, _rectAgain, 1) == true)
+    {
+        _button.Play();
         _context->TransitionTo(new Game(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+    }
     if (CheckMouse(_mouse, _rectBack, 2) == true)
+    {
+        _button.Play();
         _context->TransitionTo(new Menu);
+    }
     if (CheckMouse(_mouse, _rectResume, 3) == true)
-        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _saveSkin));
+    {
+        _button.Play();
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skinChoicePl1, _skinChoicePl2));
+    }
 }
 
 void Pause::Reset()

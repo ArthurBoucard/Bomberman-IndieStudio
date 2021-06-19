@@ -14,9 +14,9 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     _music.LoadMusic("../assets/music/game.xm");
     _music.Play();
 
-    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
-    _explosionBomb = LoadSound("../assets/sound/explosion.wav");
-    _deathPlayer = LoadSound("../assets/sound/death.wav");
+    _poseBomb.Load("../assets/sound/poseBomb.wav");
+    _explosionBomb.Load("../assets/sound/explosion.wav");
+    _deathPlayer.Load("../assets/sound/death.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -169,9 +169,9 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     _music.LoadMusic("../assets/music/game.xm");
     _music.Play();
 
-    _poseBomb = LoadSound("../assets/sound/poseBomb.wav");
-    _explosionBomb = LoadSound("../assets/sound/explosion.wav");
-    _deathPlayer = LoadSound("../assets/sound/death.wav");
+    _poseBomb.Load("../assets/sound/poseBomb.wav");
+    _explosionBomb.Load("../assets/sound/explosion.wav");
+    _deathPlayer.Load("../assets/sound/death.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -424,7 +424,7 @@ void Game::Update()
         clock_t end = clock();
         if (end - _flameList[i]->getClock() >= 30000)
         {
-            PlaySound(_explosionBomb);
+            _explosionBomb.Play();
             _flameList[i]->resetClock();
             if (_flameList[i]->getDist() == 0)
             {
@@ -479,7 +479,7 @@ void Game::Update()
                         {
                             deleteEntity(_playerList[k]->getLink()); // delete player
                             deleteEntity(_flameList[i]->getLink());
-                            PlaySound(_deathPlayer);
+                            _deathPlayer.Play();
                             break;
                         }
                     }

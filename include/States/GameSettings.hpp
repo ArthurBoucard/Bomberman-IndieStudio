@@ -53,7 +53,7 @@ private:
     std::string _nbPlayersText = "Number of players";
     std::string _nbIAText = "Number of AI";
 
-    Sound _button;
+    Raylib::Sound _button;
 };
 
 #endif /* !GAME_HPP_ */
