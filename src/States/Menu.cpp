@@ -15,11 +15,12 @@ Menu::Menu()
 
     _button.Load("../assets/sound/button.wav");
 
-    _playGame = Raylib::Text("PLAY GAME");
+    _playGame = Raylib::Text("NEW GAME");
     _title = Raylib::Text("BOMBERMAN");
     _settings = Raylib::Text("SETTINGS");
     _howToPlay = Raylib::Text("HOW TO PLAY");
     _stat = Raylib::Text("STATS");
+    _load = Raylib::Text("LOAD GAME");
 }
 
 Menu::~Menu()
@@ -32,13 +33,15 @@ bool Menu::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
     {
         rect.Draw(50, 50, RED);
         if (state == 1)
-            _playGame.Draw(rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+            _playGame.Draw(_rectPlayGame.x + _screenWidth / 26, _rectPlayGame.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
         if (state == 2)
             _settings.Draw(rect.x + _screenWidth / 40, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
         if (state == 3)
             _howToPlay.Draw(rect.x + _screenWidth / 90, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
         if (state == 4)
             _stat.Draw(rect.x + _screenWidth / 20, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
+        if (state == 5)
+            _load.Draw(rect.x + _screenWidth / 26, rect.y + _screenHeight / 28, (_screenWidth / 18) - (_screenHeight / 20), BLACK);
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             return true;
@@ -53,6 +56,7 @@ void Menu::Draw()
     _rectSettings.Draw(50, 50, RAYWHITE);
     _rectHowToPlay.Draw(50, 50, RAYWHITE);
     _rectStats.Draw(50, 50, RAYWHITE);
+    _rectLoad.Draw(50, 50, RAYWHITE);
 }
 
 void Menu::Update()
@@ -61,13 +65,15 @@ void Menu::Update()
     _screenHeight = GetScreenHeight();
     _mouse = GetMousePosition();
 
-    _rectPlayGame = Raylib::Rectangle(_screenWidth / static_cast<float>(2.7), _screenHeight / 2, _screenWidth / 4, _screenHeight / 8);
+    _rectPlayGame = Raylib::Rectangle(_screenWidth / static_cast<float>(2.7), _screenHeight / static_cast<float>(2.5), _screenWidth / 4, _screenHeight / 8);
+    _rectLoad = Raylib::Rectangle(_screenWidth / static_cast<float>(2.7), _screenHeight / static_cast<float>(1.7), _screenWidth / 4, _screenHeight / 8);
     _rectSettings = Raylib::Rectangle(_screenWidth / 6, _screenHeight / static_cast<float>(1.3), _screenWidth / 6, _screenHeight / 10);
     _rectHowToPlay = Raylib::Rectangle(_screenWidth / static_cast<float>(2.4), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10);
     _rectStats = Raylib::Rectangle(_screenWidth / static_cast<float>(1.45), _screenHeight / static_cast<float>(1.3), _screenWidth / static_cast<float>(5.5), _screenHeight / 10);
 
     _title.Draw(_screenWidth / static_cast<float>(4.5), _screenHeight / 6, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
-    _playGame.Draw(_rectPlayGame.x + _screenWidth / 40, _rectPlayGame.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+    _playGame.Draw(_rectPlayGame.x + _screenWidth / 26, _rectPlayGame.y + _screenHeight / 30, (_screenWidth / 17) - (_screenHeight / 20), BLACK);
+    _load.Draw(_rectLoad.x + _screenWidth / 26, _rectLoad.y + _screenHeight / 28, (_screenWidth / 18) - (_screenHeight / 20), BLACK);
     _settings.Draw(_rectSettings.x + _screenWidth / 40, _rectSettings.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
     _howToPlay.Draw(_rectHowToPlay.x + _screenWidth / 90, _rectHowToPlay.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
     _stat.Draw(_rectStats.x + _screenWidth / 20, _rectHowToPlay.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
@@ -102,6 +108,8 @@ void Menu::HandleInput()
         _button.Play();
         printf("Stat\n");
     }
+    if (CheckMouse(_mouse, _rectLoad, 5) == true)
+        printf("load");
 }
 
 void Menu::Reset()

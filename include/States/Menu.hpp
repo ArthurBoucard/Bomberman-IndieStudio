@@ -17,40 +17,42 @@
 
 class Menu : public State
 {
-    public:
-        Menu();
-        ~Menu();
+public:
+    Menu();
+    ~Menu();
 
-        void Draw();
-        void Update();
-        void Clear();
-        void HandleInput();
-        void Reset();
-        bool CheckMouse(Vector2, Raylib::Rectangle, int state);
+    void Draw();
+    void Update();
+    void Clear();
+    void HandleInput();
+    void Reset();
+    bool CheckMouse(Vector2, Raylib::Rectangle, int state);
 
-    private:
-        Raylib::Rectangle _rectPlayGame;
-        Raylib::Rectangle _rectSettings;
-        Raylib::Rectangle _rectHowToPlay;
-        Raylib::Rectangle _rectStats;
+private:
+    Raylib::Rectangle _rectPlayGame;
+    Raylib::Rectangle _rectSettings;
+    Raylib::Rectangle _rectHowToPlay;
+    Raylib::Rectangle _rectStats;
+    Raylib::Rectangle _rectLoad;
 
-        Vector2 _mouse;
+    Vector2 _mouse;
 
-        float _screenWidth;
-        float _screenHeight;
+    float _screenWidth;
+    float _screenHeight;
 
-        Raylib::Text _playGame;
-        Raylib::Text _title;
-        Raylib::Text _settings;
-        Raylib::Text _howToPlay;
-        Raylib::Text _stat;
+    Raylib::Text _playGame;
+    Raylib::Text _title;
+    Raylib::Text _settings;
+    Raylib::Text _howToPlay;
+    Raylib::Text _stat;
+    Raylib::Text _load;
 
-        Raylib::Music _music;
-        Raylib::Sound _button;
+    Raylib::Music _music;
+    Raylib::Sound _button;
 
-        Raylib::Texture2D _bg;
+    Raylib::Texture2D _bg;
 
-        Raylib::WindowTools _window;
+    Raylib::WindowTools _window;
 };
 
 #endif /* !Menu_HPP_ */
