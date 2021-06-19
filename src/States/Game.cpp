@@ -618,13 +618,17 @@ void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
     int rand = GetRandomValue(0, 4);
 
     if (rand == 0)
-        _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
+        if (testCollision(_positionList[positionIndex], _speed * (-1), 0))
+            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() - _speed * 5);
     if (rand == 1)
-        _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() + _speed * 5);
+        if (testCollision(_positionList[positionIndex], _speed, 0))
+            _positionList[positionIndex]->setX(_positionList[positionIndex]->getX() + _speed * 5);
     if (rand == 2)
-        _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() - _speed * 5);
+        if (testCollision(_positionList[positionIndex], 0, _speed * (-1)))
+            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() - _speed * 5);
     if (rand == 3)
-        _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() + _speed * 5);
+        if (testCollision(_positionList[positionIndex], 0, _speed))
+            _positionList[positionIndex]->setY(_positionList[positionIndex]->getY() + _speed * 5);
     if (rand == 4)
         spawnBomb(_playerList[playerIndex]->getPlayerID());
 }
