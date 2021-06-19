@@ -24,7 +24,7 @@ class Game : public State
 {
 public:
     Game(int nbPlayer, int nbIA, int skin1, int skin2);
-    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin1, int skin2);
+    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &saveSkin);
     ~Game();
 
     void Draw();
