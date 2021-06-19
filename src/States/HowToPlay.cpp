@@ -19,18 +19,16 @@ HowToPlay::~HowToPlay()
 
 void HowToPlay::Draw()
 {    
-    Vector2 pos = {(_screenWidth / 2 - _bg.getWidth() / 2 * _scale), (_screenHeight / 2 - _bg.getHeight() / 2 * _scale)};
+   Vector2 pos = {0, 0};
     _bg.Draw(pos, 0, _scale, WHITE);
-
-   // DrawTextureEx(_bg, {0, 0}, 0, 1, WHITE);
-       // _bg.Draw(0, 0, RAYWHITE);
-
 }
 
 void HowToPlay::Update()
 {
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+    if (IsWindowResized())
+        UpdateScale();
 }
 
 void HowToPlay::Clear()
@@ -41,3 +39,9 @@ void HowToPlay::HandleInput()
 
 void HowToPlay::Reset()
 {}
+
+
+void HowToPlay::UpdateScale()
+{
+    _scale = _scale / _bg.getWidth() * _screenWidth;  
+}
