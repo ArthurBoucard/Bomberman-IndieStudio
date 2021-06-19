@@ -177,9 +177,6 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     _nbIA = nbIA;
     _saveSkin = skin;
 
-    for (int i = 0; i < skin.size();i ++)
-        std::cout << skin[i] << std::endl;
-
     Texture2D brickT = LoadTexture("../assets/pictures/block.png");
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");

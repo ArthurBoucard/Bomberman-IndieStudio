@@ -109,9 +109,58 @@ void Menu::HandleInput()
         printf("Stat\n");
     }
     if (CheckMouse(_mouse, _rectLoad, 5) == true)
-        printf("load");
+    {
+        _button.Play();
+        LoadSave();
+
+        std::cout << _nbPlayer << std::endl;
+        std::cout << _nbIA << std::endl;
+        for(int i = 0; i < _map.size(); i++)
+            std::cout << _map[i] << std::endl;
+        for(int i = 0; i < _skin.size(); i++)
+            std::cout << _skin[i] << std::endl;
+
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skin));
+    }
 }
 
 void Menu::Reset()
 {
+}
+
+void Menu::LoadSave()
+{
+    std::ifstream mapFile("../assets/saveFile.txt");
+	std::string line;
+    std::string lastFlag;
+
+    getline(mapFile, lastFlag);
+    try {
+        if (mapFile) {
+            while (getline(mapFile, line))
+            {
+                if (lastFlag == ">NB_PLAYER")
+                {
+                    lastFlag = "";
+                    _nbPlayer = std::stoi(line);
+                }
+                else if (lastFlag == ">NB_IA")
+                {
+                    lastFlag = "";
+                    _nbIA = std::stoi(line);
+                }
+                else if (lastFlag == ">MAP" && line[0] != '>')
+                    _map.push_back(line);
+                else if (lastFlag == ">SKIN" && line[0] != '>')
+                    _skin.push_back(line);
+
+                if (line[0] == '>')
+                        lastFlag = line;
+            }
+        }
+    }
+    catch(Exception const& e) {
+        std::cerr << "Error: could not open \"./map\"" << e.what() << std::endl;
+        exit(84);
+    }
 }
