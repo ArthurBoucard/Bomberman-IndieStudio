@@ -18,9 +18,12 @@ HowToPlay::~HowToPlay()
 }
 
 void HowToPlay::Draw()
-{
-    //DrawTextureEx(_bg, {_screenWidth, _screenHeight}, 0, 0, WHITE);
-        _bg.Draw(0, 0, RAYWHITE);
+{    
+    Vector2 pos = {(_screenWidth / 2 - _bg.getWidth() / 2 * _scale), (_screenHeight / 2 - _bg.getHeight() / 2 * _scale)};
+    _bg.Draw(pos, 0, _scale, WHITE);
+
+   // DrawTextureEx(_bg, {0, 0}, 0, 1, WHITE);
+       // _bg.Draw(0, 0, RAYWHITE);
 
 }
 
