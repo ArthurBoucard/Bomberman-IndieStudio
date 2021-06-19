@@ -33,6 +33,7 @@ public:
     void Clear();
     void HandleInput();
     void Reset();
+    void drawPlayerUI();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
 
     Texture2D getSkin(int);

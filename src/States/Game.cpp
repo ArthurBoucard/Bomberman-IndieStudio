@@ -34,9 +34,9 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.position = {0.0f, 12.0f, 10.0f};
     _camera.target = {0.0f, 0.0f, 0.0f};
-    _camera.up = {0.0f, 1.0f, 0.0f};
+    _camera.up = {0.0f, 2.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
@@ -184,17 +184,17 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     Texture2D wallT = LoadTexture("../assets/pictures/wall.png");
     Texture2D grassT = LoadTexture("../assets/pictures/grass.png");
 
-    _camera.position = {0.0f, 10.0f, 10.0f};
+    _camera.position = {0.0f, 12.0f, 10.0f};
     _camera.target = {0.0f, 0.0f, 0.0f};
-    _camera.up = {0.0f, 1.0f, 0.0f};
+    _camera.up = {0.0f, 2.0f, 0.0f};
     _camera.fovy = 45.0f;
     _camera.projection = CAMERA_PERSPECTIVE;
 
     Model model1 = LoadModel("../assets/skin/guy.iqm");
-        model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
+    model1.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[0].c_str());
 
     Model model2 = LoadModel("../assets/skin/guy.iqm");
-        model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
+    model2.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[1].c_str());
 
     Model model3 = LoadModel("../assets/skin/guy.iqm");
     model3.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(skin[2].c_str());
@@ -384,6 +384,7 @@ void Game::Draw()
             }
         }
     }
+    drawPlayerUI();
     EndMode3D();
 }
 
@@ -588,6 +589,10 @@ void Game::HandleInput()
 }
 
 void Game::Reset()
+{
+}
+
+void Game::drawPlayerUI()
 {
 }
 
