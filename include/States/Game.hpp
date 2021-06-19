@@ -24,7 +24,7 @@ class Game : public State
 {
 public:
     Game(int nbPlayer, int nbIA, int skin1, int skin2);
-    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skin1, int skin2);
+    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &saveSkin);
     ~Game();
 
     void Draw();
@@ -38,10 +38,11 @@ public:
     Texture2D getSkin();
 
     void spawnBomb(int nbPlayer);
-    bool testCollision(int dir, Position *pos);
+    bool testCollision(Position *pos, float x, float y);
     void deleteEntity(int id);
 
     void saveMap();
+    bool testWin();
 
 private:
     float _screenWidth;
@@ -62,8 +63,6 @@ private:
     float _speed = 0.05;
 
     int _lastWall = 0;
-    bool _lastCol = true;
-    int _lastDir = 0;
 
     std::vector<std::string> _files;
 

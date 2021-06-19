@@ -14,6 +14,7 @@ Player::Player(std::string name, int id)
     _start = clock();
     _mesh = GenMeshCube(0.5, 1, 0.5);
     _bBox = GetMeshBoundingBox(_mesh);
+    _isAlive = true;
 }
 
 Player::~Player()
@@ -58,4 +59,14 @@ void Player::updateBBox(Position pos)
 BoundingBox Player::getBBox()
 {
     return _bBox;
+}
+
+void Player::setIsAlive(bool b)
+{
+    _isAlive = b;
+}
+
+bool Player::getIsAlive()
+{
+    return _isAlive;
 }

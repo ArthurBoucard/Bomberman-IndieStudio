@@ -18,7 +18,7 @@
 class Pause : public State
 {
 public:
-    Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int, int);
+    Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int, int, const std::vector<std::string> skin);
     Pause();
     ~Pause();
 
@@ -44,7 +44,7 @@ private:
     std::string _pauseText = "PAUSE";
     std::string _playAgain = "Play Again";
     std::string _resume = "Resume";
-    std::string _backMenu = "Back To Menu";
+    std::string _backMenu = "Save and Quit";
 
     int _skinChoicePl1;
     int _skinChoicePl2;
@@ -53,6 +53,7 @@ private:
     Raylib::Sound _button;
 
     std::vector<std::string> _map;
+    std::vector<std::string> _saveSkin;
 
     unsigned int _nbPlayer;
     unsigned int _nbIA;
