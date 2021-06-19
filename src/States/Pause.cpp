@@ -93,7 +93,7 @@ void Pause::HandleInput()
     if (CheckMouse(_mouse, _rectResume, 3) == true)
     {
         _button.Play();
-        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skinChoicePl1, _skinChoicePl2));
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _saveSkin));
     }
 }
 
