@@ -59,10 +59,32 @@ void Map::proceduralGenClassical()
         for (int j = 1; j < _map[i].length(); j++)
             if (_map[i][j] == ' ' && rand() % 5 != 0)
                 _map[i][j] = '#';
+}
+
+void Map::placePlayers(int nbPlayer, int nbIA)  // 0 = player 1 || 1 = player 2 || @ = IA
+{
+    std::vector<std::pair<int, int>> pPos;
 
     for (int i = 1; i < _map.size(); i++)
         for (int j = 1; j < _map[i].length(); j++)
-            if (_map[i][j] == '$')
+            if (_map[i][j] == 'S')
+                pPos.push_back({i, j});
+
+    if (nbPlayer == 2) {
+        _map[pPos[0].first][pPos[0].second] = '0';
+        pPos.erase(pPos.begin());
+        _map[pPos[pPos.size() - 1].first][pPos[pPos.size() - 1].second] = '1';
+        pPos.erase(pPos.end() - 1);
+    } else if (nbPlayer == 1) {
+        _map[pPos[0].first][pPos[0].second] = '0';
+        pPos.erase(pPos.begin());
+    }
+    for (int x = 0; x < nbIA; x++)
+        _map[pPos[x].first][pPos[x].second] = '@';
+
+    for (int i = 1; i < _map.size(); i++)
+        for (int j = 1; j < _map[i].length(); j++)
+            if (_map[i][j] == '$' || _map[i][j] == 'S')
                 _map[i][j] = ' ';
 }
 
