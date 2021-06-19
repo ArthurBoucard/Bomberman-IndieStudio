@@ -27,6 +27,8 @@ class Player : public Components {
         clock_t getClock() const;
         void updateBBox(Position pos);
         BoundingBox getBBox();
+        void setIsAlive(bool b);
+        bool getIsAlive();
 
     protected:
         int _link;
@@ -35,6 +37,7 @@ class Player : public Components {
         clock_t _start;
         Mesh _mesh;
         BoundingBox _bBox;
+        bool _isAlive;
     private:
 };
 
