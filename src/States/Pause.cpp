@@ -15,7 +15,7 @@ bool Pause::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
         if (state == 1)
             DrawText(_playAgain.c_str(), _screenWidth / static_cast<float>(4.7), _screenHeight / static_cast<float>(1.35), (_screenWidth / 16) - (_screenHeight / 21), BLACK);
         if (state == 2)
-            DrawText(_backMenu.c_str(), _screenWidth / static_cast<float>(1.65), _screenHeight / static_cast<float>(1.35), (_screenWidth / 18) - (_screenHeight / 24), BLACK);
+            DrawText(_backMenu.c_str(), _screenWidth / static_cast<float>(1.65), _screenHeight / static_cast<float>(1.35), (_screenWidth / 19) - (_screenHeight / 25), BLACK);
         if (state == 3)
             DrawText(_resume.c_str(), _screenWidth / 2.5, _screenHeight / 2.35, (_screenWidth / 11) - (_screenHeight / 17), BLACK);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
