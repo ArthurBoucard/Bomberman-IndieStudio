@@ -643,9 +643,9 @@ void Game::spawnBomb(int nbPlayer)
             {
             }
             for (std::size_t p = 0; p < _positionList.size(); p++)
-                if (_positionList[j]->getX() == _positionList[p]->getX() &&
-                    _positionList[j]->getY() == _positionList[p]->getY() &&
-                    _positionList[j]->getZ() == _positionList[p]->getZ() && j != p)
+                if (round(_positionList[j]->getX()) == _positionList[p]->getX() &&
+                    round(_positionList[j]->getY()) == _positionList[p]->getY() &&
+                    round(_positionList[j]->getZ()) == _positionList[p]->getZ() && j != p)
                     return;
             // bool isBomb = false;                                                        //
             // for (std::size_t k = 0; k < _bombList.size(); k++)                          //
