@@ -29,6 +29,8 @@ public:
     void Reset();
     bool CheckMouse(Vector2, Raylib::Rectangle, int state);
 
+    void LoadSave();
+
 private:
     Raylib::Rectangle _rectPlayGame;
     Raylib::Rectangle _rectSettings;
@@ -54,6 +56,11 @@ private:
     Raylib::Texture2D _bg;
 
     Raylib::WindowTools _window;
+
+    unsigned int _nbPlayer;
+    unsigned int _nbIA;
+    std::vector<std::string> _map;
+    std::vector<std::string> _skin;
 };
 
 #endif /* !Menu_HPP_ */
