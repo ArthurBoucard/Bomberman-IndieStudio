@@ -24,6 +24,7 @@ extern int idValue;
 #include "Solid.hpp"
 #include "Flame.hpp"
 #include "Card.hpp"
+#include "PowerUp.hpp"
 
 class Entity {
     public:
