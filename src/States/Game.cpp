@@ -508,10 +508,10 @@ void Game::Update()
         if (_nbPlayer == 1) {
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
-                    _context->TransitionTo(new Win); //WINNER
+                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
             _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
         } else
-            _context->TransitionTo(new Win); //WINNER
+            _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
     }
 }
 
