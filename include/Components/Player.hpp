@@ -29,6 +29,10 @@ class Player : public Components {
         float getSpeed() const;
         void updateBBox(Position pos);
         BoundingBox getBBox();
+        void setIsAlive(bool b);
+        bool getIsAlive();
+        std::size_t getNbBomb();
+        void setNbBomb(std::size_t n);
 
     protected:
         int _link;
@@ -38,6 +42,8 @@ class Player : public Components {
         float _speed;
         Mesh _mesh;
         BoundingBox _bBox;
+        bool _isAlive;
+        std::size_t _nbBombs;
     private:
 };
 

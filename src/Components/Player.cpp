@@ -15,6 +15,8 @@ Player::Player(std::string name, int id)
     _speed = 0.05;
     _mesh = GenMeshCube(0.5, 1, 0.5);
     _bBox = GetMeshBoundingBox(_mesh);
+    _isAlive = true;
+    _nbBombs = 1;
 }
 
 Player::~Player()
@@ -67,4 +69,24 @@ void Player::updateBBox(Position pos)
 BoundingBox Player::getBBox()
 {
     return _bBox;
+}
+
+void Player::setIsAlive(bool b)
+{
+    _isAlive = b;
+}
+
+bool Player::getIsAlive()
+{
+    return _isAlive;
+}
+
+std::size_t Player::getNbBomb()
+{
+    return _nbBombs;
+}
+
+void Player::setNbBomb(std::size_t n)
+{
+    _nbBombs = n;
 }

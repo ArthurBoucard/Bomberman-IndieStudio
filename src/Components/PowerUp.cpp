@@ -9,13 +9,15 @@
 
 PowerUp::PowerUp()
 {
-    ipower = GetRandomValue(0, 0);
+    ipower = GetRandomValue(0, 1);
 }
 
 void PowerUp::setPower()
 {
     if (ipower == 0)
         _power = new Speed;
+    if (ipower == 1)
+        _power = new BombPower;
 }
 
 PowerUp::~PowerUp()
@@ -63,4 +65,21 @@ void Speed::usePower(Player *player)
     float speed = player->getSpeed();
 
     player->setSpeed(speed + 0.01);
+}
+
+BombPower::BombPower()
+{
+    _power = nullptr;
+    _tex = LoadTexture("../assets/pictures/bombUp.png");
+}
+
+BombPower::~BombPower()
+{
+}
+
+void BombPower::usePower(Player *player)
+{
+    int nbBomb = player->getNbBomb();
+
+    player->setNbBomb(nbBomb + 1);
 }

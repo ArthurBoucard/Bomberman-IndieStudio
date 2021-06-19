@@ -44,7 +44,7 @@ private:
     std::string _pauseText = "PAUSE";
     std::string _playAgain = "Play Again";
     std::string _resume = "Resume";
-    std::string _backMenu = "Back To Menu";
+    std::string _backMenu = "Save and Quit";
 
     int _skinChoicePl1;
     int _skinChoicePl2;

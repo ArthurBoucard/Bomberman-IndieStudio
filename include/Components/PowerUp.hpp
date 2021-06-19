@@ -37,4 +37,12 @@ public:
     virtual void usePower(Player *player);
 
 };
+
+class BombPower : public PowerUp
+{
+public:
+    BombPower();
+    ~BombPower();
+    virtual void usePower(Player *player);
+};
 #endif /* !POWERUP_HPP_ */
