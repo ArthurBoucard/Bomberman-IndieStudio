@@ -489,7 +489,7 @@ void Game::Update()
             }
         }
     }
-    // AI movment
+    // AI movement
     for (int i = 0; i < _playerList.size(); i++)
     {
         if (_playerList[i]->getPlayerID() >= 2)
