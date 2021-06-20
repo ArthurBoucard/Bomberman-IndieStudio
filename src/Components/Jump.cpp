@@ -17,8 +17,8 @@ Jump::Jump()
 
 Jump::~Jump()
 {
-    // for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
-    // RL_FREE(anims);
+    UnloadModelAnimation(*_anim);
+    //RL_FREE(_anim);
 }
 
 void Jump::link(int id)
