@@ -151,7 +151,7 @@ void Menu::LoadSave()
                     _map.push_back(line);
                 else if (lastFlag == ">SKIN" && line[0] != '>')
                     _skin.push_back(line);
-                else if (lastFlag == ">NB_POWER_UP" && line[0] != '>')
+                else if (lastFlag == ">POWER_UP" && line[0] != '>')
                     _powerUp.push_back(std::stoi(line));
 
                 if (line[0] == '>')
