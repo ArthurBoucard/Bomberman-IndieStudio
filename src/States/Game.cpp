@@ -163,23 +163,37 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     }
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
+    whichAI = 0;
 
-    for (int i = 4; i > 0; i--) {
+    for (int i = 1; i <= 4; i++) {
         Entity *card = new Entity;
         Card *c = new Card(i);
         c->link(card->getId());
         if (nbPlayer >= 1 && i == 1) {
-            c->setHead(getHead(skin1));
+            c->setHead(_head[0]);
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() == 0)
                     c->setName(_playerList[i]->getPlayerName());
         } else if (nbPlayer >= 2 && i == 4) {
-            c->setHead(getHead(skin2));
+            c->setHead(_head[1]);
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() == 1)
                     c->setName(_playerList[i]->getPlayerName());
         } else {
-            c->setHead(getHead(i));
+            if (_nbPlayer >= 2 && i == 2)
+                c->setHead(_head[3]);
+            else if (_nbIA == 4) {
+                if (whichAI == 0)
+                    c->setHead(_head[2]);
+                else if (whichAI == 1)
+                    c->setHead(_head[3]);
+                else if (whichAI == 2)
+                    c->setHead(_head[1]);
+                else
+                    c->setHead(_head[0]);
+                whichAI++;
+            } else
+                c->setHead(_head[5 - i]);
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() >= 2)
                     c->setName(_playerList[i]->getPlayerName());
@@ -702,6 +716,7 @@ void Game::drawPlayerUI()
 Texture2D Game::getSkin(int skin)
 {
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[skin]) + ".png");
     _skin.erase(_skin.begin() + skin);
 
     _saveSkin.push_back(str);
@@ -714,18 +729,12 @@ Texture2D Game::getSkin()
     int index = GetRandomValue(0, (_skin.size() - 1));
 
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[index]) + ".png");
     _skin.erase(_skin.begin() + index);
 
     _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
-}
-
-std::string Game::getHead(int head)
-{
-    std::string str = "../assets/skin/head/head" + std::to_string(_skin[head]) + ".png";
-
-    return str;
 }
 
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)

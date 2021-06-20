@@ -5,3 +5,4 @@ test
 bomberman
 build/*
 .vs/*
+saveFile.txt

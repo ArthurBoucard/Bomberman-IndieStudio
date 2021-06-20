@@ -39,7 +39,6 @@ public:
 
     Texture2D getSkin(int);
     Texture2D getSkin();
-    std::string getHead(int);
 
     void spawnBomb(int nbPlayer);
     bool testCollision(Position *pos, float x, float y);
@@ -81,6 +80,7 @@ private:
     std::vector<Card *> _cardList;
 
     std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<std::string> _head;
 
     Raylib::Music _music;
     Raylib::Sound _poseBomb;
