@@ -34,6 +34,7 @@ public:
     void HandleInput();
     void Reset();
     void drawPlayerUI();
+    void updatePlayerUI();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
     void usePower();
 
