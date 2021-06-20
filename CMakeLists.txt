@@ -10,4 +10,10 @@ file(GLOB SOURCES "src/*.cpp" "src/*/*.cpp")
 
 add_executable(bomberman ${SOURCES})
 
+if (WIN32)
+set_target_properties(bomberman PROPERTIES
+                      RUNTIME_OUTPUT_DIRECTORY_DEBUG <./>
+)
+endif (WIN2)
+
 target_link_libraries(bomberman raylib)
