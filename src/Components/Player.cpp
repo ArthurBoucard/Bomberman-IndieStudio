@@ -18,6 +18,7 @@ Player::Player(std::string name, int id)
     _isAlive = true;
     _nbBombs = 1;
     _flameSize = 2;
+    _wallPass = false;
 }
 
 Player::~Player()
@@ -99,4 +100,14 @@ std::size_t Player::getFlameSize() const
 void Player::setFlameSize(std::size_t size)
 {
     _flameSize = size;
+}
+
+void Player::setWallPass(bool value)
+{
+    _wallPass = value;
+}
+
+bool Player::getWallPass() const
+{
+    return _wallPass;
 }

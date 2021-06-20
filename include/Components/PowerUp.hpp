@@ -53,4 +53,12 @@ public:
     ~FlameUp();
     virtual void usePower(Player *player);
 };
+
+class WallPass: public PowerUp
+{
+public:
+    WallPass();
+    ~WallPass();
+    virtual void usePower(Player *player);
+};
 #endif /* !POWERUP_HPP_ */
