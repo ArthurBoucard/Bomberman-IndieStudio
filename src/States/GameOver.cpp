@@ -9,8 +9,8 @@
 
 GameOver::GameOver(int nbPlayer, int nbIA, int skinChoicePl1, int skinChoicePl2)
 {
-    _musicEnd = LoadMusicStream("../assets/music/endGame.mp3");
-    PlayMusicStream(_musicEnd);
+    _musicEnd.LoadMusic("../assets/music/endGame.mp3");
+    _musicEnd.Play();
     _button.Load("../assets/sound/button.wav");
 
     _nbPlayer = nbPlayer;
@@ -23,11 +23,11 @@ GameOver::~GameOver()
 {
 }
 
-bool GameOver::CheckMouse(Vector2 mouse, Rectangle rect, std::string text, int state)
+bool GameOver::CheckMouse(Raylib::Vector2 mouse, Raylib::Rectangle rect, std::string text, int state)
 {
     if (CheckCollisionPointRec(mouse, rect))
     {
-        DrawRectangleRounded(rect, 50, 50, BLACK);
+        rect.Draw(50, 50, BLACK);
         if (state == 1)
             DrawText(text.c_str(), rect.x + _screenWidth / 50, rect.y + _screenHeight / 25, (_screenWidth / 20) - (_screenHeight / 23), WHITE);
         if (state == 2)
@@ -42,8 +42,8 @@ bool GameOver::CheckMouse(Vector2 mouse, Rectangle rect, std::string text, int s
 void GameOver::Draw()
 {
     DrawText(_gameOver.c_str(), _screenWidth / static_cast<float>(4.5), _screenHeight / 4, (_screenWidth / 8) - (_screenHeight / 15), WHITE);
-    DrawRectangleRounded(_rectBack, 50, 50, WHITE);
-    DrawRectangleRounded(_rectAgain, 50, 50, WHITE);
+    _rectBack.Draw(50, 50, WHITE);
+    _rectAgain.Draw(50, 50, WHITE);
 }
 
 void GameOver::Update()
@@ -56,7 +56,7 @@ void GameOver::Update()
 
     DrawText(_back.c_str(), _rectBack.x + _screenWidth / 50, _rectBack.y + _screenHeight / 25, (_screenWidth / 20) - (_screenHeight / 23), BLACK);
     DrawText(_again.c_str(), _rectAgain.x + _screenWidth / 25, _rectAgain.y + _screenHeight / 25, (_screenWidth / 20) - (_screenHeight / 23), BLACK);
-    UpdateMusicStream(_musicEnd);
+    _musicEnd.Update();
 }
 
 void GameOver::Clear()
@@ -66,11 +66,13 @@ void GameOver::Clear()
 
 void GameOver::HandleInput()
 {
-    if (CheckMouse(_mouse, _rectBack, _back.c_str(), 1) == true) {
+    if (CheckMouse(_mouse, _rectBack, _back.c_str(), 1) == true)
+    {
         _button.Play();
         _context->TransitionTo(new Menu);
     }
-    if (CheckMouse(_mouse, _rectAgain, _again.c_str(), 2) == true) {
+    if (CheckMouse(_mouse, _rectAgain, _again.c_str(), 2) == true)
+    {
         _button.Play();
         _context->TransitionTo(new Game(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
     }
