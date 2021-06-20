@@ -7,8 +7,12 @@
 
 #include "../../include/States/Win.hpp"
 
-Win::Win(int nbPlayer, int nbIA, int skin1, int skin2)
+Win::Win(int nbPlayer, int nbIA, int skin1, int skin2, int skinWin)
 {
+    _stringWin = "../assets/skin/head/head" + std::to_string(skinWin + 1) + ".png";
+    _imageWin = LoadImage(_stringWin.c_str());
+    _textureWin = LoadTextureFromImage(_imageWin);
+    _vectorImage = {_screenWidth / static_cast<float>(2.2), _screenHeight / static_cast<float>(2.1)};
     _bgWin.LoadFile("../assets/pictures/bg_win.png");
     _win = Raylib::Text("PLAYER 1 WIN !");
     _back = Raylib::Text("Back to Menu");
@@ -49,6 +53,7 @@ void Win::Draw()
     _bgWin.Draw(0, 0, RAYWHITE);
     _rectAgain.Draw(50, 50, BLACK);
     _rectBack.Draw(50, 50, BLACK);
+    DrawTextureEx(_textureWin, _vectorImage, 1, 2, RAYWHITE);
 }
 
 void Win::Update()
