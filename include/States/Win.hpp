@@ -15,7 +15,7 @@
 class Win : public State
 {
 public:
-    Win(int nbPlayer, int nbIA, int skin1, int skin2);
+    Win(int nbPlayer, int nbIA, int skin1, int skin2, int skinWin);
     ~Win();
 
     void Draw();
@@ -31,6 +31,11 @@ private:
 
     Raylib::Rectangle _rectBack;
     Raylib::Rectangle _rectAgain;
+
+    std::string _stringWin;
+    Image _imageWin;
+    Texture2D _textureWin;
+    Vector2 _vectorImage;
 
     int _screenWidth;
     int _screenHeight;
