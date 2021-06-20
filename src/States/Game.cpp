@@ -362,7 +362,12 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("player " + _map[x][z], _map[x][z] - 48); //Player
+                std::string name;
+                if (_map[x][z] == '0')
+                    name = "player 1";
+                else
+                    name = "player 2";
+                Player *pl = new Player(name, _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 if (_map[x][z] == '0') {
                     pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[0]);
