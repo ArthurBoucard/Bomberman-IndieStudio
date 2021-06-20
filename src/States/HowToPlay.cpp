@@ -18,20 +18,22 @@ HowToPlay::~HowToPlay()
 }
 
 void HowToPlay::Draw()
-{    
-   Vector2 pos = {0, 0};
-    _bg.Draw(pos, 0, _scale, WHITE);
+{
+    _bg.Draw({0, 0}, 0, _scale, WHITE);
 }
 
 void HowToPlay::Update()
 {
     _screenWidth = GetScreenWidth();
-    _screenHeight = GetScreenHeight();        
-    UpdateScale();
+    _screenHeight = GetScreenHeight();
+
+    _scale = _screenWidth / _bg.getWidth();
 }
 
 void HowToPlay::Clear()
-{}
+{
+    ClearBackground(RAYWHITE);
+}
 
 void HowToPlay::HandleInput()
 {}

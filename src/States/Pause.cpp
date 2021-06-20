@@ -15,7 +15,7 @@ bool Pause::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
         if (state == 1)
             DrawText(_playAgain.c_str(), _screenWidth / static_cast<float>(4.7), _screenHeight / static_cast<float>(1.35), (_screenWidth / 16) - (_screenHeight / 21), BLACK);
         if (state == 2)
-            DrawText(_backMenu.c_str(), _screenWidth / static_cast<float>(1.65), _screenHeight / static_cast<float>(1.35), (_screenWidth / 18) - (_screenHeight / 24), BLACK);
+            DrawText(_backMenu.c_str(), _screenWidth / static_cast<float>(1.65), _screenHeight / static_cast<float>(1.35), (_screenWidth / 19) - (_screenHeight / 25), BLACK);
         if (state == 3)
             DrawText(_resume.c_str(), _screenWidth / 2.5, _screenHeight / 2.35, (_screenWidth / 11) - (_screenHeight / 17), BLACK);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -88,6 +88,7 @@ void Pause::HandleInput()
     if (CheckMouse(_mouse, _rectBack, 2) == true)
     {
         _button.Play();
+        SaveInFile();
         _context->TransitionTo(new Menu);
     }
     if (CheckMouse(_mouse, _rectResume, 3) == true)
@@ -99,4 +100,26 @@ void Pause::HandleInput()
 
 void Pause::Reset()
 {
+}
+
+void Pause::SaveInFile()
+{
+    std::ofstream myfile;
+    myfile.open ("../assets/saveFile.txt");
+
+    myfile << ">NB_PLAYER" << std::endl;
+    myfile << std::to_string(_nbPlayer) << std::endl;
+    myfile << ">NB_IA" << std::endl;
+    myfile << std::to_string(_nbIA) << std::endl;
+
+    myfile << ">MAP" << std::endl;
+    for(int i = 0; i < _map.size(); i++)
+        myfile << _map[i] << std::endl;
+
+    myfile << ">SKIN" << std::endl;
+    for(int i = 0; i < _saveSkin.size(); i++)
+        myfile << _saveSkin[i] << std::endl;
+
+    myfile.close();
+
 }
