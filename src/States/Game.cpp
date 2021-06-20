@@ -161,31 +161,51 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
         }
     }
-    _screenWidth = GetScreenWidth();
-    _screenHeight = GetScreenHeight();
+    whichAI = 0;
 
-    for (int i = 4; i > 0; i--)
-    {
+    for (int i = 1; i <= 4; i++) {
         Entity *card = new Entity;
         Card *c = new Card(i);
         c->link(card->getId());
-        if (nbPlayer >= 1 && i == 1)
-        {
-            c->setHead(getHead(skin1));
-            for (std::size_t i = 0; i < _playerList.size(); i++)
-                if (_playerList[i]->getPlayerID() == 0)
+        if (nbPlayer >= 1 && i == 1) {
+            c->setHead(_head[0]);
+            for (std::size_t i = 0; i < _playerList.size(); i++) {
+                if (_playerList[i]->getPlayerID() == 0) {
                     c->setName(_playerList[i]->getPlayerName());
-        }
-        else if (nbPlayer >= 2 && i == 4)
-        {
-            c->setHead(getHead(skin2));
-            for (std::size_t i = 0; i < _playerList.size(); i++)
-                if (_playerList[i]->getPlayerID() == 1)
+                    c->setPlId(0);
+                }
+            }
+        } else if (nbPlayer >= 2 && i == 4) {
+            c->setHead(_head[1]);
+            for (std::size_t i = 0; i < _playerList.size(); i++) {
+                if (_playerList[i]->getPlayerID() == 1) {
                     c->setName(_playerList[i]->getPlayerName());
-        }
-        else
-        {
-            c->setHead(getHead(i));
+                    c->setPlId(1);
+                }
+            }
+        } else {
+            if (_nbPlayer >= 2 && i == 2) {
+                c->setHead(_head[3]);
+                c->setPlId(2);
+            } else if (_nbIA == 4) {
+                if (whichAI == 0) {
+                    c->setHead(_head[2]);
+                    c->setPlId(2);
+                } else if (whichAI == 1) {
+                    c->setHead(_head[3]);
+                    c->setPlId(3);
+                } else if (whichAI == 2) {
+                    c->setHead(_head[1]);
+                    c->setPlId(4);
+                } else {
+                    c->setHead(_head[0]);
+                    c->setPlId(5);
+                }
+                whichAI++;
+            } else {
+                c->setHead(_head[5 - i]);
+                // Need player link
+            }
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() >= 2)
                     c->setName(_playerList[i]->getPlayerName());
@@ -333,6 +353,57 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 _jumpList.push_back(jp);
             }
         }
+    }
+    whichAI = 0;
+
+    for (int i = 1; i <= 4; i++) {
+        Entity *card = new Entity;
+        Card *c = new Card(i);
+        c->link(card->getId());
+        if (nbPlayer >= 1 && i == 1) {
+            c->setHead(getHead(skin[0]));
+            for (std::size_t i = 0; i < _playerList.size(); i++) {
+                if (_playerList[i]->getPlayerID() == 0) {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(0);
+                }
+            }
+        } else if (nbPlayer >= 2 && i == 4) {
+            c->setHead(getHead(skin[1]));
+            for (std::size_t i = 0; i < _playerList.size(); i++) {
+                if (_playerList[i]->getPlayerID() == 1) {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(1);
+                }
+            }
+        } else {
+            if (_nbPlayer >= 2 && i == 2) {
+                c->setHead(getHead(skin[3]));
+                c->setPlId(2);
+            } else if (_nbIA == 4) {
+                if (whichAI == 0) {
+                    c->setHead(getHead(skin[2]));
+                    c->setPlId(2);
+                } else if (whichAI == 1) {
+                    c->setHead(getHead(skin[3]));
+                    c->setPlId(3);
+                } else if (whichAI == 2) {
+                    c->setHead(getHead(skin[1]));
+                    c->setPlId(4);
+                } else {
+                    c->setHead(getHead(skin[0]));
+                    c->setPlId(5);
+                }
+                whichAI++;
+            } else {
+                c->setHead(getHead(skin[5 - i]));
+                // Need player link
+            }
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() >= 2)
+                    c->setName(_playerList[i]->getPlayerName());
+        }
+        _cardList.push_back(c);
     }
 }
 
@@ -591,6 +662,9 @@ void Game::Update()
             }
         }
     }
+    // Update palyers cards
+    updatePlayerUI();
+    // Test if game has a winner
     if (testWin())
     {
         if (_nbPlayer == 1)
@@ -739,9 +813,24 @@ void Game::drawPlayerUI()
     }
 }
 
+void Game::updatePlayerUI()
+{
+    for (std::size_t i = 0, j = 0; i < _cardList.size(); i++) {
+        for (j = 0; j < _playerList.size(); j++) {
+            if (_cardList[i]->getPlId() == _playerList[j]->getPlayerID()) {
+                _cardList[i]->setNbPowerUpSpeed((_playerList[j]->getSpeed() - 0.05) * 100);
+                _cardList[i]->setNbPowerUpFlameUp(_playerList[j]->getFlameSize() - 2);
+                _cardList[i]->setNbPowerUpBombUp(_playerList[j]->getNbBomb() - 1);
+                _cardList[i]->setNbPowerUpWallPass(_playerList[j]->getWallPass());
+            }
+        }
+    }
+}
+
 Texture2D Game::getSkin(int skin)
 {
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[skin]) + ".png");
     _skin.erase(_skin.begin() + skin);
 
     _saveSkin.push_back(str);
@@ -754,6 +843,7 @@ Texture2D Game::getSkin()
     int index = GetRandomValue(0, (_skin.size() - 1));
 
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[index]) + ".png");
     _skin.erase(_skin.begin() + index);
 
     _saveSkin.push_back(str);
@@ -761,11 +851,11 @@ Texture2D Game::getSkin()
     return LoadTexture(str.c_str());
 }
 
-std::string Game::getHead(int head)
+std::string Game::getHead(std::string str)
 {
-    std::string str = "../assets/skin/head/head" + std::to_string(_skin[head]) + ".png";
+    std::string tmp = str.substr(29, 29);
 
-    return str;
+    return "../assets/skin/head/head" + tmp;
 }
 
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)

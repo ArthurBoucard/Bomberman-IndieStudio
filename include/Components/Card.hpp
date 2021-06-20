@@ -19,6 +19,8 @@ class Card {
         void link(int id);
         int getLink() const;
         int getId() const;
+        void setPlId(int id);
+        int getPlId() const;
 
         void setHead(std::string str);
         Texture2D getHead() const;
@@ -44,6 +46,7 @@ class Card {
     protected:
         int _link;
         int _id;
+        int _plId;
         Texture2D _head;
         std::string _name;
         Texture2D _powerUpSpeed;
