@@ -13,6 +13,7 @@
 #include "../Raylib/Raylib.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 class Pause : public State
@@ -28,6 +29,8 @@ public:
     void HandleInput();
     void Reset();
     bool CheckMouse(Vector2, Raylib::Rectangle, int state);
+
+    void SaveInFile();
 
 private:
     Vector2 _mouse;

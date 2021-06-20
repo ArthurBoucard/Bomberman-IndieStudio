@@ -10,11 +10,12 @@
 
 #include "../StatesManagement/State.hpp"
 #include "../States/Menu.hpp"
+#include "../Raylib/Raylib.hpp"
 
 class Win : public State
 {
 public:
-    Win(int nbPlayer, int nbIA, int skin1, int skin2);
+    Win(int nbPlayer, int nbIA, int skin1, int skin2, int skinWin);
     ~Win();
 
     void Draw();
@@ -31,6 +32,11 @@ private:
     Raylib::Rectangle _rectBack;
     Raylib::Rectangle _rectAgain;
 
+    std::string _stringWin;
+    Image _imageWin;
+    Texture2D _textureWin;
+    Vector2 _vectorImage;
+
     int _screenWidth;
     int _screenHeight;
 
@@ -44,6 +50,8 @@ private:
     int _nbIA;
     int _skin1;
     int _skin2;
+
+    Raylib::Sound _winMusic;
 };
 
 #endif /* !WIN_HPP_ */
