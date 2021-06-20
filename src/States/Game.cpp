@@ -542,7 +542,7 @@ void Game::Update()
     for (std::size_t i = 0; i < _bombList.size(); i++)
     {
         clock_t end = clock();
-        if (end - _bombList[i]->getClock() >= 900000)
+        if (end - _bombList[i]->getClock() >= time_ai)
             _bombList[i]->setIsExplode(true);
     }
     // Make bomb explode
@@ -570,7 +570,7 @@ void Game::Update()
     for (std::size_t i = 0, p = 0, p2 = 0, k = 0, m = 0; i < _flameList.size(); i++)
     {
         clock_t end = clock();
-        if (end - _flameList[i]->getClock() >= 30000)
+        if (end - _flameList[i]->getClock() >= time_bomb)
         {
             _explosionBomb.Play();
             _flameList[i]->resetClock();
@@ -653,7 +653,7 @@ void Game::Update()
     {
         if (_playerList[i]->getPlayerID() >= 2)
         {
-            if (clock() - _playerList[i]->getClock() > 90000)
+            if (clock() - _playerList[i]->getClock() > time_ai)
             {
                 _playerList[i]->setClock(clock());
                 for (int n = 0; n < _positionList.size(); n++)

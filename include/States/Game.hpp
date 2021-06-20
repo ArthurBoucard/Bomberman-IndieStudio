@@ -8,6 +8,15 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
+//check windows or linux
+#ifdef _WIN32 
+#define time_ai 900 
+#define time_bomb 300
+#elif _linux_ 
+#define time_ai 90000
+#define time_bomb 30000
+#endif
+
 #include "../StatesManagement/State.hpp"
 #include "../StatesManagement/Context.hpp"
 #include "../States/Menu.hpp"
