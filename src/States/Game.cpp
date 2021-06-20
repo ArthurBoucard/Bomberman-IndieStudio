@@ -366,6 +366,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 if (_playerList[i]->getPlayerID() == 0) {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(0);
+                    c->setNbPowerUpSpeed(savePowerUP[0]);
+                    c->setNbPowerUpFlameUp(savePowerUP[1]);
+                    c->setNbPowerUpBombUp(savePowerUP[2]);
+                    c->setNbPowerUpWallPass(savePowerUP[3]);
                 }
             }
         } else if (nbPlayer >= 2 && i == 4) {
@@ -374,6 +378,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 if (_playerList[i]->getPlayerID() == 1) {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(1);
+                    c->setNbPowerUpSpeed(savePowerUP[4]);
+                    c->setNbPowerUpFlameUp(savePowerUP[5]);
+                    c->setNbPowerUpBombUp(savePowerUP[6]);
+                    c->setNbPowerUpWallPass(savePowerUP[7]);
                 }
             }
         } else {
