@@ -16,7 +16,7 @@ class Breakable : public Components {
         ~Breakable();
 
         void link(int id);
-        int getLink();
+        int getLink() const;
         void breakBrick();
     protected:
         int _link;

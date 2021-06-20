@@ -16,7 +16,8 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 
     _poseBomb.Load("../assets/sound/poseBomb.wav");
     _explosionBomb.Load("../assets/sound/explosion.wav");
-    _deathPlayer.Load("../assets/sound/death.wav");
+    _deathPlayer.Load("../assets/sound/uh.wav");
+    _powerUp.Load("../assets/sound/powerUp.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -160,6 +161,79 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
         }
     }
+    whichAI = 0;
+
+    for (int i = 1; i <= 4; i++)
+    {
+        Entity *card = new Entity;
+        Card *c = new Card(i);
+        c->link(card->getId());
+        if (nbPlayer >= 1 && i == 1)
+        {
+            c->setHead(_head[0]);
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 0)
+                {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(0);
+                }
+            }
+        }
+        else if (nbPlayer >= 2 && i == 4)
+        {
+            c->setHead(_head[1]);
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 1)
+                {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(1);
+                }
+            }
+        }
+        else
+        {
+            if (_nbPlayer >= 2 && i == 2)
+            {
+                c->setHead(_head[3]);
+                c->setPlId(2);
+            }
+            else if (_nbIA == 4)
+            {
+                if (whichAI == 0)
+                {
+                    c->setHead(_head[2]);
+                    c->setPlId(2);
+                }
+                else if (whichAI == 1)
+                {
+                    c->setHead(_head[3]);
+                    c->setPlId(3);
+                }
+                else if (whichAI == 2)
+                {
+                    c->setHead(_head[1]);
+                    c->setPlId(4);
+                }
+                else
+                {
+                    c->setHead(_head[0]);
+                    c->setPlId(5);
+                }
+                whichAI++;
+            }
+            else
+            {
+                c->setHead(_head[5 - i]);
+                // Need player link
+            }
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() >= 2)
+                    c->setName(_playerList[i]->getPlayerName());
+        }
+        _cardList.push_back(c);
+    }
 }
 
 Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
@@ -171,7 +245,8 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
 
     _poseBomb.Load("../assets/sound/poseBomb.wav");
     _explosionBomb.Load("../assets/sound/explosion.wav");
-    _deathPlayer.Load("../assets/sound/death.wav");
+    _deathPlayer.Load("../assets/sound/uh.wav");
+    _powerUp.Load("../assets/sound/powerUp.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -301,12 +376,111 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
             }
         }
     }
+    whichAI = 0;
+
+    for (int i = 1; i <= 4; i++)
+    {
+        Entity *card = new Entity;
+        Card *c = new Card(i);
+        c->link(card->getId());
+        if (nbPlayer >= 1 && i == 1)
+        {
+            c->setHead(getHead(skin[0]));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 0)
+                {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(0);
+                }
+            }
+        }
+        else if (nbPlayer >= 2 && i == 4)
+        {
+            c->setHead(getHead(skin[1]));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 1)
+                {
+                    c->setName(_playerList[i]->getPlayerName());
+                    c->setPlId(1);
+                }
+            }
+        }
+        else
+        {
+            if (_nbPlayer >= 2 && i == 2)
+            {
+                c->setHead(getHead(skin[3]));
+                c->setPlId(2);
+            }
+            else if (_nbIA == 4)
+            {
+                if (whichAI == 0)
+                {
+                    c->setHead(getHead(skin[2]));
+                    c->setPlId(2);
+                }
+                else if (whichAI == 1)
+                {
+                    c->setHead(getHead(skin[3]));
+                    c->setPlId(3);
+                }
+                else if (whichAI == 2)
+                {
+                    c->setHead(getHead(skin[1]));
+                    c->setPlId(4);
+                }
+                else
+                {
+                    c->setHead(getHead(skin[0]));
+                    c->setPlId(5);
+                }
+                whichAI++;
+            }
+            else
+            {
+                c->setHead(getHead(skin[5 - i]));
+                // Need player link
+            }
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() >= 2)
+                    c->setName(_playerList[i]->getPlayerName());
+        }
+        _cardList.push_back(c);
+    }
 }
 
 Game::~Game()
 {
+    for (std::size_t i = 0; i < _positionList.size(); i++)
+        delete _positionList[i];
+    for (std::size_t i = 0; i < _breakableList.size(); i++)
+        delete _breakableList[i];
+    for (std::size_t i = 0; i < _texture2DList.size(); i++)
+    {
+        UnloadTexture(_texture2DList[i]->getTexture());
+        delete _texture2DList[i];
+    }
+    for (std::size_t i = 0; i < _playerList.size(); i++)
+        delete _playerList[i];
     for (std::size_t i = 0; i < _model3DList.size(); i++)
+    {
         UnloadModel(_model3DList[i]->getModel());
+        delete _model3DList[i];
+    }
+    for (std::size_t i = 0; i < _jumpList.size(); i++)
+        delete _jumpList[i];
+    for (std::size_t i = 0; i < _bombList.size(); i++)
+        delete _bombList[i];
+    for (std::size_t i = 0; i < _solidList.size(); i++)
+        delete _solidList[i];
+    for (std::size_t i = 0; i < _flameList.size(); i++)
+        delete _flameList[i];
+    for (std::size_t i = 0; i < _powerUpList.size(); i++)
+        delete _powerUpList[i];
+    for (std::size_t i = 0; i < _cardList.size(); i++)
+        delete _cardList[i];
 }
 
 void Game::Draw()
@@ -396,8 +570,8 @@ void Game::Draw()
             }
         }
     }
-    drawPlayerUI();
     EndMode3D();
+    drawPlayerUI();
 }
 
 void Game::Update()
@@ -532,14 +706,20 @@ void Game::Update()
             }
         }
     }
+    // Update palyers cards
+    updatePlayerUI();
+    // Test if game has a winner
     if (testWin())
     {
         if (_nbPlayer == 1)
         {
-            for (std::size_t i = 0; i < _playerList.size(); i++)
-                if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
-                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _playerList[i]->getPlayerName()));
-            _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+            std::size_t i;
+            for (i = 0; _playerList[i]->getPlayerID() != 0; i++)
+                ;
+            if (_playerList[i]->getIsAlive() == true)
+                _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
+            else
+                _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
         }
         else
             for (std::size_t i = 0; i < _playerList.size(); i++)
@@ -627,13 +807,79 @@ void Game::Reset()
 
 void Game::drawPlayerUI()
 {
+    float x;
+    float y;
+
+    for (std::size_t i = 0; i < _cardList.size(); i++)
+    {
+        if (_cardList[i]->getId() == 1)
+        {
+            x = 50;
+            y = 50;
+        }
+        else if (_cardList[i]->getId() == 2)
+        {
+            x = 1.2;
+            y = 50;
+        }
+        else if (_cardList[i]->getId() == 3)
+        {
+            x = 50;
+            y = 1.8;
+        }
+        else if (_cardList[i]->getId() == 4)
+        {
+            x = 1.2;
+            y = 1.8;
+        }
+        DrawTextureEx(_cardList[i]->getHead(), {(_screenWidth / static_cast<float>(x)) + 2, (_screenHeight / static_cast<float>(y)) + 2},
+                      0, _screenHeight / static_cast<float>(1000), WHITE);
+        DrawText(_cardList[i]->getName().c_str(), (_cardList[i]->getHead().width + (_screenWidth / x)), _screenHeight / y,
+                 (_screenWidth / 25) - (_screenHeight / 28), BLACK);
+        DrawTextureEx(_cardList[i]->getPowerUpSpeed(), {(_screenWidth / static_cast<float>(x)) + (_cardList[i]->getPowerUpSpeed().width), (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 3 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                      180, _screenHeight / static_cast<float>(800), WHITE);
+        DrawText(std::to_string(_cardList[i]->getNbPowerUpSpeed()).c_str(), (_screenWidth / static_cast<float>(x)) + 2.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 2 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+        DrawTextureEx(_cardList[i]->getPowerUpFlameUp(), {(_screenWidth / static_cast<float>(x)) + (_cardList[i]->getPowerUpSpeed().width), (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 5 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                      180, _screenHeight / static_cast<float>(800), WHITE);
+        DrawText(std::to_string(_cardList[i]->getNbPowerUpFlameUp()).c_str(), (_screenWidth / static_cast<float>(x)) + 2.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 4 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+        DrawTextureEx(_cardList[i]->getPowerUpBombUp(), {(_screenWidth / static_cast<float>(x)) + 4 * (_cardList[i]->getPowerUpSpeed().width), (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 3 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                      180, _screenHeight / static_cast<float>(800), WHITE);
+        DrawText(std::to_string(_cardList[i]->getNbPowerUpSBombUp()).c_str(), (_screenWidth / static_cast<float>(x)) + 8.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 2 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+        DrawTextureEx(_cardList[i]->getPowerUpWallPass(), {(_screenWidth / static_cast<float>(x)) + 4 * (_cardList[i]->getPowerUpSpeed().width), (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 5 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                      180, _screenHeight / static_cast<float>(800), WHITE);
+        DrawText(std::to_string(_cardList[i]->getNbPowerUpWallPass()).c_str(), (_screenWidth / static_cast<float>(x)) + 8.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 4 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                 (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+    }
+}
+
+void Game::updatePlayerUI()
+{
+    for (std::size_t i = 0, j = 0; i < _cardList.size(); i++)
+    {
+        for (j = 0; j < _playerList.size(); j++)
+        {
+            if (_cardList[i]->getPlId() == _playerList[j]->getPlayerID())
+            {
+                _cardList[i]->setNbPowerUpSpeed((_playerList[j]->getSpeed() - 0.05) * 100);
+                _cardList[i]->setNbPowerUpFlameUp(_playerList[j]->getFlameSize() - 2);
+                _cardList[i]->setNbPowerUpBombUp(_playerList[j]->getNbBomb() - 1);
+                _cardList[i]->setNbPowerUpWallPass(_playerList[j]->getWallPass());
+            }
+        }
+    }
 }
 
 Texture2D Game::getSkin(int skin)
 {
-    int index = GetRandomValue(0, (_skin.size() - 1));
-
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[skin]) + ".png");
     _skin.erase(_skin.begin() + skin);
 
     _saveSkin.push_back(str);
@@ -646,11 +892,19 @@ Texture2D Game::getSkin()
     int index = GetRandomValue(0, (_skin.size() - 1));
 
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[index]) + ".png";
+    _head.push_back("../assets/skin/head/head" + std::to_string(_skin[index]) + ".png");
     _skin.erase(_skin.begin() + index);
 
     _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
+}
+
+std::string Game::getHead(std::string str)
+{
+    std::string tmp = str.substr(29, 29);
+
+    return "../assets/skin/head/head" + tmp;
 }
 
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
@@ -722,6 +976,7 @@ void Game::usePower()
                             if (_positionList[k]->getX() == round(_positionList[j]->getX()) && _positionList[k]->getY() == round(_positionList[j]->getY()))
                             {
                                 _powerUpList[n]->usePower(_playerList[i]);
+                                _powerUp.Play();
                                 deleteEntity(_powerUpList[n]->getLink());
                             }
 }
@@ -842,9 +1097,10 @@ void Game::saveMap()
     _saveMap = map;
 }
 
-bool Game::testWin()
+bool Game::testWin() const
 {
     int nbPl = 0;
+
     for (std::size_t i = 0; i < _playerList.size(); i++)
         if (_playerList[i]->getIsAlive())
             nbPl++;

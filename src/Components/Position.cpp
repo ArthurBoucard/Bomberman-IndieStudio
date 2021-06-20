@@ -23,22 +23,22 @@ void Position::link(int id)
     _link = id;
 }
 
-int Position::getLink()
+int Position::getLink() const
 {
     return _link;
 }
 
-float Position::getX()
+float Position::getX() const
 {
     return _x;
 }
 
-float Position::getY()
+float Position::getY() const
 {
     return _y;
 }
 
-float Position::getZ()
+float Position::getZ() const
 {
     return _z;
 }

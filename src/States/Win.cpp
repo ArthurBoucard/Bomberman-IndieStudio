@@ -20,6 +20,8 @@ Win::Win(int nbPlayer, int nbIA, int skin1, int skin2, std::string nameWinner)
     _nbIA = nbIA;
     _skin1 = skin1;
     _skin2 = skin2;
+
+    _winMusic.Load("../assets/music/win.mp3");
 }
 
 Win::~Win()
@@ -53,6 +55,8 @@ void Win::Draw()
     _rectAgain.Draw(50, 50, BLACK);
     _rectBack.Draw(50, 50, BLACK);
     _vectorImage = {_screenWidth / static_cast<float>(2.2), _screenHeight / static_cast<float>(2.1)};
+
+    _winMusic.Play();
     DrawTextureEx(_textureWin, _vectorImage, 1, 2, RAYWHITE);
 }
 

@@ -13,49 +13,50 @@
 
 class Card {
     public:
-        Card();
+        Card(int id);
         ~Card();
 
         void link(int id);
         int getLink() const;
+        int getId() const;
+        void setPlId(int id);
+        int getPlId() const;
 
-        void setRect(Raylib::Rectangle rect);
-        Raylib::Rectangle getRect() const;
-
-        void setHead(Image img);
-        Image getHead() const;
+        void setHead(std::string str);
+        Texture2D getHead() const;
 
         void setName(std::string name);
         std::string getName() const;
 
-        Image getPowerUpSpeed() const;
+        Texture2D getPowerUpSpeed() const;
         void setNbPowerUpSpeed(int nb);
         int getNbPowerUpSpeed() const;
 
-        Image getPowerUpBombUp() const;
+        Texture2D getPowerUpBombUp() const;
         void setNbPowerUpBombUp(int nb);
         int getNbPowerUpSBombUp() const;
 
-        Image getPowerUpFlameUp() const;
+        Texture2D getPowerUpFlameUp() const;
         void setNbPowerUpFlameUp(int nb);
         int getNbPowerUpFlameUp() const;
 
-        Image getPowerUpWallPass() const;
+        Texture2D getPowerUpWallPass() const;
         void setNbPowerUpWallPass(int nb);
         int getNbPowerUpWallPass() const;
     protected:
         int _link;
-        Raylib::Rectangle _rect;
-        Image _head;
+        int _id;
+        int _plId;
+        Texture2D _head;
         std::string _name;
-        Image _powerUpSpeed;
-        int _nbPowerUpSpeed;
-        Image _powerUpBombUp;
-        int _nbPowerUpBombUp;
-        Image _powerUpFlameUp;
-        int _nbPowerUpFlameUp;
-        Image _powerUpWallPass;
-        int _nbPowerUpWallPass;
+        Texture2D _powerUpSpeed;
+        int _nbPowerUpSpeed = 0;
+        Texture2D _powerUpBombUp;
+        int _nbPowerUpBombUp = 0;
+        Texture2D _powerUpFlameUp;
+        int _nbPowerUpFlameUp = 0;
+        Texture2D _powerUpWallPass;
+        int _nbPowerUpWallPass = 0;
     private:
 };
 
