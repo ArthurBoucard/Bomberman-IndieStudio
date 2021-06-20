@@ -860,7 +860,7 @@ void Game::drawPlayerUI()
         }
         DrawTextureEx(_cardList[i]->getHead(), {(_screenWidth / static_cast<float>(x)) + 2, (_screenHeight / static_cast<float>(y)) + 2},
                       0, _screenHeight / static_cast<float>(1000), WHITE);
-        DrawText(_cardList[i]->getName().c_str(), (_cardList[i]->getHead().width + (_screenWidth / x)), _screenHeight / y,
+        DrawText(_cardList[i]->getName().c_str(), (_cardList[i]->getHead().width + (_screenWidth / x) + 10), _screenHeight / y,
                  (_screenWidth / 25) - (_screenHeight / 28), BLACK);
         DrawTextureEx(_cardList[i]->getPowerUpSpeed(), {(_screenWidth / static_cast<float>(x)) + (_cardList[i]->getPowerUpSpeed().width), (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 3 * (_cardList[i]->getPowerUpSpeed().width / 2)},
                       180, _screenHeight / static_cast<float>(800), WHITE);
