@@ -34,12 +34,13 @@ public:
     void HandleInput();
     void Reset();
     void drawPlayerUI();
+    void updatePlayerUI();
     void moveAi(std::size_t positionIndex, std::size_t playerIndex);
     void usePower();
 
     Texture2D getSkin(int);
     Texture2D getSkin();
-    std::string getHead(int);
+    std::string getHead(std::string str);
 
     void spawnBomb(int nbPlayer);
     bool testCollision(Position *pos, float x, float y);
@@ -81,6 +82,7 @@ private:
     std::vector<Card *> _cardList;
 
     std::vector<int> _skin = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::vector<std::string> _head;
 
     Raylib::Music _music;
     Raylib::Sound _poseBomb;

@@ -14,7 +14,7 @@ Card::Card(int id)
     _powerUpSpeed = LoadTexture("../assets/pictures/SpeedUp.png");
     _powerUpFlameUp = LoadTexture("../assets/pictures/fireUp.png");
     _powerUpBombUp = LoadTexture("../assets/pictures/bombUp.png");
-    _powerUpWallPass = LoadTexture("../assets/pictures/bombUp.png");
+    _powerUpWallPass = LoadTexture("../assets/pictures/wallPass.png");
 }
 
 Card::~Card()
@@ -36,6 +36,15 @@ int Card::getId() const
     return _id;
 }
 
+void Card::setPlId(int id)
+{
+    _plId = id;
+}
+
+int Card::getPlId() const
+{
+    return _plId;
+}
 
 void Card::setHead(std::string str)
 {
