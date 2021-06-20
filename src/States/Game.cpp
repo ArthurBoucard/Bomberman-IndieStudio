@@ -120,7 +120,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(ai->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2 + whichAI); //Player
+                Player *pl = new Player("AI " + std::to_string(whichAI), 2 + whichAI); //Player
                 pl->link(ai->getId());
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
@@ -145,7 +145,12 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("player", _map[x][z] - 48); //Player
+                std::string name;
+                if (_map[x][z] == '0')
+                    name = "player 1";
+                else
+                    name = "player 2";
+                Player *pl = new Player(name, _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
@@ -332,7 +337,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(ai->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("AI", 2 + whichAI); //Player
+                Player *pl = new Player("AI " + std::to_string(whichAI), 2 + whichAI); //Player
                 pl->link(ai->getId());
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
@@ -357,7 +362,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 Position *pos = new Position(x, z, 0); //Position
                 pos->link(player->getId());
                 _positionList.push_back(pos);
-                Player *pl = new Player("player", _map[x][z] - 48); //Player
+                Player *pl = new Player("player " + _map[x][z], _map[x][z] - 48); //Player
                 pl->link(player->getId());
                 if (_map[x][z] == '0') {
                     pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[0]);
