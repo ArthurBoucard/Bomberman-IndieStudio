@@ -51,7 +51,7 @@ void Map::proceduralGenClassical()
 {
     srand(time(NULL));
 
-    for (int i = 2; i < _map.size(); i += 4)
+    for (int i = 2; i < _map.size(); i += 2)
         for (int j = 2; j < _map[i].length(); j += 2)
             _map[i][j] = 'X';
 
