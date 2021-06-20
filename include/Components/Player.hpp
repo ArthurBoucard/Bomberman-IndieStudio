@@ -35,6 +35,8 @@ class Player : public Components {
         void setNbBomb(std::size_t n);
         std::size_t getFlameSize() const;
         void setFlameSize(std::size_t);
+        void setWallPass(bool value);
+        bool getWallPass() const;
 
     protected:
         int _link;
@@ -47,6 +49,7 @@ class Player : public Components {
         bool _isAlive;
         std::size_t _nbBombs;
         std::size_t _flameSize;
+        bool _wallPass;
     private:
 };
 

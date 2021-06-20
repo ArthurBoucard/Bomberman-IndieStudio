@@ -94,7 +94,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 Texture2DComp *tex = new Texture2DComp(wallT);
                 tex->link(wall->getId());
                 _texture2DList.push_back(tex);
-                Solid *solid = new Solid();
+                Solid *solid = new Solid(false);
                 solid->link(wall->getId());
                 _solidList.push_back(solid);
             }
@@ -110,7 +110,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 Texture2DComp *tex = new Texture2DComp(brickT);
                 tex->link(brick->getId());
                 _texture2DList.push_back(tex);
-                Solid *solid = new Solid();
+                Solid *solid = new Solid(true);
                 solid->link(brick->getId());
                 _solidList.push_back(solid);
             }
@@ -236,7 +236,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 Texture2DComp *tex = new Texture2DComp(wallT);
                 tex->link(wall->getId());
                 _texture2DList.push_back(tex);
-                Solid *solid = new Solid();
+                Solid *solid = new Solid(false);
                 solid->link(wall->getId());
                 _solidList.push_back(solid);
             }
@@ -252,7 +252,7 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 Texture2DComp *tex = new Texture2DComp(brickT);
                 tex->link(brick->getId());
                 _texture2DList.push_back(tex);
-                Solid *solid = new Solid();
+                Solid *solid = new Solid(true);
                 solid->link(brick->getId());
                 _solidList.push_back(solid);
             }
@@ -727,12 +727,16 @@ void Game::usePower()
 bool Game::testCollision(Position *pos, float x, float y) // UP = 1 | LEFT = 2 | DOWN = 3 | RIGHT = 4
 {
     bool collision = true;
+    Player *player = nullptr;
+
+    for (std::size_t i = 0; i < _playerList.size(); i++)
+        if (pos->getLink() == _playerList[i]->getLink())
+            player = _playerList[i];
 
     for (std::size_t p = 0, e = 0; p < _solidList.size(); p++)
     {
         for (e = 0; _solidList[p]->getLink() != _positionList[e]->getLink(); e++)
-        {
-        }
+            ;
         if (CheckCollisionBoxes(
                 {{static_cast<float>(pos->getX() - 6 - 0.5 / 2 + x),
                   static_cast<float>(pos->getZ() - 1 / 2),
@@ -747,7 +751,11 @@ bool Game::testCollision(Position *pos, float x, float y) // UP = 1 | LEFT = 2 |
                   static_cast<float>(_positionList[e]->getZ() + 0.5),
                   static_cast<float>(_positionList[e]->getY() - 9 + 0.5)}}))
         {
-            collision = false;
+            if (player->getWallPass() == true)
+                if (_solidList[p]->getPassable() == false)
+                    collision = false;
+            if (player->getWallPass() == false)
+                collision = false;
             break;
         }
     }
