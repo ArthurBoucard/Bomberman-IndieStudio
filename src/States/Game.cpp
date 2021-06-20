@@ -733,12 +733,14 @@ void Game::Update()
             for (i = 0; _playerList[i]->getPlayerID() != 0; i++)
                 ;
             if (_playerList[i]->getIsAlive() == true)
-                _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
+                _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _playerList[i]->getPlayerName()));
             else
                 _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
         }
         else
-            _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getIsAlive())
+                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _playerList[i]->getPlayerName()));
     }
 }
 
