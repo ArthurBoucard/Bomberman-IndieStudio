@@ -39,6 +39,7 @@ public:
 
     Texture2D getSkin(int);
     Texture2D getSkin();
+    std::string getHead(int);
 
     void spawnBomb(int nbPlayer);
     bool testCollision(Position *pos, float x, float y);
