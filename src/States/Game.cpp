@@ -161,6 +161,31 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
         }
     }
+    _screenWidth = GetScreenWidth();
+    _screenHeight = GetScreenHeight();
+
+    for (int i = 4; i > 0; i--) {
+        Entity *card = new Entity;
+        Card *c = new Card(i);
+        c->link(card->getId());
+        if (nbPlayer >= 1 && i == 1) {
+            c->setHead(getHead(skin1));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 0)
+                    c->setName(_playerList[i]->getPlayerName());
+        } else if (nbPlayer >= 2 && i == 4) {
+            c->setHead(getHead(skin2));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 1)
+                    c->setName(_playerList[i]->getPlayerName());
+        } else {
+            c->setHead(getHead(i));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() >= 2)
+                    c->setName(_playerList[i]->getPlayerName());
+        }
+        _cardList.push_back(c);
+    }
 }
 
 Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
@@ -398,8 +423,8 @@ void Game::Draw()
             }
         }
     }
-    drawPlayerUI();
     EndMode3D();
+    drawPlayerUI();
 }
 
 void Game::Update()
@@ -534,16 +559,15 @@ void Game::Update()
             }
         }
     }
-    if (testWin())
-    {
-        if (_nbPlayer == 1)
-        {
-            for (std::size_t i = 0; i < _playerList.size(); i++)
-                if (_playerList[i]->getPlayerID() == 0 && _playerList[i]->getIsAlive() == true)
-                    _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
-            _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
-        }
-        else
+    if (testWin()) {
+        if (_nbPlayer == 1) {
+            std::size_t i;
+            for (i = 0; _playerList[i]->getPlayerID() != 0; i++);
+            if (_playerList[i]->getIsAlive() == true)
+                _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
+            else
+                _context->TransitionTo(new GameOver(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2));
+        } else
             _context->TransitionTo(new Win(_nbPlayer, _nbIA, _skinChoicePl1, _skinChoicePl2, _skinChoicePl1));
     }
 }
@@ -627,12 +651,56 @@ void Game::Reset()
 
 void Game::drawPlayerUI()
 {
+    float x;
+    float y;
+
+    for (std::size_t i = 0; i < _cardList.size(); i++) {
+        if (_cardList[i]->getId() == 1) {
+            x = 50;
+            y = 50;
+        } else if (_cardList[i]->getId() == 2) {
+            x = 1.2;
+            y = 50;
+        } else if (_cardList[i]->getId() == 3) {
+            x = 50;
+            y = 1.8;
+        } else if (_cardList[i]->getId() == 4) {
+            x = 1.2;
+            y = 1.8;
+        }
+            DrawTextureEx(_cardList[i]->getHead(), {(_screenWidth / static_cast<float>(x)) + 2, (_screenHeight / static_cast<float>(y)) + 2},
+                            0, _screenHeight / static_cast<float>(1000), WHITE);
+            DrawText(_cardList[i]->getName().c_str(), (_cardList[i]->getHead().width + (_screenWidth / x)), _screenHeight / y,
+                        (_screenWidth / 25) - (_screenHeight / 28), BLACK);
+            DrawTextureEx(_cardList[i]->getPowerUpSpeed(), {(_screenWidth / static_cast<float>(x)) + (_cardList[i]->getPowerUpSpeed().width),
+                            (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 3 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                            180, _screenHeight / static_cast<float>(800), WHITE);
+            DrawText(std::to_string(_cardList[i]->getNbPowerUpSpeed()).c_str(), (_screenWidth / static_cast<float>(x)) + 2.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 2 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+            DrawTextureEx(_cardList[i]->getPowerUpFlameUp(), {(_screenWidth / static_cast<float>(x)) + (_cardList[i]->getPowerUpSpeed().width),
+                            (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 5 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                            180, _screenHeight / static_cast<float>(800), WHITE);
+            DrawText(std::to_string(_cardList[i]->getNbPowerUpFlameUp()).c_str(), (_screenWidth / static_cast<float>(x)) + 2.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 4 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+            DrawTextureEx(_cardList[i]->getPowerUpBombUp(), {(_screenWidth / static_cast<float>(x)) + 4 * (_cardList[i]->getPowerUpSpeed().width),
+                            (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 3 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                            180, _screenHeight / static_cast<float>(800), WHITE);
+            DrawText(std::to_string(_cardList[i]->getNbPowerUpSBombUp()).c_str(), (_screenWidth / static_cast<float>(x)) + 8.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 2 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+            DrawTextureEx(_cardList[i]->getPowerUpWallPass(), {(_screenWidth / static_cast<float>(x)) + 4 * (_cardList[i]->getPowerUpSpeed().width),
+                            (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 5 * (_cardList[i]->getPowerUpSpeed().width / 2)},
+                            180, _screenHeight / static_cast<float>(800), WHITE);
+            DrawText(std::to_string(_cardList[i]->getNbPowerUpWallPass()).c_str(), (_screenWidth / static_cast<float>(x)) + 8.5 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenHeight / static_cast<float>(y)) + (_cardList[i]->getHead().height * (_screenHeight / static_cast<float>(1000))) + 4 * (_cardList[i]->getPowerUpSpeed().width / 2),
+                        (_screenWidth / 35) - (_screenHeight / 38), BLACK);
+    }
 }
 
 Texture2D Game::getSkin(int skin)
 {
-    int index = GetRandomValue(0, (_skin.size() - 1));
-
     std::string str = "../assets/skin/texture/guytex" + std::to_string(_skin[skin]) + ".png";
     _skin.erase(_skin.begin() + skin);
 
@@ -651,6 +719,13 @@ Texture2D Game::getSkin()
     _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
+}
+
+std::string Game::getHead(int head)
+{
+    std::string str = "../assets/skin/head/head" + std::to_string(_skin[head]) + ".png";
+
+    return str;
 }
 
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
