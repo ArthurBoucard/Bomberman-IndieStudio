@@ -78,6 +78,11 @@ void Player::setIsAlive(bool b)
     _isAlive = b;
 }
 
+void Player::setName(std::string name)
+{
+    _name = name;
+}
+
 bool Player::getIsAlive() const
 {
     return _isAlive;
