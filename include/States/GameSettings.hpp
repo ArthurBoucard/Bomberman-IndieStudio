@@ -28,19 +28,32 @@ public:
 
 private:
     Texture2D _bg;
+
     Vector2 _mouse;
+
     Rectangle _rectPlPlayers;
     Rectangle _rectMiPlayers;
     Rectangle _rectPlIA;
     Rectangle _rectMiIA;
     Rectangle _rectValidate;
+    Rectangle _rectAfterPlayer1;
+    Rectangle _rectAfterPlayer2;
+    Rectangle _rectPrevPlayer1;
+    Rectangle _rectPrevPlayer2;
+    Rectangle _rectPlay;
     float _screenWidth;
     float _screenHeight;
+
     int _nbPlayers;
     int _nbIA;
     int _nbTotalPlayers;
+    int _verif;
+    int _skinChoicePl1;
+    int _skinChoicePl2;
     std::string _nbPlayersText = "Number of players";
     std::string _nbIAText = "Number of AI";
+
+    Raylib::Sound _button;
 };
 
 #endif /* !GAME_HPP_ */

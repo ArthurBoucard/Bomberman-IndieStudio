@@ -29,4 +29,5 @@ void Bomberman::GameLoop()
             context->HandleInput();
         EndDrawing();
     }
+    delete context;
 }

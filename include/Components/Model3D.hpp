@@ -17,8 +17,8 @@ class Model3D {
         ~Model3D();
 
         void link(int id);
-        int getLink();
-        Model getModel();
+        int getLink() const;
+        Model getModel() const;
         void setModel(Model model);
     protected:
         int _link;

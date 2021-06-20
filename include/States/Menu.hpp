@@ -13,43 +13,59 @@
 #include "../States/Game.hpp"
 #include "../States/GameOver.hpp"
 #include "../States/GameSettings.hpp"
+#include "../States/HowToPlay.hpp"
 #include "../Raylib/Raylib.hpp"
+#include "../States/Win.hpp"
+#include "../States/HowToPlay.hpp"
+
 
 class Menu : public State
 {
-    public:
-        Menu();
-        ~Menu();
+public:
+    Menu();
+    ~Menu();
 
-        void Draw();
-        void Update();
-        void Clear();
-        void HandleInput();
-        void Reset();
-        bool CheckMouse(Vector2, Raylib::Rectangle, int state);
+    void Draw();
+    void Update();
+    void Clear();
+    void HandleInput();
+    void Reset();
+    bool CheckMouse(Vector2, Raylib::Rectangle, int state);
 
-    private:
-        Raylib::Rectangle _rectPlayGame;
-        Raylib::Rectangle _rectSettings;
-        Raylib::Rectangle _rectHowToPlay;
-        Raylib::Rectangle _rectStats;
+    void LoadSave();
 
-        Vector2 _mouse;
+private:
+    Raylib::Rectangle _rectPlayGame;
+    Raylib::Rectangle _rectSettings;
+    Raylib::Rectangle _rectHowToPlay;
+    Raylib::Rectangle _rectStats;
+    Raylib::Rectangle _rectLoad;
 
-        float _screenWidth;
-        float _screenHeight;
+    Vector2 _mouse;
 
-        Raylib::Text _playGame;
-        Raylib::Text _title;
-        Raylib::Text _settings;
-        Raylib::Text _howToPlay;
-        Raylib::Text _stat;
+    float _screenWidth;
+    float _screenHeight;
 
-        Raylib::Music _music;
+    Raylib::Text _playGame;
+    Raylib::Text _title;
+    Raylib::Text _settings;
+    Raylib::Text _howToPlay;
+    Raylib::Text _stat;
+    Raylib::Text _load;
 
-        Raylib::Texture2D _bg;
+    Raylib::Music _music;
+    Raylib::Sound _button;
 
-        Raylib::WindowTools _window;
+    Raylib::Texture2D _bg;
+
+    Raylib::WindowTools _window;
+
+    unsigned int _nbPlayer;
+    unsigned int _nbIA;
+    std::vector<std::string> _map;
+    std::vector<std::string> _skin;
+
+    float _scale;
 };
 
 #endif /* !Menu_HPP_ */

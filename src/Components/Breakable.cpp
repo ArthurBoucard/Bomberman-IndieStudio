@@ -20,7 +20,7 @@ void Breakable::link(int id)
     _link = id;
 }
 
-int Breakable::getLink()
+int Breakable::getLink() const
 {
     return _link;
 }

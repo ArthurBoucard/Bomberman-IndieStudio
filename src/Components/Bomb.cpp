@@ -7,8 +7,11 @@
 
 #include "../../include/Components/Bomb.hpp"
 
-Bomb::Bomb()
+Bomb::Bomb(int radius)
 {
+    _clock = clock();
+    _isExplode = false;
+    _radius = radius;
 }
 
 Bomb::~Bomb()
@@ -25,22 +28,42 @@ void Bomb::linkPlayer(int id)
     _playerLink = id;
 }
 
-int Bomb::getLink()
+int Bomb::getLink() const
 {
     return _link;
 }
 
-int Bomb::getPlayerLink()
+int Bomb::getPlayerLink() const
 {
     return _playerLink;
 }
 
-int Bomb::getRadius()
+int Bomb::getRadius() const
 {
     return _radius;
 }
 
-int Bomb::getTimeLeft()
+int Bomb::getTimeLeft() const
 {
     return _timeLeft;
+}
+
+bool Bomb::getIsExplode() const
+{
+    return _isExplode;
+}
+
+clock_t Bomb::getClock() const
+{
+    return _clock;
+}
+
+void Bomb::setRadius(int radius)
+{
+    _radius = radius;
+}
+
+void Bomb::setIsExplode(bool isExplode)
+{
+    _isExplode = isExplode;
 }
