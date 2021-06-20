@@ -14,13 +14,12 @@ Context::Context(State *state) : _state(nullptr)
 
 Context::~Context()
 {
-    delete _state;
+    //delete _state;
 }
 
 void Context::TransitionTo(State *state)
 {
-    if (_state != nullptr)
-        delete _state;
+    delete _state;
 
     _state = state;
     _state->SetContext(this);

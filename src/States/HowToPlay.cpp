@@ -44,5 +44,5 @@ void HowToPlay::Reset()
 
 void HowToPlay::UpdateScale()
 {
-    _scale = _scale / _bg.getWidth() * _screenWidth;  
+    _scale = _scale / _bg.getWidth() * _screenWidth;
 }

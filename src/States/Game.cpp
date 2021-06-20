@@ -958,9 +958,10 @@ void Game::saveMap()
     _saveMap = map;
 }
 
-bool Game::testWin()
+bool Game::testWin() const
 {
     int nbPl = 0;
+
     for (std::size_t i = 0; i < _playerList.size(); i++)
         if (_playerList[i]->getIsAlive())
             nbPl++;

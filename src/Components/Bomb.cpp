@@ -28,32 +28,32 @@ void Bomb::linkPlayer(int id)
     _playerLink = id;
 }
 
-int Bomb::getLink()
+int Bomb::getLink() const
 {
     return _link;
 }
 
-int Bomb::getPlayerLink()
+int Bomb::getPlayerLink() const
 {
     return _playerLink;
 }
 
-int Bomb::getRadius()
+int Bomb::getRadius() const
 {
     return _radius;
 }
 
-int Bomb::getTimeLeft()
+int Bomb::getTimeLeft() const
 {
     return _timeLeft;
 }
 
-bool Bomb::getIsExplode()
+bool Bomb::getIsExplode() const
 {
     return _isExplode;
 }
 
-clock_t Bomb::getClock()
+clock_t Bomb::getClock() const
 {
     return _clock;
 }

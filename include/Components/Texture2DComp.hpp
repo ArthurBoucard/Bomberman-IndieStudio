@@ -17,8 +17,8 @@ class Texture2DComp: public Components {
         ~Texture2DComp();
 
         void link(int id);
-        int getLink();
-        Texture2D getTexture();
+        int getLink() const;
+        Texture2D getTexture() const;
     protected:
         int _link;
         Texture2D _texture;

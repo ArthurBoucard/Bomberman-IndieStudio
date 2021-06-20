@@ -17,10 +17,10 @@ class Context;
 
 class State {
     public:
-        Context *_context;
+        Context *_context = nullptr;
 
     public:
-        virtual ~State(){}
+        virtual ~State() {};
 
         void SetContext(Context *context)
         {

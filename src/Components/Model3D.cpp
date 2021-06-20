@@ -20,12 +20,12 @@ void Model3D::link(int id)
     _link = id;
 }
 
-int Model3D::getLink()
+int Model3D::getLink() const
 {
     return _link;
 }
 
-Model Model3D::getModel()
+Model Model3D::getModel() const
 {
     return _model;
 }

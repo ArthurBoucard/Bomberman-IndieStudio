@@ -24,7 +24,7 @@ void Flame::link(int id)
     _link = id;
 }
 
-int Flame::getLink()
+int Flame::getLink() const
 {
     return _link;
 }
@@ -34,22 +34,22 @@ void Flame::move()
     _dist--;
 }
 
-int Flame::getDist()
+int Flame::getDist() const
 {
     return _dist;
 }
 
-clock_t Flame::getClock()
+clock_t Flame::getClock() const
 {
     return _clock;
 }
 
-Position Flame::getBombPos()
+Position Flame::getBombPos() const
 {
     return _bombPos;
 }
 
-int Flame::getDirection()
+int Flame::getDirection() const
 {
     return _direction;
 }
