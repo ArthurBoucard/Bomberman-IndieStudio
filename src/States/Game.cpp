@@ -775,7 +775,7 @@ Texture2D Game::getSkin()
 std::string Game::getHead(std::string str)
 {
     std::string tmp = str.substr(29, 29);
-    std::cout << tmp << std::endl;
+
     return "../assets/skin/head/head" + tmp + ".png";
 }
 
