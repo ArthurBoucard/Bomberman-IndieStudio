@@ -6,6 +6,9 @@
 */
 
 #include "../../include/Map/Map.hpp"
+#include "../../include/States/Game.hpp"
+#include "ctime"
+
 
 Map::Map()
 {
@@ -119,4 +122,18 @@ void Map::proceduralGenLab()
         for (int j = 1; j < _map[i].length(); j++)
             if (_map[i][j] == '$')
                 _map[i][j] = ' ';
+}
+
+void Map::RandomMap()
+{
+
+    srand((unsigned) time(0));
+    int randomNb = 0;
+
+    randomNb = (rand() % 2);
+
+    if (randomNb == 0)
+        proceduralGenClassical();
+    else
+        proceduralGenLab();
 }
