@@ -10,7 +10,7 @@
 
 // check windows or linux
 #ifdef _WIN32
-#define time_tbomb 9000
+#define time_tbomb 1000
 #define time_ai 900
 #define time_bomb 300
 #elif __linux__
