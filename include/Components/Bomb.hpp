@@ -18,12 +18,12 @@ class Bomb {
 
         void link(int id);
         void linkPlayer(int id);
-        int getLink();
-        int getPlayerLink();
-        int getRadius();
-        int getTimeLeft();
-        bool getIsExplode();
-        clock_t getClock();
+        int getLink() const;
+        int getPlayerLink() const;
+        int getRadius() const;
+        int getTimeLeft() const;
+        bool getIsExplode() const;
+        clock_t getClock() const;
 
         void setRadius(int radius);
         void setIsExplode(bool isExplode);

@@ -22,7 +22,7 @@ namespace Raylib
             {
                 InitWindow(width, height, title.c_str());
             }
-            ~Window() //Destructor - Cloases window
+            ~Window() //Destructor - Closes window
             {
                 CloseWindow();
             }

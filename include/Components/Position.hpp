@@ -19,10 +19,10 @@ class Position : public Components {
         ~Position();
 
         void link(int id);
-        int getLink();
-        float getX();
-        float getY();
-        float getZ();
+        int getLink() const;
+        float getX() const;
+        float getY() const;
+        float getZ() const;
         void setX(float x);
         void setY(float y);
         void setZ(float z);

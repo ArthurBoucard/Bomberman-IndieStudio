@@ -17,11 +17,11 @@ class Jump {
         ~Jump();
 
         void link(int id);
-        int getLink();
-        bool getJump();
-        int getAnimCount();
-        ModelAnimation getAnim();
-        int getFrameCount();
+        int getLink() const;
+        bool getJump() const;
+        int getAnimCount() const;
+        ModelAnimation getAnim() const;
+        int getFrameCount() const;
 
         void setJump(bool jump);
         void setAnimCount(int count);

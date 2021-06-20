@@ -14,17 +14,19 @@
 
 class Solid {
     public:
-        Solid();
+        Solid(bool passable);
         ~Solid();
 
         void link(int id);
-        int getLink();
+        int getLink() const;
         void updateRect(Position pos);
-        Rectangle getRect();
+        Rectangle getRect() const;
+        bool getPassable() const;
 
     protected:
         int _link;
         Rectangle _rect;
+        bool _passable;
     private:
 };
 

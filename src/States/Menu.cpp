@@ -40,8 +40,11 @@ bool Menu::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
             _howToPlay.Draw(rect.x + _screenWidth / 90, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
         if (state == 4)
             _stat.Draw(rect.x + _screenWidth / 20, rect.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
-        if (state == 5)
+        if (state == 5) {
+            if (!FileExists("../assets/saveFile.txt"))
+                rect.Draw(50, 50, GRAY);
             _load.Draw(rect.x + _screenWidth / 26, rect.y + _screenHeight / 28, (_screenWidth / 18) - (_screenHeight / 20), BLACK);
+        }
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             return true;
@@ -51,12 +54,15 @@ bool Menu::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
 
 void Menu::Draw()
 {
-    _bg.Draw(0, 0, RAYWHITE);
+    _bg.Draw({0, 0}, 0, _scale, WHITE);
     _rectPlayGame.Draw(50, 50, RAYWHITE);
     _rectSettings.Draw(50, 50, RAYWHITE);
     _rectHowToPlay.Draw(50, 50, RAYWHITE);
     _rectStats.Draw(50, 50, RAYWHITE);
-    _rectLoad.Draw(50, 50, RAYWHITE);
+    if (!FileExists("../assets/saveFile.txt"))
+        _rectLoad.Draw(50, 50, GRAY);
+    else
+        _rectLoad.Draw(50, 50, WHITE);
 }
 
 void Menu::Update()
@@ -79,6 +85,8 @@ void Menu::Update()
     _stat.Draw(_rectStats.x + _screenWidth / 20, _rectHowToPlay.y + _screenHeight / 30, (_screenWidth / 23) - (_screenHeight / 26), BLACK);
 
     _music.Update();
+
+    _scale = _screenWidth / _bg.getWidth();
 }
 
 void Menu::Clear()
@@ -100,18 +108,16 @@ void Menu::HandleInput()
     if (CheckMouse(_mouse, _rectHowToPlay, 3) == true)
     {
         _button.Play();
-        printf("Tuto\n");
+        _context->TransitionTo(new HowToPlay);
     }
     if (CheckMouse(_mouse, _rectStats, 4) == true)
     {
         _button.Play();
-        printf("Stat\n");
     }
-    if (CheckMouse(_mouse, _rectLoad, 5) == true)
+    if (CheckMouse(_mouse, _rectLoad, 5) == true && FileExists("../assets/saveFile.txt"))
     {
         _button.Play();
         LoadSave();
-
         _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skin));
     }
 }

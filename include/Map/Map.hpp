@@ -25,6 +25,7 @@ class Map {
         std::vector<std::string> getMap() const;
         void reset();
         void proceduralGenClassical();
+        void proceduralGenLab();
         void placePlayers(int nbPlayer, int nbIA);
     protected:
     private:
