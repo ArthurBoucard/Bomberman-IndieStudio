@@ -46,7 +46,7 @@ public:
     void deleteEntity(int id);
 
     void saveMap();
-    bool testWin();
+    bool testWin() const;
 
 private:
     float _screenWidth;

@@ -18,12 +18,12 @@ class Flame {
         ~Flame();
 
         void link(int id);
-        int getLink();
+        int getLink() const;
         void move();
-        int getDist();
-        clock_t getClock();
-        Position getBombPos();
-        int getDirection();
+        int getDist() const;
+        clock_t getClock() const;
+        Position getBombPos() const;
+        int getDirection() const;
         void resetClock();
     protected:
         int _link;
