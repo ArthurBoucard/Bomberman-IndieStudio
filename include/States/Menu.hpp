@@ -64,6 +64,7 @@ private:
     unsigned int _nbIA;
     std::vector<std::string> _map;
     std::vector<std::string> _skin;
+    std::vector<int> _powerUp;
 
     float _scale;
 };

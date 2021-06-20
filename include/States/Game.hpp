@@ -36,7 +36,7 @@ class Game : public State
 {
 public:
     Game(int nbPlayer, int nbIA, int skin1, int skin2);
-    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &saveSkin);
+    Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &saveSkin, const std::vector<int> &savePowerUP);
     ~Game();
 
     void Draw();
@@ -70,6 +70,7 @@ private:
     std::vector<std::string> _map;
     std::vector<std::string> _saveMap;
     std::vector<std::string> _saveSkin;
+    std::vector<int> _savePowerUP = {0, 0, 0, 0, 0, 0, 0, 0};
 
     int _skinChoicePl1;
     int _skinChoicePl2;
@@ -77,8 +78,6 @@ private:
     Camera _camera = {0};
 
     int _lastWall = 0;
-
-    std::vector<std::string> _files;
 
     std::vector<Position *> _positionList;
     std::vector<Breakable *> _breakableList;

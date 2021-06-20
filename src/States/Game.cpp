@@ -197,12 +197,9 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             if (_nbPlayer >= 2 && i == 2)
             {
                 c->setHead(_head[3]);
-                c->setPlId(2);
-            }
-            else if (_nbIA == 4)
-            {
-                if (whichAI == 0)
-                {
+                c->setPlId(3);
+            } else if (_nbPlayer == 0) {
+                if (whichAI == 0) {
                     c->setHead(_head[2]);
                     c->setPlId(2);
                 }
@@ -226,7 +223,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             else
             {
                 c->setHead(_head[5 - i]);
-                // Need player link
+                c->setPlId(5);
             }
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() >= 2)
@@ -236,7 +233,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     }
 }
 
-Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin)
+Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const std::vector<std::string> &skin, const std::vector<int> &savePowerUP)
 {
     _map = map;
 
@@ -362,6 +359,17 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 _positionList.push_back(pos);
                 Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
+                if (_map[x][z] == '0') {
+                    pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[0]);
+                    pl->setFlameSize(pl->getFlameSize() + savePowerUP[1]);
+                    pl->setNbBomb(pl->getNbBomb() + savePowerUP[2]);
+                    pl->setWallPass(savePowerUP[3]);
+                } else if (_map[x][z] == '1') {
+                    pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[4]);
+                    pl->setFlameSize(pl->getFlameSize() + savePowerUP[5]);
+                    pl->setNbBomb(pl->getNbBomb() + savePowerUP[6]);
+                    pl->setWallPass(savePowerUP[7]);
+                }
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
                 if (_map[x][z] == '0')
@@ -392,6 +400,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(0);
+                    c->setNbPowerUpSpeed(savePowerUP[0]);
+                    c->setNbPowerUpFlameUp(savePowerUP[1]);
+                    c->setNbPowerUpBombUp(savePowerUP[2]);
+                    c->setNbPowerUpWallPass(savePowerUP[3]);
                 }
             }
         }
@@ -404,6 +416,10 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(1);
+                    c->setNbPowerUpSpeed(savePowerUP[4]);
+                    c->setNbPowerUpFlameUp(savePowerUP[5]);
+                    c->setNbPowerUpBombUp(savePowerUP[6]);
+                    c->setNbPowerUpWallPass(savePowerUP[7]);
                 }
             }
         }
@@ -797,7 +813,7 @@ void Game::HandleInput()
     if (IsKeyPressed(KEY_P))
     {
         saveMap();
-        _context->TransitionTo(new Pause(_nbPlayer, _nbIA, _saveMap, _skinChoicePl1, _skinChoicePl2, _saveSkin));
+        _context->TransitionTo(new Pause(_nbPlayer, _nbIA, _saveMap, _skinChoicePl1, _skinChoicePl2, _saveSkin, _savePowerUP));
     }
 }
 
@@ -817,12 +833,12 @@ void Game::drawPlayerUI()
             x = 50;
             y = 50;
         }
-        else if (_cardList[i]->getId() == 2)
+        else if (_cardList[i]->getId() == 2 && _nbIA != 0)
         {
             x = 1.2;
             y = 50;
         }
-        else if (_cardList[i]->getId() == 3)
+        else if (_cardList[i]->getId() == 3 && _nbIA != 0)
         {
             x = 50;
             y = 1.8;
@@ -871,6 +887,21 @@ void Game::updatePlayerUI()
                 _cardList[i]->setNbPowerUpFlameUp(_playerList[j]->getFlameSize() - 2);
                 _cardList[i]->setNbPowerUpBombUp(_playerList[j]->getNbBomb() - 1);
                 _cardList[i]->setNbPowerUpWallPass(_playerList[j]->getWallPass());
+
+                if(_playerList[j]->getPlayerID() == 0)
+                {
+                _savePowerUP[0] = (_playerList[j]->getSpeed() - 0.05) * 100;
+                _savePowerUP[1] = _playerList[j]->getFlameSize() - 2;
+                _savePowerUP[2] = _playerList[j]->getNbBomb() - 1;
+                _savePowerUP[3] = _playerList[j]->getWallPass();
+                }
+                if(_playerList[j]->getPlayerID() == 1)
+                {
+                _savePowerUP[4] = (_playerList[j]->getSpeed() - 0.05) * 100;
+                _savePowerUP[5] = _playerList[j]->getFlameSize() - 2;
+                _savePowerUP[6] = _playerList[j]->getNbBomb() - 1;
+                _savePowerUP[7] = _playerList[j]->getWallPass();
+                }
             }
         }
     }
