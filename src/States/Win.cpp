@@ -21,7 +21,7 @@ Win::Win(int nbPlayer, int nbIA, int skin1, int skin2, std::string nameWinner)
     _skin1 = skin1;
     _skin2 = skin2;
 
-    _winMusic.Load("../assets/music/win.mp3");
+    _winMusic.LoadMusic("../assets/music/win.mp3");
 }
 
 Win::~Win()
@@ -65,6 +65,8 @@ void Win::Update()
     _screenWidth = GetScreenWidth();
     _screenHeight = GetScreenHeight();
     _mouse = GetMousePosition();
+
+    _winMusic.Update();
 
     DrawText(_win.c_str(), _screenWidth / 4.5, _screenHeight / 4.5, (_screenWidth / 10) - (_screenHeight / 18), BLACK);
     // _win.Draw(_screenWidth / 4.5, _screenHeight / 4.5, (_screenWidth / 10) - (_screenHeight / 18), BLACK);

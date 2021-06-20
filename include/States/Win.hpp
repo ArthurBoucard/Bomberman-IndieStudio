@@ -51,7 +51,7 @@ private:
     int _skin1;
     int _skin2;
 
-    Raylib::Sound _winMusic;
+    Raylib::Music _winMusic;
 };
 
 #endif /* !WIN_HPP_ */
