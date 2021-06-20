@@ -187,7 +187,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             if (_nbPlayer >= 2 && i == 2) {
                 c->setHead(_head[3]);
                 c->setPlId(3);
-            } else if (_nbIA == 4) {
+            } else if (_nbPlayer == 0) {
                 if (whichAI == 0) {
                     c->setHead(_head[2]);
                     c->setPlId(2);
@@ -340,6 +340,17 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 _positionList.push_back(pos);
                 Player *pl = new Player("player", _map[x][z] - 48); //Player
                 pl->link(player->getId());
+                if (_map[x][z] == '0') {
+                    pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[0]);
+                    pl->setFlameSize(pl->getFlameSize() + savePowerUP[1]);
+                    pl->setNbBomb(pl->getNbBomb() + savePowerUP[2]);
+                    pl->setWallPass(savePowerUP[3]);
+                } else if (_map[x][z] == '1') {
+                    pl->setSpeed(pl->getSpeed() + (0.01) * savePowerUP[4]);
+                    pl->setFlameSize(pl->getFlameSize() + savePowerUP[5]);
+                    pl->setNbBomb(pl->getNbBomb() + savePowerUP[6]);
+                    pl->setWallPass(savePowerUP[7]);
+                }
                 _playerList.push_back(pl);
                 Model3D *mod = new Model3D(); //Model3D
                 if (_map[x][z] == '0')
@@ -779,12 +790,12 @@ void Game::drawPlayerUI()
             x = 50;
             y = 50;
         }
-        else if (_cardList[i]->getId() == 2)
+        else if (_cardList[i]->getId() == 2 && _nbIA != 0)
         {
             x = 1.2;
             y = 50;
         }
-        else if (_cardList[i]->getId() == 3)
+        else if (_cardList[i]->getId() == 3 && _nbIA != 0)
         {
             x = 50;
             y = 1.8;
