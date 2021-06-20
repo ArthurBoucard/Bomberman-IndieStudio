@@ -17,8 +17,8 @@ Jump::Jump()
 
 Jump::~Jump()
 {
-    // for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
-    // RL_FREE(anims);
+    UnloadModelAnimation(*_anim);
+    //RL_FREE(_anim);
 }
 
 void Jump::link(int id)
@@ -26,26 +26,26 @@ void Jump::link(int id)
     _link = id;
 }
 
-int Jump::getLink()
+int Jump::getLink() const
 {
     return _link;
 }
 
-bool Jump::getJump()
+bool Jump::getJump() const
 {
     return _isJump;
 }
 
-int Jump::getAnimCount()
+int Jump::getAnimCount() const
 {
     return _animCount;
 }
 
-ModelAnimation Jump::getAnim()
+ModelAnimation Jump::getAnim() const
 {
     return *_anim;
 }
-int Jump::getFrameCount()
+int Jump::getFrameCount() const
 {
     return _animFrameCounter;
 }
