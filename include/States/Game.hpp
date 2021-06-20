@@ -8,7 +8,7 @@
 #ifndef GAME_HPP_
 #define GAME_HPP_
 
-//check windows or linux
+// check windows or linux
 #ifdef _WIN32 
 #define time_ai 900 
 #define time_bomb 300
