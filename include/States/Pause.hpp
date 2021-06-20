@@ -13,6 +13,7 @@
 #include "../Raylib/Raylib.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 class Pause : public State
@@ -29,6 +30,8 @@ public:
     void Reset();
     bool CheckMouse(Vector2, Raylib::Rectangle, int state);
 
+    void SaveInFile();
+
 private:
     Vector2 _mouse;
 
@@ -44,7 +47,7 @@ private:
     std::string _pauseText = "PAUSE";
     std::string _playAgain = "Play Again";
     std::string _resume = "Resume";
-    std::string _backMenu = "Back To Menu";
+    std::string _backMenu = "Save and Quit";
 
     int _skinChoicePl1;
     int _skinChoicePl2;

@@ -1,0 +1,23 @@
+>NB_PLAYER
+2
+>NB_IA
+2
+>MAP
+XXXXXXXXXXXXXXX
+X0 ###### #   X
+X X#X#X#X#X#X X
+X###### ####  X
+X#X#X#X#X#X#X#X
+X ############X
+X#X#X#X X#X#X#X
+X# #### #### #X
+X#X#X#X X#X#X X
+X# # ### #### X
+X X#X#X#X#X X X
+X  # ###   # 1X
+XXXXXXXXXXXXXXX
+>SKIN
+../assets/skin/texture/guytex1.png
+../assets/skin/texture/guytex6.png
+../assets/skin/texture/guytex2.png
+../assets/skin/texture/guytex8.png
