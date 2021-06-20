@@ -163,46 +163,68 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
     }
     whichAI = 0;
 
-    for (int i = 1; i <= 4; i++) {
+    for (int i = 1; i <= 4; i++)
+    {
         Entity *card = new Entity;
         Card *c = new Card(i);
         c->link(card->getId());
-        if (nbPlayer >= 1 && i == 1) {
+        if (nbPlayer >= 1 && i == 1)
+        {
             c->setHead(_head[0]);
-            for (std::size_t i = 0; i < _playerList.size(); i++) {
-                if (_playerList[i]->getPlayerID() == 0) {
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 0)
+                {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(0);
                 }
             }
-        } else if (nbPlayer >= 2 && i == 4) {
+        }
+        else if (nbPlayer >= 2 && i == 4)
+        {
             c->setHead(_head[1]);
-            for (std::size_t i = 0; i < _playerList.size(); i++) {
-                if (_playerList[i]->getPlayerID() == 1) {
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 1)
+                {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(1);
                 }
             }
-        } else {
-            if (_nbPlayer >= 2 && i == 2) {
+        }
+        else
+        {
+            if (_nbPlayer >= 2 && i == 2)
+            {
                 c->setHead(_head[3]);
                 c->setPlId(2);
-            } else if (_nbIA == 4) {
-                if (whichAI == 0) {
+            }
+            else if (_nbIA == 4)
+            {
+                if (whichAI == 0)
+                {
                     c->setHead(_head[2]);
                     c->setPlId(2);
-                } else if (whichAI == 1) {
+                }
+                else if (whichAI == 1)
+                {
                     c->setHead(_head[3]);
                     c->setPlId(3);
-                } else if (whichAI == 2) {
+                }
+                else if (whichAI == 2)
+                {
                     c->setHead(_head[1]);
                     c->setPlId(4);
-                } else {
+                }
+                else
+                {
                     c->setHead(_head[0]);
                     c->setPlId(5);
                 }
                 whichAI++;
-            } else {
+            }
+            else
+            {
                 c->setHead(_head[5 - i]);
                 // Need player link
             }
@@ -356,46 +378,68 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
     }
     whichAI = 0;
 
-    for (int i = 1; i <= 4; i++) {
+    for (int i = 1; i <= 4; i++)
+    {
         Entity *card = new Entity;
         Card *c = new Card(i);
         c->link(card->getId());
-        if (nbPlayer >= 1 && i == 1) {
+        if (nbPlayer >= 1 && i == 1)
+        {
             c->setHead(getHead(skin[0]));
-            for (std::size_t i = 0; i < _playerList.size(); i++) {
-                if (_playerList[i]->getPlayerID() == 0) {
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 0)
+                {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(0);
                 }
             }
-        } else if (nbPlayer >= 2 && i == 4) {
+        }
+        else if (nbPlayer >= 2 && i == 4)
+        {
             c->setHead(getHead(skin[1]));
-            for (std::size_t i = 0; i < _playerList.size(); i++) {
-                if (_playerList[i]->getPlayerID() == 1) {
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+            {
+                if (_playerList[i]->getPlayerID() == 1)
+                {
                     c->setName(_playerList[i]->getPlayerName());
                     c->setPlId(1);
                 }
             }
-        } else {
-            if (_nbPlayer >= 2 && i == 2) {
+        }
+        else
+        {
+            if (_nbPlayer >= 2 && i == 2)
+            {
                 c->setHead(getHead(skin[3]));
                 c->setPlId(2);
-            } else if (_nbIA == 4) {
-                if (whichAI == 0) {
+            }
+            else if (_nbIA == 4)
+            {
+                if (whichAI == 0)
+                {
                     c->setHead(getHead(skin[2]));
                     c->setPlId(2);
-                } else if (whichAI == 1) {
+                }
+                else if (whichAI == 1)
+                {
                     c->setHead(getHead(skin[3]));
                     c->setPlId(3);
-                } else if (whichAI == 2) {
+                }
+                else if (whichAI == 2)
+                {
                     c->setHead(getHead(skin[1]));
                     c->setPlId(4);
-                } else {
+                }
+                else
+                {
                     c->setHead(getHead(skin[0]));
                     c->setPlId(5);
                 }
                 whichAI++;
-            } else {
+            }
+            else
+            {
                 c->setHead(getHead(skin[5 - i]));
                 // Need player link
             }
@@ -542,7 +586,7 @@ void Game::Update()
     for (std::size_t i = 0; i < _bombList.size(); i++)
     {
         clock_t end = clock();
-        if (end - _bombList[i]->getClock() >= time_ai)
+        if (end - _bombList[i]->getClock() >= time_tbomb)
             _bombList[i]->setIsExplode(true);
     }
     // Make bomb explode
@@ -815,9 +859,12 @@ void Game::drawPlayerUI()
 
 void Game::updatePlayerUI()
 {
-    for (std::size_t i = 0, j = 0; i < _cardList.size(); i++) {
-        for (j = 0; j < _playerList.size(); j++) {
-            if (_cardList[i]->getPlId() == _playerList[j]->getPlayerID()) {
+    for (std::size_t i = 0, j = 0; i < _cardList.size(); i++)
+    {
+        for (j = 0; j < _playerList.size(); j++)
+        {
+            if (_cardList[i]->getPlId() == _playerList[j]->getPlayerID())
+            {
                 _cardList[i]->setNbPowerUpSpeed((_playerList[j]->getSpeed() - 0.05) * 100);
                 _cardList[i]->setNbPowerUpFlameUp(_playerList[j]->getFlameSize() - 2);
                 _cardList[i]->setNbPowerUpBombUp(_playerList[j]->getNbBomb() - 1);

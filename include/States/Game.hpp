@@ -9,10 +9,12 @@
 #define GAME_HPP_
 
 // check windows or linux
-#ifdef _WIN32 
-#define time_ai 900 
+#ifdef _WIN32
+#define time_tbomb 9000
+#define time_ai 900
 #define time_bomb 300
-#elif _linux_ 
+#elif __linux__
+#define time_tbomb 900000
 #define time_ai 90000
 #define time_bomb 30000
 #endif
