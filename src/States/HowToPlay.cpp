@@ -43,6 +43,5 @@ void HowToPlay::Reset()
 
 void HowToPlay::UpdateScale()
 {
-    std::cout<<_scale<<std::endl;
     _scale = _scale / _bg.getWidth() * _screenWidth;
 }

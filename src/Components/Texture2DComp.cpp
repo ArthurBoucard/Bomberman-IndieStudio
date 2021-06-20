@@ -21,12 +21,12 @@ void Texture2DComp::link(int id)
     _link = id;
 }
 
-int Texture2DComp::getLink()
+int Texture2DComp::getLink() const
 {
     return _link;
 }
 
-Texture2D Texture2DComp::getTexture()
+Texture2D Texture2DComp::getTexture() const
 {
     return _texture;
 }

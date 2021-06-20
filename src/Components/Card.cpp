@@ -7,8 +7,14 @@
 
 #include "../../include/Components/Card.hpp"
 
-Card::Card()
+Card::Card(int id)
 {
+    _id = id;
+
+    _powerUpSpeed = LoadTexture("../assets/pictures/SpeedUp.png");
+    _powerUpFlameUp = LoadTexture("../assets/pictures/fireUp.png");
+    _powerUpBombUp = LoadTexture("../assets/pictures/bombUp.png");
+    _powerUpWallPass = LoadTexture("../assets/pictures/bombUp.png");
 }
 
 Card::~Card()
@@ -25,22 +31,18 @@ int Card::getLink() const
     return _link;
 }
 
-void Card::setRect(Raylib::Rectangle rect)
+int Card::getId() const
 {
-    _rect = rect;
+    return _id;
 }
 
-Raylib::Rectangle Card::getRect() const
+
+void Card::setHead(std::string str)
 {
-    return _rect;
+    _head = LoadTexture(str.c_str());
 }
 
-void Card::setHead(Image img)
-{
-    _head = img;
-}
-
-Image Card::getHead() const
+Texture2D Card::getHead() const
 {
     return _head;
 }
@@ -55,7 +57,7 @@ std::string Card::getName() const
     return _name;
 }
 
-Image Card::getPowerUpSpeed() const
+Texture2D Card::getPowerUpSpeed() const
 {
     return _powerUpSpeed;
 }
@@ -70,7 +72,7 @@ int Card::getNbPowerUpSpeed() const
     return _nbPowerUpSpeed;
 }
 
-Image Card::getPowerUpBombUp() const
+Texture2D Card::getPowerUpBombUp() const
 {
     return _powerUpBombUp;
 }
@@ -85,7 +87,7 @@ int Card::getNbPowerUpSBombUp() const
     return _nbPowerUpBombUp;
 }
 
-Image Card::getPowerUpFlameUp() const
+Texture2D Card::getPowerUpFlameUp() const
 {
     return _powerUpFlameUp;
 }
@@ -99,7 +101,7 @@ int Card::getNbPowerUpFlameUp() const
     return _nbPowerUpFlameUp;
 }
 
-Image Card::getPowerUpWallPass() const
+Texture2D Card::getPowerUpWallPass() const
 {
     return _powerUpWallPass;
 }

@@ -113,20 +113,11 @@ void Menu::HandleInput()
     if (CheckMouse(_mouse, _rectStats, 4) == true)
     {
         _button.Play();
-        printf("Stat\n");
     }
-    if (CheckMouse(_mouse, _rectLoad, 5) == true &&FileExists("../assets/saveFile.txt"))
+    if (CheckMouse(_mouse, _rectLoad, 5) == true && FileExists("../assets/saveFile.txt"))
     {
         _button.Play();
         LoadSave();
-
-        std::cout << _nbPlayer << std::endl;
-        std::cout << _nbIA << std::endl;
-        for(int i = 0; i < _map.size(); i++)
-            std::cout << _map[i] << std::endl;
-        for(int i = 0; i < _skin.size(); i++)
-            std::cout << _skin[i] << std::endl;
-
         _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _skin));
     }
 }
