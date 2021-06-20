@@ -26,9 +26,8 @@ void HowToPlay::Draw()
 void HowToPlay::Update()
 {
     _screenWidth = GetScreenWidth();
-    _screenHeight = GetScreenHeight();
-    if (IsWindowResized())
-        UpdateScale();
+    _screenHeight = GetScreenHeight();        
+    UpdateScale();
 }
 
 void HowToPlay::Clear()
@@ -40,8 +39,8 @@ void HowToPlay::HandleInput()
 void HowToPlay::Reset()
 {}
 
-
 void HowToPlay::UpdateScale()
 {
-    _scale = _scale / _bg.getWidth() * _screenWidth;  
+    std::cout<<_scale<<std::endl;
+    _scale = _scale / _bg.getWidth() * _screenWidth;
 }
