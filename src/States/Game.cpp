@@ -161,8 +161,6 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
             }
         }
     }
-    _screenWidth = GetScreenWidth();
-    _screenHeight = GetScreenHeight();
     whichAI = 0;
 
     for (int i = 1; i <= 4; i++) {
@@ -341,6 +339,43 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
                 _jumpList.push_back(jp);
             }
         }
+    }
+    whichAI = 0;
+
+    for (int i = 1; i <= 4; i++) {
+        Entity *card = new Entity;
+        Card *c = new Card(i);
+        c->link(card->getId());
+        if (nbPlayer >= 1 && i == 1) {
+            c->setHead(getHead(skin[0]));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 0)
+                    c->setName(_playerList[i]->getPlayerName());
+        } else if (nbPlayer >= 2 && i == 4) {
+            c->setHead(getHead(skin[1]));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() == 1)
+                    c->setName(_playerList[i]->getPlayerName());
+        } else {
+            if (_nbPlayer >= 2 && i == 2)
+                c->setHead(getHead(skin[3]));
+            else if (_nbIA == 4) {
+                if (whichAI == 0)
+                    c->setHead(getHead(skin[2]));
+                else if (whichAI == 1)
+                    c->setHead(getHead(skin[3]));
+                else if (whichAI == 2)
+                    c->setHead(getHead(skin[1]));
+                else
+                    c->setHead(getHead(skin[0]));
+                whichAI++;
+            } else
+                c->setHead(getHead(skin[5 - i]));
+            for (std::size_t i = 0; i < _playerList.size(); i++)
+                if (_playerList[i]->getPlayerID() >= 2)
+                    c->setName(_playerList[i]->getPlayerName());
+        }
+        _cardList.push_back(c);
     }
 }
 
@@ -735,6 +770,13 @@ Texture2D Game::getSkin()
     _saveSkin.push_back(str);
 
     return LoadTexture(str.c_str());
+}
+
+std::string Game::getHead(std::string str)
+{
+    std::string tmp = str.substr(29, 29);
+    std::cout << tmp << std::endl;
+    return "../assets/skin/head/head" + tmp + ".png";
 }
 
 void Game::moveAi(std::size_t positionIndex, std::size_t playerIndex)
