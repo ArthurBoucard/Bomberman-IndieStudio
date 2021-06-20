@@ -54,7 +54,6 @@ void Introduction::UpdateScale()
         _scale = _scale - 0.0001;
     else
         _scale = _scale - 0.014;
-
     if ((_bouboule.getWidth() / 2 * _scale) < _screenWidth)
         _context->TransitionTo(new Menu);
 
