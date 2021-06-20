@@ -186,7 +186,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
         } else {
             if (_nbPlayer >= 2 && i == 2) {
                 c->setHead(_head[3]);
-                c->setPlId(2);
+                c->setPlId(3);
             } else if (_nbIA == 4) {
                 if (whichAI == 0) {
                     c->setHead(_head[2]);
@@ -204,7 +204,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
                 whichAI++;
             } else {
                 c->setHead(_head[5 - i]);
-                // Need player link
+                c->setPlId(5);
             }
             for (std::size_t i = 0; i < _playerList.size(); i++)
                 if (_playerList[i]->getPlayerID() >= 2)
