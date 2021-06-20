@@ -14,6 +14,6 @@ if (WIN32)
 set_target_properties(bomberman PROPERTIES
                       RUNTIME_OUTPUT_DIRECTORY_DEBUG <./>
 )
-endif (WIN2)
+endif (WIN32)
 
 target_link_libraries(bomberman raylib)
