@@ -13,6 +13,7 @@
 #include "../States/Game.hpp"
 #include "../States/GameOver.hpp"
 #include "../States/GameSettings.hpp"
+#include "../States/HowToPlay.hpp"
 #include "../Raylib/Raylib.hpp"
 #include "../States/Win.hpp"
 
@@ -61,6 +62,8 @@ private:
     unsigned int _nbIA;
     std::vector<std::string> _map;
     std::vector<std::string> _skin;
+
+    float _scale;
 };
 
 #endif /* !Menu_HPP_ */

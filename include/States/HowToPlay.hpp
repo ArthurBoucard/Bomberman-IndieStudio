@@ -26,6 +26,7 @@ class HowToPlay : public State
         Raylib::Texture2D _bg;
         float _screenWidth;
         float _screenHeight;
+        float _scale;
 
 };
 
