@@ -16,7 +16,8 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
 
     _poseBomb.Load("../assets/sound/poseBomb.wav");
     _explosionBomb.Load("../assets/sound/explosion.wav");
-    _deathPlayer.Load("../assets/sound/death.wav");
+    _deathPlayer.Load("../assets/sound/uh.wav");
+    _powerUp.Load("../assets/sound/powerUp.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -171,7 +172,8 @@ Game::Game(int nbPlayer, int nbIA, const std::vector<std::string> &map, const st
 
     _poseBomb.Load("../assets/sound/poseBomb.wav");
     _explosionBomb.Load("../assets/sound/explosion.wav");
-    _deathPlayer.Load("../assets/sound/death.wav");
+    _deathPlayer.Load("../assets/sound/uh.wav");
+    _powerUp.Load("../assets/sound/powerUp.wav");
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -717,7 +719,7 @@ void Game::usePower()
                             if (_positionList[k]->getX() == round(_positionList[j]->getX()) && _positionList[k]->getY() == round(_positionList[j]->getY()))
                             {
                                 _powerUpList[n]->usePower(_playerList[i]);
-                                std::cout << _playerList[i]->getSpeed() << std::endl;
+                                _powerUp.Play();
                                 deleteEntity(_powerUpList[n]->getLink());
                             }
 }

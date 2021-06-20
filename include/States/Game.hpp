@@ -84,6 +84,7 @@ private:
     Raylib::Sound _poseBomb;
     Raylib::Sound _explosionBomb;
     Raylib::Sound _deathPlayer;
+    Raylib::Sound _powerUp;
 };
 
 #endif /* !GAME_HPP_ */
