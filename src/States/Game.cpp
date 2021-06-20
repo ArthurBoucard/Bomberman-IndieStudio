@@ -27,7 +27,7 @@ Game::Game(int nbPlayer, int nbIA, int skin1, int skin2)
         skin2--;
 
     map.createMap();
-    map.proceduralGenClassical();
+    map.RandomMap();
     map.placePlayers(_nbPlayer, _nbIA);
     _map = map.getMap();
 

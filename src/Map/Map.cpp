@@ -6,6 +6,7 @@
 */
 
 #include "../../include/Map/Map.hpp"
+#include "../../include/States/Game.hpp"
 
 Map::Map()
 {
@@ -49,15 +50,13 @@ void Map::reset()
 
 void Map::proceduralGenClassical()
 {
-    srand(time(NULL));
-
     for (int i = 2; i < _map.size(); i += 2)
         for (int j = 2; j < _map[i].length(); j += 2)
             _map[i][j] = 'X';
 
     for (int i = 1; i < _map.size(); i++)
         for (int j = 1; j < _map[i].length(); j++)
-            if (_map[i][j] == ' ' && rand() % 5 != 0)
+            if (_map[i][j] == ' ' && GetRandomValue(0, 5) != 0)
                 _map[i][j] = '#';
 }
 
@@ -90,8 +89,6 @@ void Map::placePlayers(int nbPlayer, int nbIA)  // 0 = player 1 || 1 = player 2 
 
 void Map::proceduralGenLab()
 {
-    srand(time(NULL));
-
     int k = 0;
     int length = 0;
 
@@ -112,11 +109,21 @@ void Map::proceduralGenLab()
     }
     for (int i = 1; i < _map.size(); i++)
         for (int j = 1; j < _map[i].length(); j++)
-            if (_map[i][j] == ' ' && rand() % 5 != 0)
+            if (_map[i][j] == ' ' && GetRandomValue(0, 5) != 0)
                 _map[i][j] = '#';
 
     for (int i = 1; i < _map.size(); i++)
         for (int j = 1; j < _map[i].length(); j++)
             if (_map[i][j] == '$')
                 _map[i][j] = ' ';
+}
+
+void Map::RandomMap()
+{
+    int randomNb = GetRandomValue(0, 1);
+
+    if (randomNb == 0)
+        proceduralGenClassical();
+    else
+        proceduralGenLab();
 }

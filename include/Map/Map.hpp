@@ -27,6 +27,7 @@ class Map {
         void proceduralGenClassical();
         void proceduralGenLab();
         void placePlayers(int nbPlayer, int nbIA);
+        void RandomMap();
     protected:
     private:
         std::vector<std::string> _map;
