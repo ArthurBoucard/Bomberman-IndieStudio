@@ -24,13 +24,13 @@ public:
     void HandleInput();
     void Reset();
 
-    bool CheckMouse(Vector2, Rectangle, std::string, int state);
+    bool CheckMouse(Raylib::Vector2, Raylib::Rectangle, std::string, int state);
 
 private:
-    Vector2 _mouse;
-    Rectangle _rectBack;
-    Rectangle _rectAgain;
-    Music _musicEnd;
+    Raylib::Vector2 _mouse;
+    Raylib::Rectangle _rectBack;
+    Raylib::Rectangle _rectAgain;
+    Raylib::Music _musicEnd;
     Raylib::Sound _button;
 
     float _screenWidth;

@@ -24,7 +24,7 @@ bool Pause::CheckMouse(Vector2 mouse, Raylib::Rectangle rect, int state)
     return false;
 }
 
-Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skinChoicePl1, int skinChoicePl2 , const std::vector<std::string> skin)
+Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int skinChoicePl1, int skinChoicePl2 , const std::vector<std::string> &skin, const std::vector<int> &powerUp)
 {
     _skinChoicePl1 = skinChoicePl1;
     _skinChoicePl2 = skinChoicePl2;
@@ -37,6 +37,7 @@ Pause::Pause(int nbPlayer, int nbIA, const std::vector<std::string> &map, int sk
     _button.Load("../assets/sound/button.wav");
 
     _saveSkin = skin;
+    _savePowerUP = powerUp;
 
     _nbPlayer = nbPlayer;
     _nbIA = nbIA;
@@ -94,7 +95,7 @@ void Pause::HandleInput()
     if (CheckMouse(_mouse, _rectResume, 3) == true)
     {
         _button.Play();
-        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _saveSkin));
+        _context->TransitionTo(new Game(_nbPlayer, _nbIA, _map, _saveSkin, _savePowerUP));
     }
 }
 
@@ -119,6 +120,10 @@ void Pause::SaveInFile()
     myfile << ">SKIN" << std::endl;
     for(int i = 0; i < _saveSkin.size(); i++)
         myfile << _saveSkin[i] << std::endl;
+
+    myfile << ">POWER_UP" << std::endl;
+    for(int i = 0; i < _savePowerUP.size(); i++)
+        myfile << _savePowerUP[i] << std::endl;
 
     myfile.close();
 

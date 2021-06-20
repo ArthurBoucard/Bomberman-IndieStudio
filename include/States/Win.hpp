@@ -15,7 +15,7 @@
 class Win : public State
 {
 public:
-    Win(int nbPlayer, int nbIA, int skin1, int skin2, int skinWin);
+    Win(int nbPlayer, int nbIA, int skin1, int skin2, std::string);
     ~Win();
 
     void Draw();
@@ -42,7 +42,7 @@ private:
 
     Vector2 _mouse;
 
-    Raylib::Text _win;
+    std::string _win;
     Raylib::Text _back;
     Raylib::Text _again;
 
@@ -51,7 +51,7 @@ private:
     int _skin1;
     int _skin2;
 
-    Raylib::Sound _winMusic;
+    Raylib::Music _winMusic;
 };
 
 #endif /* !WIN_HPP_ */
