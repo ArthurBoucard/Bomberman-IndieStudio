@@ -10,6 +10,7 @@
 
 #include "../StatesManagement/State.hpp"
 #include "../States/Menu.hpp"
+#include "../Raylib/Raylib.hpp"
 
 class Win : public State
 {
@@ -44,6 +45,8 @@ private:
     int _nbIA;
     int _skin1;
     int _skin2;
+
+    Raylib::Sound _winMusic;
 };
 
 #endif /* !WIN_HPP_ */

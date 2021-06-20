@@ -17,6 +17,8 @@ Win::Win(int nbPlayer, int nbIA, int skin1, int skin2)
     _nbIA = nbIA;
     _skin1 = skin1;
     _skin2 = skin2;
+
+    _winMusic.Load("../assets/music/win.mp3");
 }
 
 Win::~Win()
@@ -49,6 +51,8 @@ void Win::Draw()
     _bgWin.Draw(0, 0, RAYWHITE);
     _rectAgain.Draw(50, 50, BLACK);
     _rectBack.Draw(50, 50, BLACK);
+
+    _winMusic.Play();
 }
 
 void Win::Update()
