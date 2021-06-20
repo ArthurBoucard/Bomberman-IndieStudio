@@ -15,7 +15,12 @@
 #include "../States/GameSettings.hpp"
 #include "../States/HowToPlay.hpp"
 #include "../Raylib/Raylib.hpp"
+<<<<<<< HEAD
 #include "../States/Win.hpp"
+=======
+#include "../States/HowToPlay.hpp"
+
+>>>>>>> 81da35adc7dca01ec50754e29b801b5d2ef5a685
 
 class Menu : public State
 {
