@@ -5,5 +5,3 @@ test
 bomberman
 build/*
 .vs/*
-CMakeLists.txt
-.gitignore
