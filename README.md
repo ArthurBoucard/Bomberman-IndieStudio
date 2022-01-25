@@ -1,2 +1,3 @@
 # IndieStudio-Bomberman
-A bombeman game made in c++ using the raylib
+A bomberman game made in C++ using the Raylib with local multiplayer or against computers.
+build on windows and linux
